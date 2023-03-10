@@ -1,11 +1,11 @@
 package com.mygdx.bottomsup;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Game extends ApplicationAdapter {
+public class BottomsUp extends Game {
 	SpriteBatch batch;
 	Texture img;
 	
