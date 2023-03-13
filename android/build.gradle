@@ -1,3 +1,4 @@
+apply plugin: 'com.google.gms.google-services'
 android {
     buildToolsVersion "33.0.1"
     compileSdkVersion 33
@@ -18,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.mygdx.bottomsup"
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -83,6 +84,10 @@ task run(type: Exec) {
 
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.bottomsup/com.mygdx.bottomsup.AndroidLauncher'
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-database:20.1.0'
 }
 
 eclipse.project.name = appName + "-android"

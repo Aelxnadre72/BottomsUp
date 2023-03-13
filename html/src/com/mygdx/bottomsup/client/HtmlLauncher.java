@@ -3,7 +3,7 @@ package com.mygdx.bottomsup.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.mygdx.bottomsup.Game;
+import com.mygdx.bottomsup.BottomsUp;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -17,6 +17,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new Game();
+                return new BottomsUp();
         }
 }
