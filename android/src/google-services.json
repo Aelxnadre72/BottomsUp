@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "626236143143",
+    "firebase_url": "https://bottomsup-d3260-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "bottomsup-d3260",
+    "storage_bucket": "bottomsup-d3260.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626236143143:android:9a9bd35b1be4ec42378002",
+        "android_client_info": {
+          "package_name": "com.mygdx.bottomsup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626236143143-4qcu0re7ui7ud89o0tuog222edrrltig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsxR6F0VvwKtnOVe_3o77j16mYE70IOew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626236143143-4qcu0re7ui7ud89o0tuog222edrrltig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
