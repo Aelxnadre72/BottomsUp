@@ -1,10 +1,15 @@
 package screens;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GameScreen extends Screen {
+public class MainMenuScreen extends Screen {
 
-    public GameScreen(GameScreenManager gsm) {
+    private Texture background;
+    private Texture hostButton;
+    private Texture joinButton;
+
+    public MainMenuScreen(GameScreenManager gsm) {
         super(gsm);
     }
 
