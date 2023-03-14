@@ -1,7 +1,6 @@
 package com.mygdx.bottomsup;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -10,9 +9,11 @@ import screens.MainMenuScreen;
 
 
 public class BottomsUp extends Game {
+
+	public static final int WIDTH = 360;
+	public static final int HEIGHT = 800;
 	private GameScreenManager gsm;
 	SpriteBatch batch;
-	Texture img;
 
 	@Override
 	public void create () {
@@ -24,7 +25,6 @@ public class BottomsUp extends Game {
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
 		gsm.update();
 		gsm.render(batch);
 	}
