@@ -1,37 +1,53 @@
 package screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.ScreenAdapter;
-import com.mygdx.bottomsup.BottomsUp;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class JoinGameScreen extends ScreenAdapter {
-    BottomsUp game;
 
-    public JoinGameScreen(BottomsUp game) {
-        this.game = game;
+public class JoinGameScreen extends Screen {
+
+    private Texture enterButton;
+    private  Texture background;
+    private Texture logo;
+
+    public JoinGameScreen(GameScreenManager gsm) {
+        super(gsm);
+        enterButton = new Texture("buttonJoinGame.png");
+        background = new Texture("badlogic.jpg");
+        logo = new Texture("bottomsUpLogo.png");
+
     }
 
     @Override
-    public void show(){
-        Gdx.input.setInputProcessor(new InputAdapter() {
-            @Override
-            public boolean keyDown(int keyCode) {
-                if (keyCode == Input.Keys.SPACE) {
-                    //game.setScreen(new GameScreen(game));
-                }
-                return true;
-            }
-        });
+    public void handleInput(){
+
     }
 
     @Override
-    public void render(float delta) {
+    public void update(){
+        handleInput();
+    }
+
+
+
+    @Override
+    public void render(SpriteBatch sb) {
+        float sizeButton = (float) ((float)Gdx.graphics.getWidth() * 0.6);
+        float sizeButton2 = (float) (sizeButton * 0.35);
+
+        float sizeLogo = (float) ((float)Gdx.graphics.getWidth() * 0.6);
+        float sizeLogo2 = (float) (sizeLogo * 0.75);
+
+        sb.begin();
+        sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.draw(logo, 70, 500, sizeLogo, sizeLogo2);
+        sb.draw(enterButton, 70, 300, sizeButton, sizeButton2);
+        sb.end();
     }
 
     @Override
-    public void hide(){
-        Gdx.input.setInputProcessor(null);
+    public void dispose(){
+
     }
 }
