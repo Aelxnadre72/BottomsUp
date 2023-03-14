@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("bottoms-up");
+		config.setWindowedMode(BottomsUp.WIDTH, BottomsUp.HEIGHT);
 		new Lwjgl3Application(new BottomsUp(), config);
 	}
 }
