@@ -13,7 +13,6 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new BottomsUp(), config);
-		// Write a message to the database - FUNKER IKKE
 		FirebaseDatabase database = FirebaseDatabase.getInstance();
 		DatabaseReference myRef = database.getReference("message");
 		myRef.setValue("Hello, World!");
