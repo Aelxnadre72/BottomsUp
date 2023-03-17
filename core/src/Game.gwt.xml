@@ -2,4 +2,50 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "http://www.gwtproject.org/doctype/2.8.0/gwt-module.dtd">
 <module>
 	<source path="com/mygdx/bottomsup" />
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:context="example.javatpoint.com.edittextexample.MainActivity">
+
+		<EditText
+			android:id="@+id/editText1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="61dp"
+			android:ems="10"
+			android:inputType="text"
+			android:hint=?enter text?
+		tools:layout_editor_absoluteX="84dp"
+		tools:layout_editor_absoluteY="53dp" />
+
+		<EditText
+			android:id="@+id/editText2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/editText1"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="32dp"
+			android:ems="10"
+			android:inputType="password"
+			android:hint="enter password"
+			tools:layout_editor_absoluteX="84dp"
+			tools:layout_editor_absoluteY="127dp" />
+
+		<Button
+			android:id="@+id/button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/editText2"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="109dp"
+			android:text="Show Value"
+			tools:layout_editor_absoluteX="148dp"
+			tools:layout_editor_absoluteY="266dp" />
+	</RelativeLayout>
+
+
 </module>
