@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import screens.GameScreenManager;
 import screens.JoinGameScreen;
-import screens.MainMenuScreen;
 
 
 public class BottomsUp extends Game {

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 import com.badlogic.gdx.utils.Align;
@@ -20,9 +19,10 @@ import screens.TextInputListener;
 public class JoinGameScreen extends Screen {
 
     private Texture enterButton;
-    private  Texture background;
+    private Texture background;
     private Texture logo;
-    private final TextField  pin_input;
+    private TextField  pin_input;
+
     private TextInputListener listener;
 
     private TextField.TextFieldListener txtListener;
@@ -40,6 +40,8 @@ public class JoinGameScreen extends Screen {
         stage = new Stage(new ScreenViewport());
 
         pin_input= new TextField("", uiskin);
+
+        pin_input = new TextField("", uiskin);
         pin_input.setSize(300, 50);
         pin_input.setPosition((300), 500);
 
@@ -50,11 +52,16 @@ public class JoinGameScreen extends Screen {
         Gdx.input.getTextInput(listener, "", "", "Enter game pin");
         Gdx.input.setInputProcessor(stage);
         Gdx.input.setOnscreenKeyboardVisible(false);
+        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setOnscreenKeyboardVisible(false);
+        Gdx.input.getTextInput(listener, "", "", "ENTER PIN");
+
     }
 
+
     @Override
-    public void handleInput(){
-        if (Gdx.input.justTouched()){
+    public void handleInput() {
+        if (Gdx.input.justTouched()) {
             Gdx.input.setOnscreenKeyboardVisible(true);
         }
     }
@@ -67,18 +74,15 @@ public class JoinGameScreen extends Screen {
 
     @Override
     public void render(SpriteBatch sb) {
-
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
         float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
         float scaleButton = (float)(scaleWidth * 0.3);
-        float scaleLogo = (float)(scaleWidth * 0.75);
         float delta = Gdx.graphics.getDeltaTime();
 
         sb.begin();
-        sb.draw(background, 0, 0, width, height);
-        //sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth, scaleLogo);
+        sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.draw(enterButton, (float)(width * 0.2), (float)(height * 0.25), scaleWidth, scaleButton);
         stage.act(delta);
         stage.draw();
