@@ -1,4 +1,5 @@
 package screens;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,8 +15,6 @@ public class JoinGameScreen extends Screen {
     private Texture enterButton;
     private Texture background;
     private Texture logo;
-
-    private Texture textfield;
 
     private final TextField pin_input;
     private TextInputListener listener;
@@ -39,7 +38,6 @@ public class JoinGameScreen extends Screen {
         table.setWidth(stage.getWidth());
         table.align(Align.center | Align.top);
         table.setPosition(0, Gdx.graphics.getHeight());
-        stage.addActor(table);
 
         pin_input = new TextField("", uiskin);
         pin_input.setSize(300, 50);
@@ -49,17 +47,20 @@ public class JoinGameScreen extends Screen {
         pin_input.setTextFieldListener(txtListener);
         table.add(pin_input).width(400).fill();
         stage.addActor(pin_input);
+        stage.addActor(table);
+
+        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setOnscreenKeyboardVisible(false);
+        Gdx.input.getTextInput(listener, "", "", "ENTER PIN");
+
     }
 
-    public void keyTyped(TextField textField, char key) {
-        if (key == '\n') {
-            textField.getOnscreenKeyboard().show(false);
-        }
-    }
 
     @Override
     public void handleInput() {
-        keyTyped(pin_input, 'h');
+        if (Gdx.input.justTouched()) {
+            Gdx.input.setOnscreenKeyboardVisible(true);
+        }
     }
 
     @Override
@@ -70,20 +71,19 @@ public class JoinGameScreen extends Screen {
 
     @Override
     public void render(SpriteBatch sb) {
-        float sizeButton = (float) ((float) Gdx.graphics.getWidth() * 0.6);
-        float sizeLogo = (float) ((float) Gdx.graphics.getWidth() * 0.6);
-        float sizeLogo2 = (float) (sizeLogo * 0.75);
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
 
-        Gdx.input.getTextInput(listener, "", "Enter game pin", "Hint Value");
+        float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
+        float scaleButton = (float)(scaleWidth * 0.3);
         float delta = Gdx.graphics.getDeltaTime();
-        stage.act(delta);
-        stage.draw();
-
-        Gdx.input.setInputProcessor(stage);
-        Gdx.input.setOnscreenKeyboardVisible(true);
 
         sb.begin();
         sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.draw(enterButton, (float)(width * 0.2), (float)(height * 0.25), scaleWidth, scaleButton);
+        stage.act(delta);
+        stage.draw();
+        sb.end();
     }
 
     @Override
