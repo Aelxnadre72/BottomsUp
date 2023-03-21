@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Stack;
 
 public class GameScreenManager {
+
     private Stack<Screen> screens;
 
     public GameScreenManager() {
@@ -31,5 +32,4 @@ public class GameScreenManager {
     public void render(SpriteBatch sb) {
         screens.peek().render(sb);
     }
-
 }

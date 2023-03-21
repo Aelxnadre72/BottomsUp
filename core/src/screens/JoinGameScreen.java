@@ -1,5 +1,6 @@
 package screens;
 
+<<<<<<< HEAD
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -92,5 +93,34 @@ public class JoinGameScreen extends Screen {
     @Override
     public void dispose(){
         stage.dispose();
+=======
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class JoinGameScreen extends Screen {
+
+    public JoinGameScreen(GameScreenManager gsm) {
+        super(gsm);
     }
+
+    @Override
+    protected void handleInput() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+
+    }
+
+    @Override
+    public void dispose() {
+
+>>>>>>> 4206e7ec7786b1ae2ca672e0e706206e07ceea85
+    }
+
 }
