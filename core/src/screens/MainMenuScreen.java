@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 public class MainMenuScreen extends Screen {
 
     private Texture background;
-
     private Texture logo;
     private Texture hostButton;
     private Texture joinButton;
@@ -76,6 +75,7 @@ public class MainMenuScreen extends Screen {
 
     @Override
     public void dispose() {
+        background.dispose();
         hostButton.dispose();
         joinButton.dispose();
         logo.dispose();
