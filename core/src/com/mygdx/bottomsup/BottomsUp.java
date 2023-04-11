@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import screens.GameScreenManager;
-import screens.MainMenuScreen;
+import screens.JoinGameScreen;
 
 
 public class BottomsUp extends Game {
@@ -20,7 +20,7 @@ public class BottomsUp extends Game {
 		batch = new SpriteBatch();
 		gsm = new GameScreenManager();
 		ScreenUtils.clear(0, 0, 0, 1);
-		gsm.push(new MainMenuScreen(gsm));
+		gsm.push(new JoinGameScreen(gsm));
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class BottomsUp extends Game {
 		gsm.update();
 		gsm.render(batch);
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();
