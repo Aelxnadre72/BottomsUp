@@ -36,7 +36,7 @@ public class JoinGameScreen extends Screen {
                                          scaleWidth,
                                          scaleHeight);
         boundsEnterButton = new Rectangle((float)(Gdx.graphics.getWidth() * 0.2),
-                                       (float)(Gdx.graphics.getHeight() * 0.25) - scaleHeight,
+                                       (float)(Gdx.graphics.getHeight() * 0.75) - scaleHeight,
                                           scaleWidth,
                                           scaleHeight);
         Gdx.input.setOnscreenKeyboardVisible(false);
@@ -119,6 +119,7 @@ public class JoinGameScreen extends Screen {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsEnterButton.contains(x, y) && getCodeValue().equals("123")) {
+                //Add server logic to find lobby
                 gsm.set(new LobbyScreen(gsm));
                 dispose();
             }
