@@ -11,7 +11,7 @@ public class MainMenuScreen extends Screen {
 
     private float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
     private float scaleHeight = (float)(scaleWidth * 0.3);
-    private float scaleLogo = (float)(scaleWidth * 0.75);
+    private float scaleLogo = (float)(scaleWidth * 0.9);
     private Texture background;
     private Texture logo;
     private Texture hostButton;
