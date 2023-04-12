@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import screens.GameScreenManager;
+import screens.HostLobbyScreen;
+import screens.LobbyScreen;
 import screens.MainMenuScreen;
 
 
@@ -20,7 +22,7 @@ public class BottomsUp extends Game {
 		batch = new SpriteBatch();
 		gsm = new GameScreenManager();
 		ScreenUtils.clear(0, 0, 0, 1);
-		gsm.push(new MainMenuScreen(gsm));
+		gsm.push(new HostLobbyScreen(gsm));
 	}
 
 	@Override
