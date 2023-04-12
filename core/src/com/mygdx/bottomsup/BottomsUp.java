@@ -1,32 +1,38 @@
 package com.mygdx.bottomsup;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import jdk.tools.jmod.Main;
+import screens.GameScreen;
+import screens.GameScreenManager;
+import screens.MainMenuScreen;
+
 
 public class BottomsUp extends Game {
+
+	public static final int WIDTH = 360;
+	public static final int HEIGHT = 800;
+	private GameScreenManager gsm;
 	SpriteBatch batch;
-	Texture img;
-	
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		gsm = new GameScreenManager();
+		ScreenUtils.clear(0, 0, 0, 1);
+		gsm.push(new GameScreen(gsm));
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		gsm.update();
+		gsm.render(batch);
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }
