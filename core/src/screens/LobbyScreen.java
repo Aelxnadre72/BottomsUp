@@ -27,7 +27,7 @@ public class LobbyScreen extends Screen {
 
     public LobbyScreen(GameScreenManager gsm) {
         super(gsm);
-        backgroundUpper = new Texture("MainMenuBackground.png");
+        backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("DarkerBackground.png");
         exit = new Texture("Exit.png");
         boundsExitField = new Rectangle(

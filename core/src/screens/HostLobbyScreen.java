@@ -29,7 +29,7 @@ public class HostLobbyScreen extends Screen {
 
     public HostLobbyScreen(GameScreenManager gsm) {
         super(gsm);
-        backgroundUpper = new Texture("MainMenuBackground.png");
+        backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("DarkerBackground.png");
         exit = new Texture("Exit.png");
         boundsExitField = new Rectangle(

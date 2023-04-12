@@ -45,6 +45,9 @@ public class JoinGameScreen extends Screen {
             @Override
             public boolean touchDown (int x, int y, int pointer, int button) {
                 if (boundsJoinField.contains(x, y)) {
+                    if (codeValue.equals("ENTER PIN")) {
+                        setCodeValue("");
+                    }
                     Gdx.input.setOnscreenKeyboardVisible(true);
                 } else {
                     Gdx.input.setOnscreenKeyboardVisible(false);
