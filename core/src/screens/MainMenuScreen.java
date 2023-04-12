@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class MainMenuScreen extends Screen {
-    float width = Gdx.graphics.getWidth();
-    float height = Gdx.graphics.getHeight();
+    private float width = Gdx.graphics.getWidth();
+    private float height = Gdx.graphics.getHeight();
 
-    float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
-    float scaleHeight = (float)(scaleWidth * 0.3);
-    float scaleLogo = (float)(scaleWidth * 0.75);
+    private float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
+    private float scaleHeight = (float)(scaleWidth * 0.3);
+    private float scaleLogo = (float)(scaleWidth * 0.9);
     private Texture background;
     private Texture logo;
     private Texture hostButton;
@@ -22,7 +22,7 @@ public class MainMenuScreen extends Screen {
 
     public MainMenuScreen(GameScreenManager gsm) {
         super(gsm);
-        background = new Texture("MainMenuBackground.png");
+        background = new Texture("background.png");
         hostButton = new Texture("buttonHostGame.png");
         joinButton = new Texture("buttonJoinGame.png");
         logo = new Texture("bottomsUpLogo.png");
@@ -42,7 +42,7 @@ public class MainMenuScreen extends Screen {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsHostButton.contains(x, y)) {
-                gsm.set(new LobbyScreen(gsm));
+                gsm.set(new HostLobbyScreen(gsm));
                 dispose();
             } else if (boundsJoinButton.contains(x, y)) {
                 gsm.set(new JoinGameScreen(gsm));

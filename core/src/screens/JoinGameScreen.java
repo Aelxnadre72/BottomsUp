@@ -13,38 +13,51 @@ public class JoinGameScreen extends Screen {
     private float height = Gdx.graphics.getHeight();
     private float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
     private float scaleHeight = (float)(scaleWidth * 0.3);
+    private float scaleLogo = (float)(scaleWidth * 0.9);
+    private float scaleButton = (float)(Gdx.graphics.getWidth() * 0.1);
+
     private Texture enterButton;
     private Texture background;
     private Texture logo;
+    private Texture backButton;
     private String codeValue = "ENTER PIN";
     private BitmapFont code;
     private Texture joinField;
     private Rectangle boundsJoinField;
     private Rectangle boundsEnterButton;
+    private Rectangle boundsBackButton;
 
     public JoinGameScreen(GameScreenManager gsm) {
         super(gsm);
         enterButton = new Texture("buttonJoinGame.png");
         background = new Texture("background.png");
         logo = new Texture("bottomsUpLogo.png");
+        backButton = new Texture("backButton.png");
         code = new BitmapFont();
         code.getData().setScale(3, 3);
         code.setColor(0, 0, 0, 1);
         joinField = new Texture("button.png");
         boundsJoinField = new Rectangle((float)(Gdx.graphics.getWidth() * 0.2),
-                                        (float)(Gdx.graphics.getHeight() * 0.5) - scaleHeight,
+                                        (float)(Gdx.graphics.getHeight() * 0.6) - scaleHeight,
                                          scaleWidth,
                                          scaleHeight);
         boundsEnterButton = new Rectangle((float)(Gdx.graphics.getWidth() * 0.2),
                                        (float)(Gdx.graphics.getHeight() * 0.75) - scaleHeight,
                                           scaleWidth,
                                           scaleHeight);
+        boundsBackButton = new Rectangle((float)(Gdx.graphics.getWidth() * 0.05),
+                                       (float)(Gdx.graphics.getHeight() * 0.1) - scaleButton,
+                                          scaleButton,
+                                          scaleButton);
         Gdx.input.setOnscreenKeyboardVisible(false);
 
         Gdx.input.setInputProcessor(new InputAdapter () {
             @Override
             public boolean touchDown (int x, int y, int pointer, int button) {
                 if (boundsJoinField.contains(x, y)) {
+                    if (codeValue.equals("ENTER PIN")) {
+                        setCodeValue("");
+                    }
                     Gdx.input.setOnscreenKeyboardVisible(true);
                 } else {
                     Gdx.input.setOnscreenKeyboardVisible(false);
@@ -101,6 +114,11 @@ public class JoinGameScreen extends Screen {
                             setCodeValue(getCodeValue().substring(0, getCodeValue().length() - 1));
                         }
                         break;
+
+                    case Input.Keys.ENTER:
+                        Gdx.input.setOnscreenKeyboardVisible(false);
+                        break;
+
                 }
                 return true;
             }
@@ -123,6 +141,10 @@ public class JoinGameScreen extends Screen {
                 gsm.set(new LobbyScreen(gsm));
                 dispose();
             }
+            else if (boundsBackButton.contains(x, y)) {
+                gsm.set(new MainMenuScreen(gsm));
+                dispose();
+            }
         }
     }
 
@@ -136,9 +158,11 @@ public class JoinGameScreen extends Screen {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        sb.draw(joinField, (float)(width * 0.2), (float)(height * 0.5), scaleWidth, scaleHeight);
+        sb.draw(joinField, (float)(width * 0.2), (float)(height * 0.4), scaleWidth, scaleHeight);
         sb.draw(enterButton, (float)(width * 0.2), (float)(height * 0.25), scaleWidth, scaleHeight);
-        code.draw(sb, codeValue, (float)(width * 0.215), (float)(height * 0.565));
+        sb.draw(backButton, (float)(width * 0.05), (float)(height * 0.9), scaleButton, scaleButton);
+        sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth, scaleLogo);
+        code.draw(sb, codeValue, (float)(width * 0.275), (float)(height * 0.465));
         sb.end();
     }
 
