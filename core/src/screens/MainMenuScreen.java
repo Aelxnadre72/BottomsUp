@@ -71,8 +71,8 @@ public class MainMenuScreen extends Screen {
     @Override
     public void dispose() {
         background.dispose();
+        logo.dispose();
         hostButton.dispose();
         joinButton.dispose();
-        logo.dispose();
     }
 }

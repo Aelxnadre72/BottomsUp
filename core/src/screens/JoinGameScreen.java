@@ -23,7 +23,7 @@ public class JoinGameScreen extends Screen {
     private Texture background;
     private Texture logo;
     private Texture backButton;
-    private String codeValue = "Enter Pin";
+    private String codeValue = "Enter game pin";
     private BitmapFont code;
     private Texture joinField;
     private Rectangle boundsJoinField;
@@ -38,7 +38,7 @@ public class JoinGameScreen extends Screen {
         backButton = new Texture("backButton.png");
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 80;
+        parameter.size = 60;
         parameter.color = new Color(0x7999B6ff);
         code = generator.generateFont(parameter);
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
@@ -61,7 +61,7 @@ public class JoinGameScreen extends Screen {
             @Override
             public boolean touchDown (int x, int y, int pointer, int button) {
                 if (boundsJoinField.contains(x, y)) {
-                    if (codeValue.equals("Enter Pin")) {
+                    if (codeValue.equals("Enter game pin")) {
                         setCodeValue("");
                         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
                         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
@@ -73,6 +73,15 @@ public class JoinGameScreen extends Screen {
                     Gdx.input.setOnscreenKeyboardVisible(true);
                 } else {
                     Gdx.input.setOnscreenKeyboardVisible(false);
+                    if (codeValue.isEmpty()) {
+                        setCodeValue("Enter game pin");
+                        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
+                        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+                        parameter.size = 60;
+                        parameter.color = new Color(0x7999B6ff);
+                        code = generator.generateFont(parameter);
+                        generator.dispose(); // don't forget to dispose to avoid memory leaks!
+                    }
                 }
                 return true;
             }
@@ -129,6 +138,15 @@ public class JoinGameScreen extends Screen {
 
                     case Input.Keys.ENTER:
                         Gdx.input.setOnscreenKeyboardVisible(false);
+                        if (codeValue.isEmpty()) {
+                            setCodeValue("Enter game pin");
+                            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
+                            FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+                            parameter.size = 60;
+                            parameter.color = new Color(0x7999B6ff);
+                            code = generator.generateFont(parameter);
+                            generator.dispose(); // don't forget to dispose to avoid memory leaks!
+                        }
                         break;
 
                 }
@@ -183,6 +201,8 @@ public class JoinGameScreen extends Screen {
         background.dispose();
         joinField.dispose();
         enterButton.dispose();
+        backButton.dispose();
+        logo.dispose();
         code.dispose();
     }
 }

@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class HostLobbyScreen extends Screen {
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
-    String gameCode = "123456";
+    String gameCode = "123";
 
     float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.4);
     float scaleHeight = (float)(scaleWidth * 0.3);
@@ -61,13 +61,10 @@ public class HostLobbyScreen extends Screen {
                 dispose();
             }
             else if(boundStartGameButton.contains(x,y)){
+                //Add new game screen
                 gsm.set(new LobbyScreen(gsm));
                 dispose();
             }
-
-            System.out.println(boundsExitField);
-            System.out.println(boundStartGameButton);
-            System.out.println("x: " + x + "\ny: " + y);
         }
     }
 
