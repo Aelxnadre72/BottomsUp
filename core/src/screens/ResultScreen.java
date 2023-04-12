@@ -11,26 +11,27 @@ public class ResultScreen extends Screen {
     float height = Gdx.graphics.getHeight();
 
     float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
-    float scaleHeight = (float)(scaleWidth * 0.3);
-    float scaleLogo = (float)(scaleWidth * 0.75);
-    private Texture background;
-    private Texture background2;
+    float scaleLogo = (float)(scaleWidth * 0.9);
+    float scaleText = (float)(scaleWidth * 0.2);
+    private float scaleButton = (float)(Gdx.graphics.getWidth() * 0.1);
+    private float scaleNumbers = (float)(Gdx.graphics.getWidth() * 0.1);
+    private Texture backgroundUpper;
+    private Texture backgroundLower;
     private Texture logo;
     private Texture resultText;
+    private Texture cancelButton;
     private Texture first;
     private Texture second;
     private Texture third;
     private Texture fourth;
 
     public ResultScreen(GameScreenManager gsm) {
-
         super(gsm);
-        background = new Texture("background.png");
-        background2 = new Texture("darkerBackground.png");
-        first = new Texture("1.png");
-        second = new Texture("2.png");
-        third = new Texture("3.png");
-        fourth = new Texture("4.png");
+        backgroundUpper = new Texture("background.png");
+        backgroundLower = new Texture("DarkerBackground.png");
+        logo = new Texture("bottomsUpLogoNoText.png");
+        cancelButton = new Texture("cancelButton.png");
+        resultText = new Texture("results.png");
     }
 
     @Override
@@ -45,7 +46,13 @@ public class ResultScreen extends Screen {
 
     @Override
     public void render(SpriteBatch sb) {
-
+        sb.begin();
+        sb.draw(backgroundUpper, 0, 0, width, height);
+        sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.55));
+        sb.draw(logo, (float)(width * 0.2), (float)(height * 0.65), scaleWidth, scaleLogo);
+        sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.9), scaleButton, scaleButton);
+        sb.draw(resultText, (float)(width * 0.2), (float)(height * 0.57), scaleWidth, scaleText);
+        sb.end();
     }
 
     @Override
