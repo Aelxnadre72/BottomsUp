@@ -21,7 +21,7 @@ public class BottomsUp extends Game {
 		batch = new SpriteBatch();
 		gsm = new GameScreenManager();
 		ScreenUtils.clear(0, 0, 0, 1);
-		gsm.push(new ResultScreen(gsm));
+		gsm.push(new MainMenuScreen(gsm));
 	}
 
 	@Override
