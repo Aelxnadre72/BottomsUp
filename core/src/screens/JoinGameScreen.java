@@ -114,6 +114,11 @@ public class JoinGameScreen extends Screen {
                             setCodeValue(getCodeValue().substring(0, getCodeValue().length() - 1));
                         }
                         break;
+
+                    case Input.Keys.ENTER:
+                        Gdx.input.setOnscreenKeyboardVisible(false);
+                        break;
+
                 }
                 return true;
             }
@@ -157,7 +162,7 @@ public class JoinGameScreen extends Screen {
         sb.draw(enterButton, (float)(width * 0.2), (float)(height * 0.25), scaleWidth, scaleHeight);
         sb.draw(backButton, (float)(width * 0.05), (float)(height * 0.9), scaleButton, scaleButton);
         sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth, scaleLogo);
-        code.draw(sb, codeValue, (float)(width * 0.215), (float)(height * 0.465));
+        code.draw(sb, codeValue, (float)(width * 0.275), (float)(height * 0.465));
         sb.end();
     }
 
