@@ -3,9 +3,12 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 
 public class JoinGameScreen extends Screen {
@@ -20,7 +23,7 @@ public class JoinGameScreen extends Screen {
     private Texture background;
     private Texture logo;
     private Texture backButton;
-    private String codeValue = "ENTER PIN";
+    private String codeValue = "Enter Pin";
     private BitmapFont code;
     private Texture joinField;
     private Rectangle boundsJoinField;
@@ -33,9 +36,12 @@ public class JoinGameScreen extends Screen {
         background = new Texture("background.png");
         logo = new Texture("bottomsUpLogo.png");
         backButton = new Texture("backButton.png");
-        code = new BitmapFont();
-        code.getData().setScale(3, 3);
-        code.setColor(0, 0, 0, 1);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = 80;
+        parameter.color = new Color(0x7999B6ff);
+        code = generator.generateFont(parameter);
+        generator.dispose(); // don't forget to dispose to avoid memory leaks!
         joinField = new Texture("button.png");
         boundsJoinField = new Rectangle((float)(Gdx.graphics.getWidth() * 0.2),
                                         (float)(Gdx.graphics.getHeight() * 0.6) - scaleHeight,
@@ -55,8 +61,14 @@ public class JoinGameScreen extends Screen {
             @Override
             public boolean touchDown (int x, int y, int pointer, int button) {
                 if (boundsJoinField.contains(x, y)) {
-                    if (codeValue.equals("ENTER PIN")) {
+                    if (codeValue.equals("Enter Pin")) {
                         setCodeValue("");
+                        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
+                        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+                        parameter.size = 80;
+                        parameter.color = new Color(0x022444ff);
+                        code = generator.generateFont(parameter);
+                        generator.dispose();
                     }
                     Gdx.input.setOnscreenKeyboardVisible(true);
                 } else {
@@ -162,7 +174,7 @@ public class JoinGameScreen extends Screen {
         sb.draw(enterButton, (float)(width * 0.2), (float)(height * 0.25), scaleWidth, scaleHeight);
         sb.draw(backButton, (float)(width * 0.05), (float)(height * 0.9), scaleButton, scaleButton);
         sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth, scaleLogo);
-        code.draw(sb, codeValue, (float)(width * 0.275), (float)(height * 0.465));
+        code.draw(sb, codeValue, (float)(width * 0.275), (float)(height * 0.47));
         sb.end();
     }
 
