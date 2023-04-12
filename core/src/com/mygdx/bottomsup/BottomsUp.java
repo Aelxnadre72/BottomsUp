@@ -30,7 +30,7 @@ public class BottomsUp extends Game {
 		gsm.update();
 		gsm.render(batch);
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();
