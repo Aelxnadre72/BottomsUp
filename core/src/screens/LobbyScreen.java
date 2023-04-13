@@ -33,8 +33,8 @@ public class LobbyScreen extends Screen {
         backgroundLower = new Texture("background2.png");
         exit = new Texture("cancelButton.png");
         boundsExitField = new Rectangle(
-                (float)(width * 0.03),
-                (float)(height * 0.07) - scaleExit,
+                (float)(width * 0.05),
+                (float)(height * 0.08) - scaleExit,
                 scaleExit, scaleExit);
         logo = new Texture("bottomsUpLogoNoText.png");
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
@@ -84,7 +84,7 @@ public class LobbyScreen extends Screen {
         sb.begin();
         sb.draw(backgroundUpper, 0, 0, width, height);
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.63));
-        sb.draw(exit, (float)(width * 0.03), (float)(height * 0.93), scaleExit, scaleExit);
+        sb.draw(exit, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
         sb.draw(logo, (float)(width * 0.3), (float)(height * 0.81), scaleWidth, scaleLogo);
         gamePinCode.draw(sb,
                 "Game pin: \n" + gameCode,

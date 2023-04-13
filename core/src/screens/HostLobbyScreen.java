@@ -34,8 +34,8 @@ public class HostLobbyScreen extends Screen {
         backgroundLower = new Texture("background2.png");
         exit = new Texture("cancelButton.png");
         boundsExitField = new Rectangle(
-                (float)(width * 0.03),
-                (float)(height * 0.07) - scaleExit,
+                (float)(width * 0.05),
+                (float)(height * 0.08) - scaleExit,
                 scaleExit,
                 scaleExit);
         logo = new Texture("bottomsUpLogoNoText.png");
@@ -109,22 +109,21 @@ public class HostLobbyScreen extends Screen {
         sb.begin();
         sb.draw(backgroundUpper, 0, 0, width, height);
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.54));
-        sb.draw(exit, (float)(width * 0.03), (float)(height * 0.93), scaleExit, scaleExit);
+        sb.draw(exit, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
         sb.draw(logo, (float)(width * 0.3), (float)(height * 0.81), scaleWidth, scaleLogo);
         gamePinCode.draw(sb,
                 "Game pin: \n" + gameCode,
                 (float)(width * 0.28),
                 (float)(height * 0.79));
-        // This is hidden behind the button
-        startGameText.draw(sb,
-                "Start game!",
-                (float)(width * 0.2),
-                (float)(height * 0.64));
         sb.draw(startGame,
                 (float)(width * 0.18),
                 (float)(height * 0.57),
                 (float)(width * 0.64),
                 (float)(height * 0.1));
+        startGameText.draw(sb,
+                "Start game!",
+                (float)(width * 0.21),
+                (float)(height * 0.64));
         playersJoinedText.draw(sb,
                 "Players joined:",
                 (float)(width * 0.16),
