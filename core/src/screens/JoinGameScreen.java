@@ -17,7 +17,7 @@ public class JoinGameScreen extends Screen {
     private float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
     private float scaleHeight = (float)(scaleWidth * 0.3);
     private float scaleLogo = (float)(scaleWidth * 0.9);
-    private float scaleButton = (float)(Gdx.graphics.getWidth() * 0.1);
+    private float scaleButton = (float)(Gdx.graphics.getWidth() * 0.08);
 
     private Texture enterButton;
     private Texture background;
@@ -25,6 +25,7 @@ public class JoinGameScreen extends Screen {
     private Texture backButton;
     private String codeValue = "Enter game pin";
     private BitmapFont code;
+    private BitmapFont enterGameText;
     private Texture joinField;
     private Rectangle boundsJoinField;
     private Rectangle boundsEnterButton;
@@ -32,7 +33,7 @@ public class JoinGameScreen extends Screen {
 
     public JoinGameScreen(GameScreenManager gsm) {
         super(gsm);
-        enterButton = new Texture("buttonJoinGame.png");
+        enterButton = new Texture("button.png");
         background = new Texture("background.png");
         logo = new Texture("bottomsUpLogo.png");
         backButton = new Texture("backButton.png");
@@ -51,6 +52,12 @@ public class JoinGameScreen extends Screen {
                                           scaleButton);
         Gdx.input.setOnscreenKeyboardVisible(false);
         setPinField(codeValue, 60, new Color(0x7999B6ff));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 80;
+        parameter.color = new Color(0x022444ff);
+        enterGameText = generator.generateFont(parameter);
+        generator.dispose();
 
         Gdx.input.setInputProcessor(new InputAdapter () {
             @Override
@@ -181,6 +188,7 @@ public class JoinGameScreen extends Screen {
         sb.draw(backButton, (float)(width * 0.05), (float)(height * 0.9), scaleButton, scaleButton);
         sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth, scaleLogo);
         code.draw(sb, codeValue, (float)(width * 0.275), (float)(height * 0.47));
+        enterGameText.draw(sb, "Enter game", (float)(width * 0.28), (float)(height * 0.32));
         sb.end();
     }
 
@@ -192,5 +200,6 @@ public class JoinGameScreen extends Screen {
         backButton.dispose();
         logo.dispose();
         code.dispose();
+        enterGameText.dispose();
     }
 }

@@ -1,14 +1,11 @@
 package screens;
 
-import static com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.DEFAULT_CHARS;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Rectangle;
 
 public class ResultScreen extends Screen {
 
@@ -31,7 +28,7 @@ public class ResultScreen extends Screen {
     public ResultScreen(GameScreenManager gsm) {
         super(gsm);
         backgroundUpper = new Texture("background.png");
-        backgroundLower = new Texture("DarkerBackground.png");
+        backgroundLower = new Texture("darkerBackground.png");
         logo = new Texture("bottomsUpLogoNoText.png");
         cancelButton = new Texture("cancelButton.png");
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));

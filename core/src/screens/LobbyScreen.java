@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class LobbyScreen extends Screen {
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
-    String gameCode = "123456";
+    String gameCode = "123";
 
     float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.4);
     float scaleHeight = (float)(scaleWidth * 0.3);
@@ -21,22 +21,19 @@ public class LobbyScreen extends Screen {
     private Texture exit;
     private Rectangle boundsExitField;
     private Texture logo;
-    private Texture gamePin;
-    private Texture playersJoined;
+
     private BitmapFont gamePinCode;
 
     public LobbyScreen(GameScreenManager gsm) {
         super(gsm);
         backgroundUpper = new Texture("background.png");
-        backgroundLower = new Texture("DarkerBackground.png");
+        backgroundLower = new Texture("darkerBackground.png");
         exit = new Texture("Exit.png");
         boundsExitField = new Rectangle(
                 (float)(width * 0.03),
                 (float)(height * 0.06) - scaleExit,
                 scaleExit, scaleExit);
         logo = new Texture("bottomsUpLogoNoText.png");
-        gamePin = new Texture("GamePin.png");
-        playersJoined = new Texture("PlayersJoined.png");
         gamePinCode = new BitmapFont();
         gamePinCode.getData().setScale(3, 3);
         gamePinCode.setColor(0, 0, 0, 1);
@@ -82,8 +79,6 @@ public class LobbyScreen extends Screen {
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.55));
         sb.draw(exit, (float)(width * 0.03), (float)(height * 0.94), scaleExit, scaleExit);
         sb.draw(logo, (float)(width * 0.3), (float)(height * 0.825), scaleWidth, scaleLogo);
-        sb.draw(gamePin, 0, (float)(height * 0.75), width, scaleHeight);
-        sb.draw(playersJoined, 0, (float)(height * 0.55), width, (float)(height * 0.1));
         gamePinCode.draw(sb,
                 gameCode,
                 (float)(width * 0.3),
@@ -97,7 +92,5 @@ public class LobbyScreen extends Screen {
         backgroundLower.dispose();
         exit.dispose();
         logo.dispose();
-        gamePin.dispose();
-        playersJoined.dispose();
     }
 }

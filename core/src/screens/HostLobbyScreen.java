@@ -21,16 +21,14 @@ public class HostLobbyScreen extends Screen {
     private Texture exit;
     private Rectangle boundsExitField;
     private Texture logo;
-    private Texture gamePin;
     private Texture startGame;
     private Rectangle boundStartGameButton;
-    private Texture playersJoined;
     private BitmapFont gamePinCode;
 
     public HostLobbyScreen(GameScreenManager gsm) {
         super(gsm);
         backgroundUpper = new Texture("background.png");
-        backgroundLower = new Texture("DarkerBackground.png");
+        backgroundLower = new Texture("darkerBackground.png");
         exit = new Texture("Exit.png");
         boundsExitField = new Rectangle(
                 (float)(width * 0.03),
@@ -38,14 +36,12 @@ public class HostLobbyScreen extends Screen {
                 scaleExit,
                 scaleExit);
         logo = new Texture("bottomsUpLogoNoText.png");
-        gamePin = new Texture("GamePin.png");
-        startGame = new Texture("buttonStartGame.png");
+        startGame = new Texture("button.png");
         boundStartGameButton = new Rectangle(
                 (float)(width * 0.2),
                 (float)(height * 0.42) - (float)(height * 0.1),
                 (float)(width * 0.6),
                 (float)(height * 0.1));
-        playersJoined = new Texture("PlayersJoined.png");
         gamePinCode = new BitmapFont();
         gamePinCode.getData().setScale(3, 3);
         gamePinCode.setColor(0, 0, 0, 1);
@@ -96,7 +92,6 @@ public class HostLobbyScreen extends Screen {
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.5));
         sb.draw(exit, (float)(width * 0.03), (float)(height * 0.94), scaleExit, scaleExit);
         sb.draw(logo, (float)(width * 0.3), (float)(height * 0.84), scaleWidth, scaleLogo);
-        sb.draw(gamePin, 0, (float)(height * 0.765), width, scaleHeight);
         gamePinCode.draw(sb,
                 gameCode,
                 (float)(width * 0.3),
@@ -106,7 +101,6 @@ public class HostLobbyScreen extends Screen {
                 (float)(height * 0.58),
                 (float)(width * 0.6),
                 (float)(height * 0.1));
-        sb.draw(playersJoined, 0, (float)(height * 0.475), width, (float)(height * 0.1));
         sb.end();
     }
 
@@ -116,9 +110,7 @@ public class HostLobbyScreen extends Screen {
         backgroundLower.dispose();
         exit.dispose();
         logo.dispose();
-        gamePin.dispose();
         startGame.dispose();
-        playersJoined.dispose();
     }
 }
 
