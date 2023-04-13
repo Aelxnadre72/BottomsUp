@@ -77,7 +77,7 @@ public class HostLobbyScreen extends Screen {
             }
             else if(boundStartGameButton.contains(x,y)){
                 //Add new game screen
-                gsm.set(new LobbyScreen(gsm));
+                gsm.set(new GameScreen(gsm));
                 dispose();
             }
         }
