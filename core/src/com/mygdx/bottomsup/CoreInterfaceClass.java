@@ -1,5 +1,5 @@
 package com.mygdx.bottomsup;
 
-public interface CoreInterfaceClass {
+public class CoreInterfaceClass {
 
 }

@@ -1,5 +1,5 @@
 package com.mygdx.bottomsup;
 
-public interface AndroidInterfaceClass {
-    
+public class AndroidInterfaceClass {
+
 }
