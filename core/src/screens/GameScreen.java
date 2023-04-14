@@ -29,10 +29,13 @@ public class GameScreen extends Screen {
 
     private BlockTower blockTower;
 
+    private long timeoutTime = System.currentTimeMillis();;
+
     private long startTime = System.currentTimeMillis();
 
     private long elapsedTime;
-    private long timeoutTime;
+
+    private long timeoutDuration = 3000;
 
     public GameScreen(GameScreenManager gsm) {
         super(gsm);
@@ -49,8 +52,6 @@ public class GameScreen extends Screen {
 
     @Override
     protected void handleInput() {
-        timeoutTime = System.currentTimeMillis();
-
         if (Gdx.input.justTouched()) {
             pointer.x = Gdx.input.getX();
             pointer.y = Gdx.input.getY();
@@ -60,40 +61,20 @@ public class GameScreen extends Screen {
 
             } else {
 
-                if (timeoutTime < startTime) {
+                if (timeoutTime < elapsedTime) {
 
                     if (boundsBtn1.contains(pointer.x, pointer.y)) {
                         //spørre til databasen med btn1 som info
-                        if (blockTower.checkNextBlock(1)) {  // sjekke om de matcher med ønsket knapp
-                            blockTower.popNextBlock();
-                            blockTower.getNextBlock();
-                        } else {
-                            timeoutTime = System.currentTimeMillis() + 3000;
-                        }
+                        checkPopTimeoutBlock(0);
 
                     } else if (boundsBtn2.contains(pointer.x, pointer.y)) {
-                        if (blockTower.checkNextBlock(2)) { // sjekke om de matcher med ønsket knapp
-                            blockTower.popNextBlock();
-                            blockTower.getNextBlock();
-                        } else {
-                            timeoutTime = System.currentTimeMillis() + 3000;
-                        }
+                        checkPopTimeoutBlock(1);
 
                     } else if (boundsBtn3.contains(pointer.x, pointer.y)) {
-                        if (blockTower.checkNextBlock(3)){ // sjekke om de matcher med ønsket knapp
-                            blockTower.popNextBlock();
-                            blockTower.getNextBlock();
-                        } else {
-                            timeoutTime = System.currentTimeMillis() + 3000;
-                        }
+                        checkPopTimeoutBlock(2);
 
                     } else if (boundsBtn4.contains(pointer.x, pointer.y)) {
-                        if (blockTower.checkNextBlock(4)) { // sjekke om de matcher med ønsket knapp
-                            blockTower.popNextBlock();
-                            blockTower.getNextBlock();
-                        } else {
-                            timeoutTime = System.currentTimeMillis() + 3000;
-                        }
+                        checkPopTimeoutBlock(3);
                     }
                 }
             }
@@ -101,13 +82,14 @@ public class GameScreen extends Screen {
     }
     @Override
     public void update() {
+        elapsedTime = System.currentTimeMillis() - startTime;
+        handleInput();
     }
 
 @Override
     public void render(SpriteBatch sb) {
 
         // vet ikke helt hvor den skal stå ennå men skal med et sted
-        elapsedTime = System.currentTimeMillis() - startTime;
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
@@ -162,5 +144,13 @@ public class GameScreen extends Screen {
     @Override
     public void dispose() {
 
+    }
+
+    private void checkPopTimeoutBlock(int blockNumber) {
+        if (blockTower.checkNextBlock(blockNumber)) { // sjekke om de matcher med ønsket knapp
+            blockTower.popNextBlock();
+        } else {
+            timeoutTime = System.currentTimeMillis() + timeoutDuration;
+        }
     }
 }
