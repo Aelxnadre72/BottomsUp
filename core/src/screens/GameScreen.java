@@ -37,6 +37,7 @@ public class GameScreen extends Screen {
 
     private long timeoutDuration = 3000;
 
+
     public GameScreen(GameScreenManager gsm) {
         super(gsm);
         background = new Texture("background.png");
@@ -44,6 +45,7 @@ public class GameScreen extends Screen {
         btn2 = new Texture("block1.png");
         btn3 = new Texture("block2.png");
         btn4 = new Texture("block3.png");
+
         mainView = new Texture("button.png");
         secondView = new Texture("button.png");
         thirdView = new Texture("button.png");
@@ -137,6 +139,16 @@ public class GameScreen extends Screen {
                 (float)(height * (heightScaleTop + heightScaleBot) + heightBtn),
                 widthPlayers,
                 heightPlayers);
+
+        // draw blocktower
+        sb.draw(btn1, (float)(widthMain/5), (float)(height/2.7),(float)(width * 0.25),
+                (float)(width * 0.25));
+        sb.draw(btn2, (float)(widthMain/5), (float)(height/2.10), (float)(width * 0.25),
+                (float)(width * 0.25));
+        sb.draw(btn3, (float)(widthMain/5), (float)(height/(1.70)), (float)(width * 0.25),
+                (float)(width * 0.25)) ;
+        sb.draw(btn4, (float)(widthMain/5), (float)(height/1.45), (float)(width * 0.25),
+                (float)(width * 0.25));
 
         sb.end();
     }
