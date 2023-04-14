@@ -12,19 +12,14 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new BottomsUp(), config);
+		initialize(new BottomsUp(new AndroidInterfaceClass()), config);
 		FirebaseDatabase database = FirebaseDatabase.getInstance();
-		DatabaseReference players = database.getReference("players");
+		DatabaseReference players = database.getReference("lobbies");
 		players.setValue("");
-		players.child("1");
-		players.child("1").child("name").setValue("Einar");
-		players.child("1").child("blockTower").setValue("1,2,1,4,1");
-		players.child("1").child("time").setValue("0");
-
-		players.child("2");
-		players.child("2").child("name").setValue("Jan Adrian");
-		players.child("2").child("blockTower").setValue("1,2,1,3,4");
-		players.child("2").child("time").setValue("0");
+		players.child("123");
+		players.child("123").child("1").child("name").setValue("Einar");
+		players.child("123").child("1").child("blockTower").setValue("1,2,1,4,1");
+		players.child("123").child("1").child("time").setValue("0");
 
 		DatabaseReference highscores = database.getReference("highscores");
 		highscores.setValue("");

@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import screens.GameScreenManager;
 import screens.MainMenuScreen;
-import screens.ResultScreen;
 
 
 public class BottomsUp extends Game {
@@ -14,8 +13,13 @@ public class BottomsUp extends Game {
 	public static final int WIDTH = 360;
 	public static final int HEIGHT = 800;
 	private GameScreenManager gsm;
+
+	FireBaseInterface FBIF;
 	SpriteBatch batch;
 
+	public BottomsUp(FireBaseInterface FBIF){
+		this.FBIF = FBIF;
+	}
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
