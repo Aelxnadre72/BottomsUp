@@ -130,9 +130,10 @@ public class GameScreen extends Screen {
 
         // standard sizes for player screens
         float widthMain = (float)(width * 0.6);
-        float heightMain = (float)(height * 0.55);
+        float heightMain = (float)(height * 0.58);
         float widthPlayers = (float)(width * 0.32);
         float heightPlayers = (float) (height * 0.21);
+        float widthMainBlock = (float)(width * 0.25);
 
         double heightScalePlayers = heightScaleBot + heightScaleTop;
 
@@ -173,14 +174,14 @@ public class GameScreen extends Screen {
             }
         }
 
-        sb.draw(getBlockTowerImage(bt.get(0)), (float)(widthMain/5), (float)(height/2.7),(float)(width * 0.25),
-                (float)(width * 0.25));
-        sb.draw(getBlockTowerImage(bt.get(1)), (float)(widthMain/5), (float)(height/2.7 + width * 0.25), (float)(width * 0.25),
-                (float)(width * 0.25));
-        sb.draw(getBlockTowerImage(bt.get(2)), (float)(widthMain/5), (float)(height/2.7 + width * 0.5), (float)(width * 0.25),
-                (float)(width * 0.25)) ;
-        sb.draw(getBlockTowerImage(bt.get(3)), (float)(widthMain/5), (float)(height/2.7 + width * 0.75), (float)(width * 0.25),
-                (float)(width * 0.25));
+        sb.draw(getBlockTowerImage(bt.get(0)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7), widthMainBlock,
+                widthMainBlock);
+        sb.draw(getBlockTowerImage(bt.get(1)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7 + width * 0.25), widthMainBlock,
+                widthMainBlock);
+        sb.draw(getBlockTowerImage(bt.get(2)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7 + width * 0.5), widthMainBlock,
+                widthMainBlock);
+        sb.draw(getBlockTowerImage(bt.get(3)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7 + width * 0.75), widthMainBlock,
+                widthMainBlock);
 
         sb.end();
     }
