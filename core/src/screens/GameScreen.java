@@ -24,10 +24,10 @@ public class GameScreen extends Screen {
     private Texture thirdView;
     private Texture fourthView;
 
-    private Rectangle boundsBtn0;
-    private Rectangle boundsBtn1;
-    private Rectangle boundsBtn2;
-    private Rectangle boundsBtn3;
+    private Texture boundsBtn0;
+    private Texture boundsBtn1;
+    private Texture boundsBtn2;
+    private Texture boundsBtn3;
 
     private BlockTower blockTower;
 
@@ -35,7 +35,8 @@ public class GameScreen extends Screen {
 
     private long startTime = System.currentTimeMillis();
 
-    private long elapsedTime;
+    // private long elapsedGameTime;
+    // For the leaderboard, in render: elapsedGameTime = System.currentTimeMillis() - startTime;
 
     private long timeoutDuration = 3000;
 
@@ -51,9 +52,20 @@ public class GameScreen extends Screen {
     private double heightScaleBot;
     private double widthScale;
 
+    // standard sizes for player screens
+    private float widthMain;
+    private float heightMain;
+    private float widthPlayers;
+    private float heightPlayers;
+    private float widthMainBlock;
+
+    private double heightScalePlayers;
+
 
     public GameScreen(GameScreenManager gsm) {
         super(gsm);
+        blockTower = new BlockTower(50);
+
         background = new Texture("background.png");
         btn0 = new Texture("block0.png");
         btn1 = new Texture("block1.png");
@@ -61,7 +73,10 @@ public class GameScreen extends Screen {
         btn3 = new Texture("block3.png");
         errorBlock = new Texture("errorBlock.png");
         invisibleBlock = new Texture("invisibleBlock.png");
-        blockTower = new BlockTower(50);
+        boundsBtn0 = new Texture("blockButton0.png");
+        boundsBtn1 = new Texture("blockButton1.png");
+        boundsBtn2 = new Texture("blockButton2.png");
+        boundsBtn3 = new Texture("blockButton3.png");
 
         mainView = new Texture("button.png");
         secondView = new Texture("button.png");
@@ -80,70 +95,59 @@ public class GameScreen extends Screen {
         heightScaleTop = 0.141;
         heightScaleBot = 0.01;
         widthScale = 0.02;
+
+        // standard sizes for player screens
+        widthMain = (float)(width * 0.6);
+        heightMain = (float)(height * 0.58);
+        widthPlayers = (float)(width * 0.32);
+        heightPlayers = (float) (height * 0.21);
+        widthMainBlock = (float)(width * 0.25);
+
+        heightScalePlayers = heightScaleBot + heightScaleTop;
     }
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.isTouched(0)) {
+        if (Gdx.input.justTouched()) {
             int pointerX = Gdx.input.getX(0);
             int pointerY = Gdx.input.getY(0);
-            System.out.println("abcde");
 
+            if (blockTower.getCurrentHeight() != 0 && timeoutTime < System.currentTimeMillis()) {
+                if (isBoundedByBtn(0, pointerX, pointerY)) {
+                    checkPopTimeoutBlock(0);
 
-            if (blockTower.getCopyOfCurrentList().isEmpty()) {
-                // stopp spillet
+                } else if (isBoundedByBtn(1, pointerX, pointerY)) {
+                    checkPopTimeoutBlock(1);
 
-            } else {
-                System.out.println("fghij");
+                } else if (isBoundedByBtn(2, pointerX, pointerY)) {
+                    checkPopTimeoutBlock(2);
 
+                } else if (isBoundedByBtn(3, pointerX, pointerY)) {
+                    checkPopTimeoutBlock(3);
+                }
 
-                //if (timeoutTime < elapsedTime) {
-
-                    if (isBoundedByBtn(0, pointerX, pointerY)) {
-                        System.out.println("test1");
-                        checkPopTimeoutBlock(0);
-
-                    } else if (isBoundedByBtn(1, pointerX, pointerY)) {
-                        checkPopTimeoutBlock(1);
-                        System.out.println("test2");
-
-                    } else if (isBoundedByBtn(2, pointerX, pointerY)) {
-                        checkPopTimeoutBlock(2);
-                        System.out.println("test3");
-
-                    } else if (isBoundedByBtn(3, pointerX, pointerY)) {
-                        checkPopTimeoutBlock(3);
-                        System.out.println("test4");
-                    }
-                //}
+                // if finished
+                if(blockTower.getCurrentHeight() == 0) {
+                    System.out.println("Finished");
+                }
             }
         }
     }
     @Override
     public void update() {
-        elapsedTime = System.currentTimeMillis() - startTime;
         handleInput();
     }
 
 @Override
     public void render(SpriteBatch sb) {
 
-        // standard sizes for player screens
-        float widthMain = (float)(width * 0.6);
-        float heightMain = (float)(height * 0.58);
-        float widthPlayers = (float)(width * 0.32);
-        float heightPlayers = (float) (height * 0.21);
-        float widthMainBlock = (float)(width * 0.25);
-
-        double heightScalePlayers = heightScaleBot + heightScaleTop;
-
         sb.begin();
         sb.draw(background, 0, 0, width, height);
         //sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth, scaleLogo);
-        sb.draw(btn0, (float)(width * widthScale),              (float)(height * heightScaleTop), widthBtn, heightBtn);
-        sb.draw(btn1, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleTop), widthBtn, heightBtn);
-        sb.draw(btn2, (float)(width * widthScale),              (float)(height * heightScaleBot), widthBtn, heightBtn);
-        sb.draw(btn3, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleBot), widthBtn, heightBtn);
+        sb.draw(boundsBtn0, (float)(width * widthScale),              (float)(height * heightScaleTop), widthBtn, heightBtn);
+        sb.draw(boundsBtn1, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleTop), widthBtn, heightBtn);
+        sb.draw(boundsBtn2, (float)(width * widthScale),              (float)(height * heightScaleBot), widthBtn, heightBtn);
+        sb.draw(boundsBtn3, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleBot), widthBtn, heightBtn);
 
         sb.draw(mainView,
                 (float)(width * widthScale),
@@ -168,9 +172,10 @@ public class GameScreen extends Screen {
 
         // draw blocktower
         List<Integer> bt = blockTower.getCopyOfCurrentList();
+        // replaces the last block images with an invisible block when there is less than 4 blocks left
         if(blockTower.getCurrentHeight() <= 3) {
             for (int j = 0; j < 4-blockTower.getCurrentHeight(); j++) {
-                bt.add(4); // when the number 4 is read, and invisible block will render instead
+                bt.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
             }
         }
 
