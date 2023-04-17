@@ -25,21 +25,7 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new BottomsUp(new AndroidInterfaceClass()), config);
 		database = FirebaseDatabase.getInstance().getReference();
-
-		//DatabaseReference players = database.getReference("lobbies");
-		//players.setValue("");
-
-		//players.child("1");
-		//players.child("1").child("1").child("name").setValue("Einar 2");
-		//players.child("1").child("1").child("blockTower").setValue("1,2,1,4,1");
-		//players.child("1").child("1").child("time").setValue("0");
-
-		//DatabaseReference highscores = database.getReference("highscores");
-		//highscores.setValue("");
-		//highscores.child("16473").child("name").setValue("Einar 2");
-
-		//joinLobby("1", "Hang Celin", "3,2,4,1");
-
+		
 		//hostLobby("Martine", "1,2,3,1,2");
 		//hostLobby("", "Elise11", "4,4,4,1,2");
 		//joinLobby("11", "Hang Celin", "3,2,4,1");
