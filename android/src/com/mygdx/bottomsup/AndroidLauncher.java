@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AndroidLauncher extends AndroidApplication implements FireBaseInterface {
 
-	String lobbyCode;
+	private String lobbyCode;
 	private DatabaseReference database;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -45,28 +45,31 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 		//hostLobby("Martine", "1,2,3,1,2");
 		hostLobby("123", "Elise", "4,4,4,1,2");
 		joinLobby("123", "Hang Celin", "3,2,4,1");
-		joinLobby("123", "H", "1,2,3,4");
+		joinLobby("123", "Jan Adrian", "1,2,3,4");
 		//joinLobby("12", "Emma", "1,3,3,3");
 		//hitBlock("1", "1,1,1,1");
 	}
 
 	@Override
 	public String hostLobby(String code, String name, String blockTower) {
-		final long[] id = new long[1];
-		database.child("lobbies").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
+
+		final long[] lobbyId = new long[1];
+		database.child("lobbies").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 			@Override
 			public void onComplete(@NonNull Task<DataSnapshot> task) {
 				if (!task.isSuccessful()) {
 					Log.e("firebase", "Error getting data", task.getException());
 				}
 				else {
-					id[0] = Long.parseLong(String.valueOf(task.getResult().getChildrenCount()));
+					lobbyId[0] = Long.parseLong(String.valueOf(task.getResult().getChildrenCount()));
 				}
-				database.child("lobbies").child(code).child(String.valueOf(id[0]+1)).child("name").setValue(name);
-				database.child("lobbies").child(code).child(String.valueOf(id[0]+1)).child("blockTower").setValue(blockTower);
+				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1");
+				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1").child("name").setValue(name);
+				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1").child("blockTower").setValue(blockTower);
 			}
 		});
+
 		return "true";
 	}
 
@@ -93,6 +96,8 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 
 	@Override
 	public void endGame() {
+
+		database.child("lobbies").child(lobbyCode).removeValue();
 
 	}
 
