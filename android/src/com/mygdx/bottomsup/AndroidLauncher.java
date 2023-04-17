@@ -26,8 +26,6 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 		initialize(new BottomsUp(new AndroidInterfaceClass()), config);
 		database = FirebaseDatabase.getInstance().getReference();
 
-
-
 		//DatabaseReference players = database.getReference("lobbies");
 		//players.setValue("");
 
@@ -43,17 +41,15 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 		//joinLobby("1", "Hang Celin", "3,2,4,1");
 
 		//hostLobby("Martine", "1,2,3,1,2");
-		hostLobby("123", "Elise", "4,4,4,1,2");
-		joinLobby("123", "Hang Celin", "3,2,4,1");
-		joinLobby("123", "Jan Adrian", "1,2,3,4");
+		//hostLobby("", "Elise11", "4,4,4,1,2");
+		//joinLobby("11", "Hang Celin", "3,2,4,1");
+		//joinLobby("14", "Jan Adrian8", "1,2,3,4");
 		//joinLobby("12", "Emma", "1,3,3,3");
 		//hitBlock("1", "1,1,1,1");
 	}
 
 	@Override
 	public String hostLobby(String code, String name, String blockTower) {
-
-
 		final long[] lobbyId = new long[1];
 		database.child("lobbies").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 			@Override
@@ -62,15 +58,15 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 					Log.e("firebase", "Error getting data", task.getException());
 				}
 				else {
-					lobbyId[0] = Long.parseLong(String.valueOf(task.getResult().getChildrenCount()));
+					lobbyId[0] = task.getResult().getChildrenCount();
 				}
 				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1");
 				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1").child("name").setValue(name);
 				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1").child("blockTower").setValue(blockTower);
 			}
 		});
-
-		return "true";
+		lobbyCode = String.valueOf(lobbyId[0]);
+		return String.valueOf(lobbyId[0]);
 	}
 
 	@Override
@@ -91,6 +87,7 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 				}
 			}
 		});
+		lobbyCode = code;
 		return Integer.parseInt(code);
 	}
 
