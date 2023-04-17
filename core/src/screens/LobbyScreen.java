@@ -1,16 +1,18 @@
 package screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
 // LobbyScreen for the players, not the host
 public class LobbyScreen extends Screen {
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
-    String gameCode = "123456";
+    String gameCode = "123";
 
     float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.4);
     float scaleHeight = (float)(scaleWidth * 0.3);
@@ -21,25 +23,27 @@ public class LobbyScreen extends Screen {
     private Texture exit;
     private Rectangle boundsExitField;
     private Texture logo;
-    private Texture gamePin;
-    private Texture playersJoined;
+
     private BitmapFont gamePinCode;
+    private BitmapFont playersJoinedText;
 
     public LobbyScreen(GameScreenManager gsm) {
         super(gsm);
         backgroundUpper = new Texture("background.png");
-        backgroundLower = new Texture("DarkerBackground.png");
-        exit = new Texture("Exit.png");
+        backgroundLower = new Texture("background2.png");
+        exit = new Texture("cancelButton.png");
         boundsExitField = new Rectangle(
-                (float)(width * 0.03),
-                (float)(height * 0.06) - scaleExit,
+                (float)(width * 0.05),
+                (float)(height * 0.08) - scaleExit,
                 scaleExit, scaleExit);
         logo = new Texture("bottomsUpLogoNoText.png");
-        gamePin = new Texture("GamePin.png");
-        playersJoined = new Texture("PlayersJoined.png");
-        gamePinCode = new BitmapFont();
-        gamePinCode.getData().setScale(3, 3);
-        gamePinCode.setColor(0, 0, 0, 1);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 100;
+        parameter.color = new Color(0x022444ff);
+        gamePinCode = generator.generateFont(parameter);
+        playersJoinedText = generator.generateFont(parameter);
+        generator.dispose();
     }
 
     @Override
@@ -79,15 +83,17 @@ public class LobbyScreen extends Screen {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(backgroundUpper, 0, 0, width, height);
-        sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.55));
-        sb.draw(exit, (float)(width * 0.03), (float)(height * 0.94), scaleExit, scaleExit);
-        sb.draw(logo, (float)(width * 0.3), (float)(height * 0.825), scaleWidth, scaleLogo);
-        sb.draw(gamePin, 0, (float)(height * 0.75), width, scaleHeight);
-        sb.draw(playersJoined, 0, (float)(height * 0.55), width, (float)(height * 0.1));
+        sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.63));
+        sb.draw(exit, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
+        sb.draw(logo, (float)(width * 0.3), (float)(height * 0.81), scaleWidth, scaleLogo);
         gamePinCode.draw(sb,
-                gameCode,
-                (float)(width * 0.3),
-                (float)(height * 0.725));
+                "Game pin: \n" + gameCode,
+                (float)(width * 0.28),
+                (float)(height * 0.79));
+        playersJoinedText.draw(sb,
+                "Players joined:",
+                (float)(width * 0.16),
+                (float)(height * 0.6));
         sb.end();
     }
 
@@ -97,7 +103,5 @@ public class LobbyScreen extends Screen {
         backgroundLower.dispose();
         exit.dispose();
         logo.dispose();
-        gamePin.dispose();
-        playersJoined.dispose();
     }
 }
