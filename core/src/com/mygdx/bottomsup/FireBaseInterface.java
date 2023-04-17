@@ -6,8 +6,8 @@ public interface FireBaseInterface {
     public String hostLobby(String code, String name, String blockTower);
     public int joinLobby(String code, String name, String blockTower);
     public void endGame();
-    public void hitBlock(String id, String blockTower);
-    public List<String> updateBlockTowers();
+    public void updateBlockTower(String id, String blockTower);
+    public List<String> updateOthers();
 
     public List<String> getResults();
 

@@ -43,11 +43,12 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 		//joinLobby("1", "Hang Celin", "3,2,4,1");
 
 		//hostLobby("Martine", "1,2,3,1,2");
-		hostLobby("123", "Elise", "4,4,4,1,2");
-		joinLobby("123", "Hang Celin", "3,2,4,1");
-		joinLobby("123", "Jan Adrian", "1,2,3,4");
+		//hostLobby("123", "Elise", "4,4,4,1,2");
+		//joinLobby("123", "Hang Celin", "3,2,4,1");
+		//joinLobby("123", "Jan Adrian", "1,2,3,4");
 		//joinLobby("12", "Emma", "1,3,3,3");
 		//hitBlock("1", "1,1,1,1");
+		endGame();
 	}
 
 	@Override
@@ -97,17 +98,34 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 	@Override
 	public void endGame() {
 
-		database.child("lobbies").child(lobbyCode).removeValue();
+		database.child("lobbies").child(lobbyCode).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+			final long[] id = new long[1];
+			@Override
+			public void onComplete(@NonNull Task<DataSnapshot> task) {
+				if (!task.isSuccessful()) {
+					Log.e("firebase", "Error getting data", task.getException());
+				}
+				else {
+					id[0] = task.getResult().getChildrenCount();
+					if (id[0] == 1000) {
+						database.child("lobbies").removeValue();
+						return;
+					}
+					for(int i = 1; i <= id[0]; i++) {
+						database.child("lobbies").child(lobbyCode).child(String.valueOf(i)).setValue("");
+					}
+				}
+			}
+		});
+	}
+
+	@Override
+	public void updateBlockTower(String id, String blockTower) {
 
 	}
 
 	@Override
-	public void hitBlock(String id, String blockTower) {
-
-	}
-
-	@Override
-	public List<String> updateBlockTowers() {
+	public List<String> updateOthers() {
 
 		return null;
 	}

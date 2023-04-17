@@ -20,13 +20,13 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public void hitBlock(String id, String blockTower) {
-        aL.hitBlock(id, blockTower);
+    public void updateBlockTower(String id, String blockTower) {
+        aL.updateBlockTower(id, blockTower);
     }
 
     @Override
-    public List<String> updateBlockTowers() {
-        return aL.updateBlockTowers();
+    public List<String> updateOthers() {
+        return aL.updateOthers();
     }
 
     @Override
