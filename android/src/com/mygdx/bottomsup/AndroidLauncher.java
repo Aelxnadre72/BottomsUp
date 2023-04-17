@@ -15,6 +15,5 @@ public class AndroidLauncher extends AndroidApplication {
 		initialize(new BottomsUp(), config);
 		FirebaseDatabase database = FirebaseDatabase.getInstance();
 		DatabaseReference myRef = database.getReference("message");
-		myRef.setValue("Hello, World!");
 	}
 }
