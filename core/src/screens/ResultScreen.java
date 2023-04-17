@@ -1,7 +1,5 @@
 package screens;
 
-import static com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.DEFAULT_CHARS;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,11 +15,12 @@ public class ResultScreen extends Screen {
 
     float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
     float scaleLogo = (float)(scaleWidth * 0.9);
-    private float scaleButton = (float)(Gdx.graphics.getWidth() * 0.1);
+    private float scaleExit = (float)(Gdx.graphics.getWidth() * 0.1);
     private Texture backgroundUpper;
     private Texture backgroundLower;
     private Texture logo;
     private Texture cancelButton;
+    private Rectangle boundsExitField;
     private BitmapFont resultText;
     private BitmapFont first;
     private BitmapFont second;
@@ -29,11 +28,17 @@ public class ResultScreen extends Screen {
     private BitmapFont fourth;
 
     public ResultScreen(GameScreenManager gsm) {
+
         super(gsm);
         backgroundUpper = new Texture("background.png");
-        backgroundLower = new Texture("DarkerBackground.png");
+        backgroundLower = new Texture("darkerBackground.png");
         logo = new Texture("bottomsUpLogoNoText.png");
         cancelButton = new Texture("cancelButton.png");
+        boundsExitField = new Rectangle(
+                (float)(width * 0.05),
+                (float)(height * 0.08) - scaleExit,
+                scaleExit,
+                scaleExit);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 164;
@@ -55,12 +60,19 @@ public class ResultScreen extends Screen {
 
     @Override
     protected void handleInput() {
-
+        if (Gdx.input.justTouched()) {
+            int x = Gdx.input.getX();
+            int y = Gdx.input.getY();
+            if (boundsExitField.contains(x, y)) {
+                gsm.set(new MainMenuScreen(gsm));
+                dispose();
+            }
+        }
     }
 
     @Override
     public void update() {
-
+        handleInput();
     }
 
     @Override
@@ -68,8 +80,8 @@ public class ResultScreen extends Screen {
         sb.begin();
         sb.draw(backgroundUpper, 0, 0, width, height);
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.55));
-        sb.draw(logo, (float)(width * 0.2), (float)(height * 0.65), scaleWidth, scaleLogo);
-        sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.9), scaleButton, scaleButton);
+        sb.draw(logo, (float)(width * 0.2), (float)(height * 0.67), scaleWidth, scaleLogo);
+        sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
         resultText.draw(sb, "Results!", (float)(width * 0.19), (float)(height * 0.65));
         first.draw(sb, "1.", (float)(width * 0.05), (float)(height * 0.5));
         second.draw(sb, "2.", (float)(width * 0.05), (float)(height * 0.37));
@@ -80,6 +92,9 @@ public class ResultScreen extends Screen {
 
     @Override
     public void dispose() {
-
+        backgroundUpper.dispose();
+        backgroundLower.dispose();
+        logo.dispose();
+        cancelButton.dispose();
     }
 }

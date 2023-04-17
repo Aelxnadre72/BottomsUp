@@ -25,14 +25,6 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new BottomsUp(new AndroidInterfaceClass()), config);
 		database = FirebaseDatabase.getInstance().getReference();
-
-		//hostLobby("Martine", "1,2,3,1,2");
-		//hostLobby("123", "Elise", "4,4,4,1,2");
-		//joinLobby("123", "Hang Celin", "3,2,4,1");
-		//joinLobby("123", "Jan Adrian", "1,2,3,4");
-		//hostLobby("", "Elise11", "4,4,4,1,2");
-		//joinLobby("11", "Hang Celin", "3,2,4,1");
-		//joinLobby("14", "Jan Adrian8", "1,2,3,4");
 	}
 
 	@Override
@@ -122,6 +114,5 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 
 	@Override
 	public void updateHighscore(String time) {
-
 	}
 }
