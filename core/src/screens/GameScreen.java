@@ -62,6 +62,11 @@ public class GameScreen extends Screen {
     private float widthMainBlock;
 
     private double heightScalePlayers;
+    private Texture cancelButton;
+
+    private Rectangle boundsExitField;
+
+    private float scaleExit = (float)(Gdx.graphics.getWidth() * 0.1);
 
 
     public GameScreen(GameScreenManager gsm) {
@@ -76,6 +81,7 @@ public class GameScreen extends Screen {
         errorBlock = new Texture("errorBlock.png");
         invisibleBlock = new Texture("invisibleBlock.png");
         timeoutSplash = new Texture("splash.png");
+        cancelButton = new Texture("cancelButton.png");
 
         boundsBtn0 = new Texture("blockButton0.png");
         boundsBtn1 = new Texture("blockButton1.png");
@@ -108,6 +114,12 @@ public class GameScreen extends Screen {
         widthMainBlock = (float)(width * 0.25);
 
         heightScalePlayers = heightScaleBot + heightScaleTop;
+
+        boundsExitField = new Rectangle(
+                (float)(width * 0.05),
+                (float)(height * 0.08) - scaleExit,
+                scaleExit,
+                scaleExit);
     }
 
     @Override
@@ -135,6 +147,11 @@ public class GameScreen extends Screen {
                     System.out.println("Finished");
                 }
             }
+
+            if (boundsExitField.contains(pointerX, pointerY)) {
+                gsm.set(new MainMenuScreen(gsm));
+                dispose();
+            }
         }
     }
     @Override
@@ -152,6 +169,8 @@ public class GameScreen extends Screen {
         sb.draw(boundsBtn1, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleTop), widthBtn, heightBtn);
         sb.draw(boundsBtn2, (float)(width * widthScale),              (float)(height * heightScaleBot), widthBtn, heightBtn);
         sb.draw(boundsBtn3, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleBot), widthBtn, heightBtn);
+
+        sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
 
         sb.draw(mainView,
                 (float)(width * widthScale),
