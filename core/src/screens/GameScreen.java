@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 
 
 import java.util.List;
@@ -15,8 +15,6 @@ import components.BlockTower;
 public class GameScreen extends Screen {
     private Texture background;
     private Texture background2;
-    private Texture backgroundWhite;
-    private Texture backgroundWhite2;
     private Texture btn0;
     private Texture btn1;
     private Texture btn2;
@@ -61,15 +59,6 @@ public class GameScreen extends Screen {
     private float widthAvatar;
     private float heightAvatar;
 
-    private float widthNameTag1;
-    private float heightNametag1;
-    private float widthNameTag2;
-    private float heightNametag2;
-    private float widthNameTag3;
-    private float heightNametag3;
-    private float widthNameTag4;
-    private float heightNametag4;
-
     // Scales for width and height for the different buttons and screen
     private double heightScaleTop;
     private double heightScaleBot;
@@ -91,7 +80,6 @@ public class GameScreen extends Screen {
 
     public GameScreen(GameScreenManager gsm) {
         super(gsm);
-        ShapeRenderer sr = new ShapeRenderer();
         blockTower = new BlockTower(50);
 
         background = new Texture("background.png");
@@ -227,7 +215,8 @@ public class GameScreen extends Screen {
                     widthMainBlock);
             sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
                     widthMainBlock);
-            // avatar and nametags drawn in both if and else since it needs to be behind the splat,
+
+            // avatar and name tags are drawn in both if and else since it needs to be behind the splat,
             // but in front of the blocks
             sb.draw(avatar, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
                     widthAvatar, heightAvatar);
@@ -260,7 +249,6 @@ public class GameScreen extends Screen {
             sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47 + width * 0.75), widthMainBlock,
                     widthMainBlock);
         }
-
         sb.end();
     }
 
