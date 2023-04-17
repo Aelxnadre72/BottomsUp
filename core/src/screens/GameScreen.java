@@ -183,17 +183,27 @@ public class GameScreen extends Screen {
             }
         }
 
-        sb.draw(getBlockTowerImage(bt.get(0)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7), widthMainBlock,
-                widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(1)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7 + width * 0.25), widthMainBlock,
-                widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(2)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7 + width * 0.5), widthMainBlock,
-                widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(3)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7 + width * 0.75), widthMainBlock,
-                widthMainBlock);
-
-        if(timeoutTime > System.currentTimeMillis()) {
+        if(timeoutTime < System.currentTimeMillis()) {
+            sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 2 - widthMainBlock * 0.42), (float) (height / 2.7), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 2 - widthMainBlock * 0.42), (float) (height / 2.7 + width * 0.25), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 2 - widthMainBlock * 0.42), (float) (height / 2.7 + width * 0.5), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 2 - widthMainBlock * 0.42), (float) (height / 2.7 + width * 0.75), widthMainBlock,
+                    widthMainBlock);
+        }
+        else {
             sb.draw(timeoutSplash,0,0, width, height);
+            // makes the tower invisible while there is a timeout/splash
+            sb.draw(invisibleBlock, (float) (widthMain / 2 - widthMainBlock * 0.42), (float) (height / 2.7), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(invisibleBlock, (float) (widthMain / 2 - widthMainBlock * 0.42), (float) (height / 2.7 + width * 0.25), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(invisibleBlock, (float) (widthMain / 2 - widthMainBlock * 0.42), (float) (height / 2.7 + width * 0.5), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(invisibleBlock, (float) (widthMain / 2 - widthMainBlock * 0.42), (float) (height / 2.7 + width * 0.75), widthMainBlock,
+                    widthMainBlock);
         }
 
         sb.end();
