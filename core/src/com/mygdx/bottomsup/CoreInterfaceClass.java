@@ -19,12 +19,12 @@ public class CoreInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public void hitBlock(String id, String blockTower) {
+    public void updateBlockTower(String id, String blockTower) {
 
     }
 
     @Override
-    public List<String> updateBlockTowers() {
+    public List<String> updateOthers() {
         return null;
     }
 
