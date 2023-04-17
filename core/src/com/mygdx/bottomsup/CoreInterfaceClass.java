@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CoreInterfaceClass implements FireBaseInterface{
     @Override
-    public String hostLobby(String name, String blockTower) {
+    public String hostLobby(String code, String name, String blockTower) {
         return null;
     }
 

@@ -2,14 +2,11 @@ package com.mygdx.bottomsup;
 
 import java.util.List;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 public class AndroidInterfaceClass implements FireBaseInterface{
     AndroidLauncher aL = new AndroidLauncher();
     @Override
-    public String hostLobby(String name, String blockTower) {
-        return aL.hostLobby(name, blockTower);
+    public String hostLobby(String code, String name, String blockTower) {
+        return aL.hostLobby(code, name, blockTower);
     }
 
     @Override
