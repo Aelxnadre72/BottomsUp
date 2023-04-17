@@ -102,7 +102,7 @@ public class GameScreen extends Screen {
 
         // standard sizes for player screens
         widthMain = (float)(width * 0.6);
-        heightMain = (float)(height * 0.58);
+        heightMain = (float) (height * 0.62);
         widthPlayers = (float)(width * 0.32);
         heightPlayers = (float) (height * 0.21);
         widthMainBlock = (float)(width * 0.25);
