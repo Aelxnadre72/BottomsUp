@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.bottomsup.FireBaseInterface;
 
 // LobbyScreen for the players, not the host
 public class LobbyScreen extends Screen {
@@ -24,6 +25,8 @@ public class LobbyScreen extends Screen {
     private Texture gamePin;
     private Texture playersJoined;
     private BitmapFont gamePinCode;
+
+    private FireBaseInterface FBIF;
 
     public LobbyScreen(GameScreenManager gsm) {
         super(gsm);

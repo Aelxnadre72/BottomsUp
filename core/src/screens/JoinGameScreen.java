@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.bottomsup.FireBaseInterface;
 
 public class JoinGameScreen extends Screen {
     private float width = Gdx.graphics.getWidth();
@@ -18,6 +19,8 @@ public class JoinGameScreen extends Screen {
     private float scaleHeight = (float)(scaleWidth * 0.3);
     private float scaleLogo = (float)(scaleWidth * 0.9);
     private float scaleButton = (float)(Gdx.graphics.getWidth() * 0.1);
+
+    private FireBaseInterface FBIF;
 
     private Texture enterButton;
     private Texture background;
@@ -154,10 +157,14 @@ public class JoinGameScreen extends Screen {
         if (Gdx.input.justTouched()) {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
-            if (boundsEnterButton.contains(x, y) && getCodeValue().equals("123")) {
-                //Add server logic to find lobby
-                gsm.set(new LobbyScreen(gsm));
-                dispose();
+            if (boundsEnterButton.contains(x, y)) {
+                int success = FBIF.joinLobby(codeValue, "Aleks", "1,2,3");
+                if (success == 1) {
+                    gsm.set(new LobbyScreen(gsm));
+                    dispose();
+                } else {
+                    //Set a field to display error msg
+                }
             }
             else if (boundsBackButton.contains(x, y)) {
                 gsm.set(new MainMenuScreen(gsm));

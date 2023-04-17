@@ -59,23 +59,25 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 	@Override
 	public int joinLobby(String code, String name, String blockTower) {
 		final long[] id = new long[1];
+		final int[] success = new int[1];
 		database.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
 			@Override
 			public void onComplete(@NonNull Task<DataSnapshot> task) {
 				if (!task.isSuccessful()) {
 					Log.e("firebase", "Error getting data", task.getException());
+					success[0] = 0;
 				}
 				else {
 					id[0] = Long.parseLong(String.valueOf(task.getResult().getChildrenCount()));
 					Log.d("players before joining", String.valueOf(task.getResult().getChildrenCount()));
 					database.child("lobbies").child(code).child(String.valueOf(id[0]+1)).child("name").setValue(name);
 					database.child("lobbies").child(code).child(String.valueOf(id[0]+1)).child("blockTower").setValue(blockTower);
+					success[0] = 1;
 				}
 			}
 		});
-		lobbyCode = code;
-		return Integer.parseInt(code);
+		return success[0];
 	}
 
 	@Override
