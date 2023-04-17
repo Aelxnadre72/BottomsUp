@@ -31,7 +31,9 @@ public class GameScreen extends Screen {
 
     private BlockTower blockTower;
 
-    private long timeoutTime = System.currentTimeMillis();;
+    private Texture timeoutSplash;
+
+    private long timeoutTime = 0;
 
     private long startTime = System.currentTimeMillis();
 
@@ -73,6 +75,8 @@ public class GameScreen extends Screen {
         btn3 = new Texture("block3.png");
         errorBlock = new Texture("errorBlock.png");
         invisibleBlock = new Texture("invisibleBlock.png");
+        timeoutSplash = new Texture("splash.png");
+
         boundsBtn0 = new Texture("blockButton0.png");
         boundsBtn1 = new Texture("blockButton1.png");
         boundsBtn2 = new Texture("blockButton2.png");
@@ -187,6 +191,10 @@ public class GameScreen extends Screen {
                 widthMainBlock);
         sb.draw(getBlockTowerImage(bt.get(3)), (float)(widthMain/2 - widthMainBlock * 0.42), (float)(height/2.7 + width * 0.75), widthMainBlock,
                 widthMainBlock);
+
+        if(timeoutTime > System.currentTimeMillis()) {
+            sb.draw(timeoutSplash,0,0, width, height);
+        }
 
         sb.end();
     }
