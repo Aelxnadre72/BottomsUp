@@ -55,7 +55,7 @@ public class MainMenuScreen extends Screen {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsHostButton.contains(x, y)) {
-                gsm.set(new HostLobbyScreen(gsm));
+                gsm.set(new HostGameScreen(gsm));
                 dispose();
             } else if (boundsJoinButton.contains(x, y)) {
                 gsm.set(new JoinGameScreen(gsm));
