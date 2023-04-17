@@ -240,6 +240,7 @@ public class GameScreen extends Screen {
         thirdView.dispose();
         fourthView.dispose();
         invisibleBlock.dispose();
+        cancelButton.dispose();
     }
 
     private void checkPopTimeoutBlock(int blockNumber) {
