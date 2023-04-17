@@ -18,14 +18,14 @@ import java.util.List;
 public class AndroidLauncher extends AndroidApplication implements FireBaseInterface {
 
 	private String lobbyCode;
-	private DatabaseReference database;
+	private static DatabaseReference database;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new BottomsUp(new AndroidInterfaceClass()), config);
 		database = FirebaseDatabase.getInstance().getReference();
-		
+
 		//hostLobby("Martine", "1,2,3,1,2");
 		//hostLobby("123", "Elise", "4,4,4,1,2");
 		//joinLobby("123", "Hang Celin", "3,2,4,1");

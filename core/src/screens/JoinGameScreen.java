@@ -1,5 +1,7 @@
 package screens;
 
+import static com.mygdx.bottomsup.BottomsUp.FBIF;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -10,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.bottomsup.FireBaseInterface;
 
 public class JoinGameScreen extends Screen {
     private float width = Gdx.graphics.getWidth();
@@ -20,7 +21,6 @@ public class JoinGameScreen extends Screen {
     private float scaleLogo = (float)(scaleWidth * 0.9);
     private float scaleButton = (float)(Gdx.graphics.getWidth() * 0.1);
 
-    private FireBaseInterface FBIF;
 
     private Texture enterButton;
     private Texture background;

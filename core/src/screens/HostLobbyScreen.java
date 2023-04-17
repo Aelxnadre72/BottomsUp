@@ -2,8 +2,8 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 // LobbyScreen for the host, not the players
@@ -26,6 +26,7 @@ public class HostLobbyScreen extends Screen {
     private Rectangle boundStartGameButton;
     private Texture playersJoined;
     private BitmapFont gamePinCode;
+
 
     public HostLobbyScreen(GameScreenManager gsm) {
         super(gsm);

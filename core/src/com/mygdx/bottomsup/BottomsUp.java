@@ -14,7 +14,7 @@ public class BottomsUp extends Game {
 	public static final int HEIGHT = 800;
 	private GameScreenManager gsm;
 
-	FireBaseInterface FBIF;
+	public static FireBaseInterface FBIF;
 	SpriteBatch batch;
 
 	public BottomsUp(FireBaseInterface FBIF){

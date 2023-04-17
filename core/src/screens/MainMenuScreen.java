@@ -1,5 +1,7 @@
 package screens;
 
+import static com.mygdx.bottomsup.BottomsUp.FBIF;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,6 +36,7 @@ public class MainMenuScreen extends Screen {
                                          (float)(height * 0.75) - scaleHeight,
                                          scaleWidth,
                                          scaleHeight);
+
     }
 
     @Override
@@ -45,6 +48,8 @@ public class MainMenuScreen extends Screen {
                 gsm.set(new HostLobbyScreen(gsm));
                 dispose();
             } else if (boundsJoinButton.contains(x, y)) {
+                //FBIF.hostLobby("123", "Aleks", "1,2,3,4,5");
+                FBIF.joinLobby("2", "Aleks", "1,2,3,4,5");
                 gsm.set(new JoinGameScreen(gsm));
                 dispose();
             }
