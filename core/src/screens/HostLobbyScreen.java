@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class HostLobbyScreen extends Screen {
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
-    String gameCode = "123";
+    String lobbyCode;
     float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.4);
     float scaleHeight = (float)(scaleWidth * 0.3);
     float scaleLogo = (float)(scaleWidth * 0.8);
@@ -29,8 +29,9 @@ public class HostLobbyScreen extends Screen {
     private BitmapFont playersJoinedText;
 
 
-    public HostLobbyScreen(GameScreenManager gsm) {
+    public HostLobbyScreen(GameScreenManager gsm, String lobbyCode) {
         super(gsm);
+        this.lobbyCode = lobbyCode;
         backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("background2.png");
         exit = new Texture("cancelButton.png");
@@ -89,17 +90,6 @@ public class HostLobbyScreen extends Screen {
         handleInput();
     }
 
-
-    // Getter for the game code
-    public String getGameCode(){
-        return gameCode;
-    }
-
-    // Setter for the game code (unsure if needed)
-    public void setGameCode(String gameCode){
-        this.gameCode = gameCode;
-    }
-
     // Function which will get the players from the database and add them to the page
     public String getPlayers(){
         return "DUMMY VALUE";
@@ -113,7 +103,7 @@ public class HostLobbyScreen extends Screen {
         sb.draw(exit, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
         sb.draw(logo, (float)(width * 0.3), (float)(height * 0.81), scaleWidth, scaleLogo);
         gamePinCode.draw(sb,
-                "Game pin: \n" + gameCode,
+                "Game pin: \n" + lobbyCode,
                 (float)(width * 0.28),
                 (float)(height * 0.79));
         sb.draw(startGame,

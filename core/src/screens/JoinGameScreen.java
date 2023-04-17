@@ -411,9 +411,9 @@ private char focus;
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsEnterButton.contains(x, y)) {
-                int success = FBIF.joinLobby(codeValue, "Aleks", "1,2,3");
-                if (success == 1) {
-                    gsm.set(new LobbyScreen(gsm));
+                String code = FBIF.joinLobby(codeValue, nameValue, "");
+                if (!code.isEmpty()) {
+                    gsm.set(new LobbyScreen(gsm, code));
                     dispose();
                 } else {
                     //Set a field to display error msg

@@ -3,17 +3,15 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.bottomsup.FireBaseInterface;
 
 // LobbyScreen for the players, not the host
 public class LobbyScreen extends Screen {
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
-    String gameCode = "123";
 
     float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.4);
     float scaleHeight = (float)(scaleWidth * 0.3);
@@ -28,10 +26,11 @@ public class LobbyScreen extends Screen {
     private BitmapFont gamePinCode;
     private BitmapFont playersJoinedText;
 
-    private FireBaseInterface FBIF;
+    private String lobbyCode;
 
-    public LobbyScreen(GameScreenManager gsm) {
+    public LobbyScreen(GameScreenManager gsm, String lobbycode) {
         super(gsm);
+        this.lobbyCode = lobbycode;
         backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("background2.png");
         exit = new Texture("cancelButton.png");
@@ -66,17 +65,6 @@ public class LobbyScreen extends Screen {
         handleInput();
     }
 
-
-    // Getter for the game code
-    public String getGameCode(){
-        return gameCode;
-    }
-
-    // Setter for the game code (unsure if needed)
-    public void setGameCode(String gameCode){
-        this.gameCode = gameCode;
-    }
-
     // Function which will get the players from the database and add them to the page
     public String getPlayers(){
         return "DUMMY VALUE";
@@ -90,7 +78,7 @@ public class LobbyScreen extends Screen {
         sb.draw(exit, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
         sb.draw(logo, (float)(width * 0.3), (float)(height * 0.81), scaleWidth, scaleLogo);
         gamePinCode.draw(sb,
-                "Game pin: \n" + gameCode,
+                "Game pin: \n" + lobbyCode,
                 (float)(width * 0.28),
                 (float)(height * 0.79));
         playersJoinedText.draw(sb,

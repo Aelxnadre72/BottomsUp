@@ -5,12 +5,12 @@ import java.util.List;
 public class AndroidInterfaceClass implements FireBaseInterface{
     AndroidLauncher aL = new AndroidLauncher();
     @Override
-    public String hostLobby(String code, String name, String blockTower) {
-        return aL.hostLobby(code, name, blockTower);
+    public String hostLobby(String name, String blockTower) {
+        return aL.hostLobby(name, blockTower);
     }
 
     @Override
-    public int joinLobby(String code, String name, String blockTower) {
+    public String joinLobby(String code, String name, String blockTower) {
         return aL.joinLobby(code, name, blockTower);
     }
 

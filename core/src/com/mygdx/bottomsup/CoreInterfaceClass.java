@@ -4,13 +4,13 @@ import java.util.List;
 
 public class CoreInterfaceClass implements FireBaseInterface{
     @Override
-    public String hostLobby(String code, String name, String blockTower) {
+    public String hostLobby(String name, String blockTower) {
         return null;
     }
 
     @Override
-    public int joinLobby(String code, String name, String blockTower) {
-        return 0;
+    public String joinLobby(String code, String name, String blockTower) {
+        return "0";
     }
 
     @Override

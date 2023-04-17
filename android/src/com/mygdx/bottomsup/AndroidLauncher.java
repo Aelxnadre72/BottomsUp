@@ -17,8 +17,8 @@ import java.util.List;
 
 public class AndroidLauncher extends AndroidApplication implements FireBaseInterface {
 
-	private String lobbyCode;
 	private static DatabaseReference database;
+	private String lobbyCode;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +28,7 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 	}
 
 	@Override
-	public String hostLobby(String code, String name, String blockTower) {
+	public String hostLobby(String name, String blockTower) {
 		final long[] lobbyId = new long[1];
 		database.child("lobbies").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 			@Override
@@ -38,44 +38,44 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 				}
 				else {
 					lobbyId[0] = task.getResult().getChildrenCount();
+					lobbyCode = String.valueOf(lobbyId[0]+1);
 				}
 				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1");
 				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1").child("name").setValue(name);
 				database.child("lobbies").child(String.valueOf(lobbyId[0]+1)).child("1").child("blockTower").setValue(blockTower);
 			}
 		});
-		lobbyCode = String.valueOf(lobbyId[0]);
-		return String.valueOf(lobbyId[0]);
+		return lobbyCode;
 	}
 
 	@Override
-	public int joinLobby(String code, String name, String blockTower) {
+	public String joinLobby(String code, String name, String blockTower) {
 		final long[] id = new long[1];
-		final int[] success = new int[1];
+		final String[] lobbyCode = new String[1];
+
 		database.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
 			@Override
 			public void onComplete(@NonNull Task<DataSnapshot> task) {
 				if (!task.isSuccessful()) {
 					Log.e("firebase", "Error getting data", task.getException());
-					success[0] = 0;
 				}
 				else {
-					id[0] = Long.parseLong(String.valueOf(task.getResult().getChildrenCount()));
+					id[0] = task.getResult().getChildrenCount();
+					lobbyCode[0] = String.valueOf(id[0]+1);
 					Log.d("players before joining", String.valueOf(task.getResult().getChildrenCount()));
 					database.child("lobbies").child(code).child(String.valueOf(id[0]+1)).child("name").setValue(name);
 					database.child("lobbies").child(code).child(String.valueOf(id[0]+1)).child("blockTower").setValue(blockTower);
-					success[0] = 1;
 				}
 			}
 		});
-		return success[0];
+		return lobbyCode[0];
 	}
 
 	@Override
 	public void endGame() {
 
-		database.child("lobbies").child(lobbyCode).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+		database.child("lobbies").child("lobbyCode").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 			final long[] id = new long[1];
 			@Override
 			public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -89,7 +89,7 @@ public class AndroidLauncher extends AndroidApplication implements FireBaseInter
 						return;
 					}
 					for(int i = 1; i <= id[0]; i++) {
-						database.child("lobbies").child(lobbyCode).child(String.valueOf(i)).setValue("");
+						database.child("lobbies").child("lobbyCode").child(String.valueOf(i)).setValue("");
 					}
 				}
 			}
