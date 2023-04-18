@@ -4,8 +4,8 @@ import java.util.List;
 
 public class CoreInterfaceClass implements FireBaseInterface{
     @Override
-    public String hostLobby(String name, String blockTower) {
-        return null;
+    public void hostLobby(String name, String blockTower) {
+
     }
 
     @Override
@@ -36,5 +36,10 @@ public class CoreInterfaceClass implements FireBaseInterface{
     @Override
     public void updateHighscore(String time) {
 
+    }
+
+    @Override
+    public String getLobbyCode() {
+        return null;
     }
 }

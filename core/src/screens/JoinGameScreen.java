@@ -411,12 +411,12 @@ private char focus;
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsEnterButton.contains(x, y)) {
-                String code = FBIF.joinLobby(codeValue, nameValue, "");
-                if (!code.isEmpty()) {
-                    gsm.set(new LobbyScreen(gsm, code));
-                    dispose();
+                String playerId = FBIF.joinLobby(codeValue, nameValue, "");
+                if (playerId.isEmpty()) {
+                    return;
                 } else {
-                    //Set a field to display error msg
+                    gsm.set(new LobbyScreen(gsm, codeValue));
+                    dispose();
                 }
             }
             else if (boundsBackButton.contains(x, y)) {
