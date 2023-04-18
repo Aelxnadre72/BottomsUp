@@ -418,8 +418,11 @@ public class JoinGameScreen extends Screen {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsEnterButton.contains(x, y)) {
-                String playerId = FBIF.joinLobby(codeValue, nameValue, "");
-                if (playerId.isEmpty() || nameValue.isEmpty()) {
+                String success = FBIF.joinLobby(codeValue, nameValue, "");
+                System.out.println(success);
+                if (success.equals("false") || nameValue.isEmpty()) {
+                    // add text "could not join"
+                    System.out.println("Lobby is full");
                     return;
                 } else {
                     gsm.set(new LobbyScreen(gsm, codeValue));

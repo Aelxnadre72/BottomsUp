@@ -307,13 +307,7 @@ public class HostGameScreen extends Screen{
                 int x = Gdx.input.getX();
                 int y = Gdx.input.getY();
                 if (boundsHostGameButton.contains(x, y)) {
-                    FBIF.hostLobby(nameValue, "");
-                        try {
-                            TimeUnit.SECONDS.sleep(1);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    String code = FBIF.getLobbyCode();
+                    String code = FBIF.hostLobby(nameValue, "");
                     System.out.println(code);
                     gsm.set(new HostLobbyScreen(gsm, code));
                     dispose();

@@ -12,12 +12,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AndroidInterfaceClass implements FireBaseInterface{
     FirebaseDatabase database;
     DatabaseReference myRef;
 
     String lobbyId;
+    long playerCount = 0;
 
     List<String> playerList;
 
@@ -26,7 +28,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
         myRef = database.getReference();
     }
     @Override
-    public void hostLobby(String name, String blockTower) {
+    public String hostLobby(String name, String blockTower) {
         myRef.child("lobbies").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -42,6 +44,14 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 }
             }
         });
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return lobbyId;
     }
 
     private void handleId(Task<DataSnapshot> task) {
@@ -61,12 +71,31 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 }
                 else {
                     lobbyId[0] = task.getResult().getChildrenCount();
-                    myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("name").setValue(name);
-                    myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("blockTower").setValue(blockTower);
+                    handleJoinSuccess(task);
+                    if(lobbyId[0] < 4) {
+                        myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("name").setValue(name);
+                        myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("blockTower").setValue(blockTower);
+                    }
                 }
             }
         });
-        return String.valueOf(lobbyId[0]+1);
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(playerCount > 3) {
+            return "false";
+        }
+        else {
+            return "true";
+        }
+    }
+
+    private void handleJoinSuccess(Task<DataSnapshot> task) {
+        this.playerCount = task.getResult().getChildrenCount();
     }
 
     @Override
@@ -114,12 +143,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public String getLobbyCode() {
-        return lobbyId;
-    }
-
-    @Override
-    public void updatePlayerList(String code) {
+    public List<String> updatePlayerList(String code) {
         myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -131,11 +155,13 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 }
             }
         });
-    }
 
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-    @Override
-    public List<String> getPlayerList() {
         return playerList;
     }
 

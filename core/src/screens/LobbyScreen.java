@@ -65,13 +65,7 @@ public class LobbyScreen extends Screen {
     }
 
     public void getPlayers() {
-        FBIF.updatePlayerList(lobbyCode);
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        List<String> playersFromDatabase = FBIF.getPlayerList();
+        List<String> playersFromDatabase = FBIF.updatePlayerList(lobbyCode);
         for(int i = 0; i < playersFromDatabase.size(); i++) {
             players.set(i, playersFromDatabase.get(i));
         }

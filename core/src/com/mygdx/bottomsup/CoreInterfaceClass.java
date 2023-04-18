@@ -4,9 +4,7 @@ import java.util.List;
 
 public class CoreInterfaceClass implements FireBaseInterface{
     @Override
-    public void hostLobby(String name, String blockTower) {
-
-    }
+    public String hostLobby(String name, String blockTower) {return "0"; }
 
     @Override
     public String joinLobby(String code, String name, String blockTower) {
@@ -39,17 +37,6 @@ public class CoreInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public String getLobbyCode() {
-        return null;
-    }
-
-    @Override
-    public void updatePlayerList(String code) {
+    public List<String> updatePlayerList(String code) {return null; }
 
     }
-
-    @Override
-    public List<String> getPlayerList() {
-        return null;
-    }
-}
