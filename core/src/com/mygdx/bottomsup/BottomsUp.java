@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import screens.GameScreenManager;
+import screens.JoinGameScreen;
 import screens.MainMenuScreen;
 
 
