@@ -25,6 +25,15 @@ public class LobbyScreen extends Screen {
 
     private BitmapFont gamePinCode;
     private BitmapFont playersJoinedText;
+    private BitmapFont player1Text;
+    private BitmapFont player2Text;
+    private BitmapFont player3Text;
+    private BitmapFont player4Text;
+
+    private String player1  = "1";
+    private String player2 = "2";
+    private String player3 = "3";
+    private String player4 = "4";
 
     private String lobbyCode;
 
@@ -41,10 +50,14 @@ public class LobbyScreen extends Screen {
         logo = new Texture("bottomsUpLogoNoText.png");
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 100;
+        parameter.size = (int)width*1/11;
         parameter.color = new Color(0x022444ff);
         gamePinCode = generator.generateFont(parameter);
         playersJoinedText = generator.generateFont(parameter);
+        player1Text = generator.generateFont(parameter);
+        player2Text = generator.generateFont(parameter);
+        player3Text = generator.generateFont(parameter);
+        player4Text = generator.generateFont(parameter);
         generator.dispose();
     }
 
@@ -65,11 +78,6 @@ public class LobbyScreen extends Screen {
         handleInput();
     }
 
-    // Function which will get the players from the database and add them to the page
-    public String getPlayers(){
-        return "DUMMY VALUE";
-    }
-
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
@@ -85,6 +93,10 @@ public class LobbyScreen extends Screen {
                 "Players joined:",
                 (float)(width * 0.16),
                 (float)(height * 0.6));
+        player1Text.draw(sb, player1, (float)(width * 0.16), (float)(height * 0.45));
+        player2Text.draw(sb, player2, (float)(width * 0.16), (float)(height * 0.35));
+        player3Text.draw(sb, player3, (float)(width * 0.16), (float)(height * 0.25));
+        player4Text.draw(sb, player4, (float)(width * 0.16), (float)(height * 0.15));
         sb.end();
     }
 
