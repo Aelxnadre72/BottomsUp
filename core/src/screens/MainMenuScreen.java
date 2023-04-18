@@ -74,11 +74,11 @@ public class MainMenuScreen extends Screen {
 
         sb.begin();
         sb.draw(background, 0, 0, width, height);
-        sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth, scaleLogo);
+        sb.draw(logo, (float)(width * 0.2), (float)(height * 0.55), scaleWidth, scaleLogo);
         sb.draw(hostButton, (float)(width * 0.2), (float)(height * 0.4), scaleWidth, scaleHeight);
         sb.draw(joinButton, (float)(width * 0.2), (float)(height * 0.25), scaleWidth, scaleHeight);
-        hostButtonText.draw(sb, "Host game", (float)(width * 0.3), (float)(height * 0.47));
-        joinButtonText.draw(sb, "Join game", (float)(width * 0.3), (float)(height * 0.32));
+        hostButtonText.draw(sb, "Host game", (float)(width * 0.3), (float)(height * 0.46));
+        joinButtonText.draw(sb, "Join game", (float)(width * 0.3), (float)(height * 0.31));
         sb.end();
 
     }
