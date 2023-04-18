@@ -28,6 +28,16 @@ public class HostLobbyScreen extends Screen {
     private BitmapFont startGameText;
     private BitmapFont playersJoinedText;
 
+    private BitmapFont player1Text;
+    private BitmapFont player2Text;
+    private BitmapFont player3Text;
+    private BitmapFont player4Text;
+
+    private String player1  = "1";
+    private String player2 = "2";
+    private String player3 = "3";
+    private String player4 = "4";
+
     public HostLobbyScreen(GameScreenManager gsm) {
         super(gsm);
         backgroundUpper = new Texture("background.png");
@@ -48,13 +58,16 @@ public class HostLobbyScreen extends Screen {
         Gdx.input.setOnscreenKeyboardVisible(false);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 100;
+        parameter.size = (int)width*1/11;
         parameter.color = new Color(0x022444ff);
         gamePinCode = generator.generateFont(parameter);
         startGameText = generator.generateFont(parameter);
         playersJoinedText = generator.generateFont(parameter);
+        player1Text = generator.generateFont(parameter);
+        player2Text = generator.generateFont(parameter);
+        player3Text = generator.generateFont(parameter);
+        player4Text = generator.generateFont(parameter);
         generator.dispose();
-
     }
 
     public void setFont(BitmapFont textHolder, int size, int color) {
@@ -88,22 +101,6 @@ public class HostLobbyScreen extends Screen {
         handleInput();
     }
 
-
-    // Getter for the game code
-    public String getGameCode(){
-        return gameCode;
-    }
-
-    // Setter for the game code (unsure if needed)
-    public void setGameCode(String gameCode){
-        this.gameCode = gameCode;
-    }
-
-    // Function which will get the players from the database and add them to the page
-    public String getPlayers(){
-        return "DUMMY VALUE";
-    }
-
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
@@ -128,6 +125,10 @@ public class HostLobbyScreen extends Screen {
                 "Players joined:",
                 (float)(width * 0.16),
                 (float)(height * 0.51));
+        player1Text.draw(sb, player1, (float)(width * 0.16), (float)(height * 0.4));
+        player2Text.draw(sb, player2, (float)(width * 0.16), (float)(height * 0.3));
+        player3Text.draw(sb, player3, (float)(width * 0.16), (float)(height * 0.2));
+        player4Text.draw(sb, player4, (float)(width * 0.16), (float)(height * 0.1));
         sb.end();
     }
 
