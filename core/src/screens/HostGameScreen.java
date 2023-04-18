@@ -1,5 +1,7 @@
 package screens;
 
+import static com.mygdx.bottomsup.BottomsUp.FBIF;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -9,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
+
+import java.util.concurrent.TimeUnit;
 
 public class HostGameScreen extends Screen{
 
@@ -47,7 +51,7 @@ public class HostGameScreen extends Screen{
                     scaleWidth,
                     scaleHeight);
             boundsHostGameButton = new Rectangle((float) (Gdx.graphics.getWidth() * 0.2),
-                    (float) (Gdx.graphics.getHeight() * 0.7) - scaleHeight,
+                    (float) (Gdx.graphics.getHeight() * 0.75) - scaleHeight,
                     scaleWidth,
                     scaleHeight);
             boundsBackButton = new Rectangle((float) (Gdx.graphics.getWidth() * 0.05),
@@ -303,8 +307,15 @@ public class HostGameScreen extends Screen{
                 int x = Gdx.input.getX();
                 int y = Gdx.input.getY();
                 if (boundsHostGameButton.contains(x, y)) {
-                    //Add server logic to find lobby
-                    gsm.set(new HostLobbyScreen(gsm));
+                    FBIF.hostLobby(nameValue, "");
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    String code = FBIF.getLobbyCode();
+                    System.out.println(code);
+                    gsm.set(new HostLobbyScreen(gsm, code));
                     dispose();
                 }
                 else if (boundsBackButton.contains(x, y)) {
