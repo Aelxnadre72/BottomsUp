@@ -15,4 +15,8 @@ public interface FireBaseInterface {
 
     public String getLobbyCode();
 
+    public void updatePlayerList(String code);
+
+    public List<String> getPlayerList();
+
 }

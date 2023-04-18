@@ -1,5 +1,7 @@
 package screens;
 
+import static com.mygdx.bottomsup.BottomsUp.FBIF;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 // LobbyScreen for the players, not the host
 public class LobbyScreen extends Screen {
@@ -30,16 +36,13 @@ public class LobbyScreen extends Screen {
     private BitmapFont player3Text;
     private BitmapFont player4Text;
 
-    private String player1  = "1";
-    private String player2 = "2";
-    private String player3 = "3";
-    private String player4 = "4";
-
+    private List<String> players;
     private String lobbyCode;
 
     public LobbyScreen(GameScreenManager gsm, String lobbycode) {
         super(gsm);
         this.lobbyCode = lobbycode;
+        players = Arrays.asList("", "", "", "");
         backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("background2.png");
         exit = new Texture("cancelButton.png");
@@ -61,6 +64,19 @@ public class LobbyScreen extends Screen {
         generator.dispose();
     }
 
+    public void getPlayers() {
+        FBIF.updatePlayerList(lobbyCode);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        List<String> playersFromDatabase = FBIF.getPlayerList();
+        for(int i = 0; i < playersFromDatabase.size(); i++) {
+            players.set(i, playersFromDatabase.get(i));
+        }
+    }
+
     @Override
     protected void handleInput() {
         if (Gdx.input.justTouched()){
@@ -76,6 +92,7 @@ public class LobbyScreen extends Screen {
     @Override
     public void update() {
         handleInput();
+        getPlayers();
     }
 
     @Override
@@ -93,10 +110,10 @@ public class LobbyScreen extends Screen {
                 "Players joined:",
                 (float)(width * 0.16),
                 (float)(height * 0.6));
-        player1Text.draw(sb, player1, (float)(width * 0.16), (float)(height * 0.45));
-        player2Text.draw(sb, player2, (float)(width * 0.16), (float)(height * 0.35));
-        player3Text.draw(sb, player3, (float)(width * 0.16), (float)(height * 0.25));
-        player4Text.draw(sb, player4, (float)(width * 0.16), (float)(height * 0.15));
+        player1Text.draw(sb, players.get(0), (float)(width * 0.16), (float)(height * 0.45));
+        player2Text.draw(sb, players.get(1), (float)(width * 0.16), (float)(height * 0.35));
+        player3Text.draw(sb, players.get(2), (float)(width * 0.16), (float)(height * 0.25));
+        player4Text.draw(sb, players.get(3), (float)(width * 0.16), (float)(height * 0.15));
         sb.end();
     }
 

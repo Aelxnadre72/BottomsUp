@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AndroidInterfaceClass implements FireBaseInterface{
@@ -17,6 +18,8 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     DatabaseReference myRef;
 
     String lobbyId;
+
+    List<String> playerList;
 
     public AndroidInterfaceClass() {
         database = FirebaseDatabase.getInstance();
@@ -43,7 +46,6 @@ public class AndroidInterfaceClass implements FireBaseInterface{
 
     private void handleId(Task<DataSnapshot> task) {
         this.lobbyId = String.valueOf(task.getResult().getChildrenCount()+1);
-        System.out.println(lobbyId);
     }
 
     @Override
@@ -114,5 +116,36 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     @Override
     public String getLobbyCode() {
         return lobbyId;
+    }
+
+    @Override
+    public void updatePlayerList(String code) {
+        myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    handlePlayerList(task);
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public List<String> getPlayerList() {
+        return playerList;
+    }
+
+    private void handlePlayerList(Task<DataSnapshot> task) {
+        List<String> localPlayers = new ArrayList<>();
+        long playerCount = task.getResult().getChildrenCount();
+        for(int i = 1; i <= playerCount; i++) {
+            String child = task.getResult().child(String.valueOf(i)).child("name").getValue().toString();
+            localPlayers.add(child);
+        }
+        playerList = localPlayers;
     }
 }

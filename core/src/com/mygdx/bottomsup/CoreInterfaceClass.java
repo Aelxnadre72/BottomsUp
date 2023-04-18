@@ -42,4 +42,14 @@ public class CoreInterfaceClass implements FireBaseInterface{
     public String getLobbyCode() {
         return null;
     }
+
+    @Override
+    public void updatePlayerList(String code) {
+
+    }
+
+    @Override
+    public List<String> getPlayerList() {
+        return null;
+    }
 }
