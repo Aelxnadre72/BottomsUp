@@ -40,6 +40,7 @@ public class MainMenuScreen extends Screen {
                                          (float)(height * 0.75) - scaleHeight,
                                          scaleWidth,
                                          scaleHeight);
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 80;

@@ -1,5 +1,7 @@
 package screens;
 
+import static com.mygdx.bottomsup.BottomsUp.FBIF;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -18,6 +20,7 @@ public class JoinGameScreen extends Screen {
     private float scaleHeight = (float)(scaleWidth * 0.3);
     private float scaleLogo = (float)(scaleWidth * 0.9);
     private float scaleButton = (float)(Gdx.graphics.getWidth() * 0.08);
+
 
     private Texture enterButton;
     private Texture background;
@@ -60,7 +63,7 @@ public class JoinGameScreen extends Screen {
                 scaleWidth,
                 scaleHeight);
         boundsEnterButton = new Rectangle((float) (Gdx.graphics.getWidth() * 0.2),
-                (float) (Gdx.graphics.getHeight() * 0.8) - scaleHeight,
+                (float) (Gdx.graphics.getHeight() * 0.85) - scaleHeight,
                 scaleWidth,
                 scaleHeight);
         boundsBackButton = new Rectangle((float) (Gdx.graphics.getWidth() * 0.05),
@@ -414,10 +417,14 @@ public class JoinGameScreen extends Screen {
         if (Gdx.input.justTouched()) {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
-            if (boundsEnterButton.contains(x, y) && getCodeValue().equals("123")) {
-                //Add server logic to find lobby
-                gsm.set(new LobbyScreen(gsm));
-                dispose();
+            if (boundsEnterButton.contains(x, y)) {
+                String playerId = FBIF.joinLobby(codeValue, nameValue, "");
+                if (playerId.isEmpty() || nameValue.isEmpty()) {
+                    return;
+                } else {
+                    gsm.set(new LobbyScreen(gsm, codeValue));
+                    dispose();
+                }
             }
             else if (boundsBackButton.contains(x, y)) {
                 gsm.set(new MainMenuScreen(gsm));
