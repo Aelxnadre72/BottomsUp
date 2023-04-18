@@ -63,7 +63,7 @@ public class JoinGameScreen extends Screen {
                 scaleWidth,
                 scaleHeight);
         boundsEnterButton = new Rectangle((float) (Gdx.graphics.getWidth() * 0.2),
-                (float) (Gdx.graphics.getHeight() * 0.8) - scaleHeight,
+                (float) (Gdx.graphics.getHeight() * 0.85) - scaleHeight,
                 scaleWidth,
                 scaleHeight);
         boundsBackButton = new Rectangle((float) (Gdx.graphics.getWidth() * 0.05),

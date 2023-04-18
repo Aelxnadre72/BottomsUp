@@ -51,7 +51,7 @@ public class HostGameScreen extends Screen{
                     scaleWidth,
                     scaleHeight);
             boundsHostGameButton = new Rectangle((float) (Gdx.graphics.getWidth() * 0.2),
-                    (float) (Gdx.graphics.getHeight() * 0.7) - scaleHeight,
+                    (float) (Gdx.graphics.getHeight() * 0.75) - scaleHeight,
                     scaleWidth,
                     scaleHeight);
             boundsBackButton = new Rectangle((float) (Gdx.graphics.getWidth() * 0.05),
