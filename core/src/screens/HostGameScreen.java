@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.concurrent.TimeUnit;
+
 public class HostGameScreen extends Screen{
 
         private float width = Gdx.graphics.getWidth();
@@ -306,7 +308,13 @@ public class HostGameScreen extends Screen{
                 int y = Gdx.input.getY();
                 if (boundsHostGameButton.contains(x, y)) {
                     FBIF.hostLobby(nameValue, "");
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     String code = FBIF.getLobbyCode();
+                    System.out.println(code);
                     gsm.set(new HostLobbyScreen(gsm, code));
                     dispose();
                 }

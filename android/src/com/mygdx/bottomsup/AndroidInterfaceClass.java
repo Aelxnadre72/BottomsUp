@@ -32,7 +32,6 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 }
                 else {
                     long lobbyNum = task.getResult().getChildrenCount();
-                    System.out.println(lobbyNum+1);
                     handleId(task);
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1");
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("name").setValue(name);
@@ -43,7 +42,8 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     }
 
     private void handleId(Task<DataSnapshot> task) {
-        this.lobbyId = String.valueOf(task.getResult().getChildrenCount());
+        this.lobbyId = String.valueOf(task.getResult().getChildrenCount()+1);
+        System.out.println(lobbyId);
     }
 
     @Override
