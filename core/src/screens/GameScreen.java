@@ -89,7 +89,7 @@ public class GameScreen extends Screen {
     public GameScreen(GameScreenManager gsm, String playerId, String lobbyCode) {
         super(gsm);
         blockTower = new BlockTower(50);
-        FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().toString());
+        FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
         this.playerId = playerId;
         this.lobbyCode = lobbyCode;
         otherPlayers = new ArrayList<>();
@@ -259,10 +259,13 @@ public class GameScreen extends Screen {
                 otherPlayers.set(i, tempTower);
             }
         }
+        System.out.println("all towers " + otherPlayers.toString());
 
-        // draw the other players towers
+
+    // draw the other players towers
         for(List<Integer> tower : otherPlayers) {
-            drawTower(sb, tower);
+            //drawTower(sb, tower);
+            System.out.println("tower: " + tower.toString());
         }
 
         if(timeoutTime < System.currentTimeMillis()) {

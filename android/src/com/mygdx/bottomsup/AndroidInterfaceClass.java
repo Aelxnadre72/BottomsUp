@@ -170,7 +170,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
         List<List<Integer>> towers = new ArrayList<>();
         long playerCount = task.getResult().getChildrenCount();
         for(int i = 1; i <= playerCount; i++) {
-            if(playerId != String.valueOf(i)) {
+            if(!playerId.equals(String.valueOf(i))) {
                 String tower = task.getResult().child(String.valueOf(i)).child("blockTower").getValue().toString();
                 tower = tower.replaceAll("[\\D]", "");
                 List<Integer> towerList = new ArrayList<>();
