@@ -27,8 +27,18 @@ public class CoreInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public List<String> getResults() {
+    public List<String> getResults(String code) {
         return null;
+    }
+
+    @Override
+    public void setResult(String code, String playerId, String value) {
+
+    }
+
+    @Override
+    public void hostStartGame(String code) {
+
     }
 
     @Override

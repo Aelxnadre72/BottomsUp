@@ -26,6 +26,8 @@ public class AndroidInterfaceClass implements FireBaseInterface{
 
     List<List<Integer>> opponentTowers;
 
+    List<String> resultsList;
+
     public AndroidInterfaceClass() {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
@@ -44,6 +46,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1");
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("name").setValue(name);
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("blockTower").setValue(blockTower);
+                    myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("result").setValue("25");
                 }
             }
         });
@@ -79,6 +82,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                     if(lobbyId[0] < 4) {
                         myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("name").setValue(name);
                         myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("blockTower").setValue(blockTower);
+                        myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("result").setValue("0");
                     }
                 }
             }
@@ -175,7 +179,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 tower = tower.replaceAll("[\\D]", "");
                 List<Integer> towerList = new ArrayList<>();
                 for(int j = 0; j < tower.length(); j++) {
-                    towerList.add(Integer.valueOf(tower.charAt(j)));
+                    towerList.add(Integer.parseInt(String.valueOf(tower.charAt(j))));
                 }
                 towers.add(towerList);
             }
@@ -183,14 +187,63 @@ public class AndroidInterfaceClass implements FireBaseInterface{
         opponentTowers = towers;
     }
 
+    @Override
+    public void setResult(String code, String playerId, String value) {
+        myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    myRef.child("lobbies").child(code).child(playerId).child("result").setValue(value);
+                }
+            }
+        });
+    }
 
-        @Override
-    public List<String> getResults() {
-        return null;
+    @Override
+    public void hostStartGame(String code) {
+        setResult(code, "1", "0");
+    }
+
+
+    @Override
+    public List<String> getResults(String code) {
+            myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        handleResults(task);
+                    }
+                }
+            });
+
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            return resultsList;
+    }
+
+    private void handleResults(Task<DataSnapshot> task) {
+        List<String> results = new ArrayList<>();
+        long playerCount = task.getResult().getChildrenCount();
+        for(int i = 1; i <= playerCount; i++) {
+            String child = task.getResult().child(String.valueOf(i)).child("result").getValue().toString();
+            results.add(child);
+        }
+        resultsList = results;
     }
 
     @Override
     public void updateHighscore(String time) {
+
     }
 
     @Override

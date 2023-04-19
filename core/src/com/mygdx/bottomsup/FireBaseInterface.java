@@ -9,7 +9,10 @@ public interface FireBaseInterface {
     public void updateBlockTower(String code, String playerId, String blockTower);
     public List<List<Integer>> updateOthers(String code, String playerId);
 
-    public List<String> getResults();
+    public List<String> getResults(String code);
+
+    public void setResult(String code, String playerId, String value);
+    public void hostStartGame(String code);
 
     public void updateHighscore(String time);
 

@@ -95,8 +95,8 @@ public class LobbyScreen extends Screen {
 
     private void checkStartGame() {
         //check if host has pressed start, then start game
-        boolean start = false;
-        if(start) {
+        List<String> results = FBIF.getResults(lobbyCode);
+        if(results.get(0).equals("0")) {
             gsm.set(new GameScreen(gsm, playerId, lobbyCode));
         }
     }
