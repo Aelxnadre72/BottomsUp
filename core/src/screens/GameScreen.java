@@ -204,6 +204,20 @@ public class GameScreen extends Screen {
         if(count + isFinished == otherPlayers.size()) {
             gameOver = true;
         }
+
+        // For the other players: replaces the last block images with an invisible block when there is less than 4 blocks left
+        for(int i = 0; i < otherPlayers.size(); i++) {
+            if (otherPlayers.get(i).size() <= 3) {
+                List<Integer> tempTower = otherPlayers.get(i);
+                Integer num = 4-otherPlayers.get(i).size();
+                for (int j = 0; j < num; j++) {
+                    tempTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
+                    System.out.println(j);
+                }
+                otherPlayers.set(i, tempTower);
+            }
+        }
+        System.out.println("all towers " + otherPlayers.toString());
     }
     @Override
     public void update() {
@@ -254,20 +268,6 @@ public class GameScreen extends Screen {
                 mainBlockTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
             }
         }
-
-        // For the other players: replaces the last block images with an invisible block when there is less than 4 blocks left
-        for(int i = 0; i < otherPlayers.size(); i++) {
-            if (otherPlayers.get(i).size() <= 3) {
-                List<Integer> tempTower = otherPlayers.get(i);
-                Integer num = 4-otherPlayers.get(i).size();
-                for (int j = 0; j < num; j++) {
-                    tempTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
-                    System.out.println(j);
-                }
-                otherPlayers.set(i, tempTower);
-            }
-        }
-        System.out.println("all towers " + otherPlayers.toString());
 
 
     // draw the other players towers
