@@ -13,6 +13,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JoinGameScreen extends Screen {
     private float width = Gdx.graphics.getWidth();
     private float height = Gdx.graphics.getHeight();
@@ -418,14 +421,20 @@ public class JoinGameScreen extends Screen {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsEnterButton.contains(x, y)) {
+                List<String> playersFromDatabase = FBIF.updatePlayerList(codeValue);
+                if(playersFromDatabase.contains(nameValue)) {
+                    // add text "the player name is taken"
+                    System.out.println("The player name is taken");
+                    return;
+                }
                 String success = FBIF.joinLobby(codeValue, nameValue, "");
                 System.out.println(success);
                 if (success.equals("false") || nameValue.isEmpty()) {
-                    // add text "could not join"
-                    System.out.println("Lobby is full");
+                    // add text "The lobby is full"
+                    System.out.println("The lobby is full");
                     return;
                 } else {
-                    gsm.set(new LobbyScreen(gsm, codeValue));
+                    gsm.set(new LobbyScreen(gsm, codeValue, nameValue));
                     dispose();
                 }
             }

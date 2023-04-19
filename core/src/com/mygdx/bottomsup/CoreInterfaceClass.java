@@ -17,12 +17,12 @@ public class CoreInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public void updateBlockTower(String id, String blockTower) {
+    public void updateBlockTower(String code, String playerId, String blockTower) {
 
     }
 
     @Override
-    public List<String> updateOthers() {
+    public List<List<Integer>> updateOthers(String code, String playerId) {
         return null;
     }
 

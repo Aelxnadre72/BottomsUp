@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +23,8 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     long playerCount = 0;
 
     List<String> playerList;
+
+    List<List<Integer>> opponentTowers;
 
     public AndroidInterfaceClass() {
         database = FirebaseDatabase.getInstance();
@@ -37,6 +40,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 }
                 else {
                     long lobbyNum = task.getResult().getChildrenCount();
+                    System.out.println(lobbyNum);
                     handleId(task);
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1");
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("name").setValue(name);
@@ -123,17 +127,64 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public void updateBlockTower(String id, String blockTower) {
+    public void updateBlockTower(String code, String playerId, String blockTower) {
+        myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    myRef.child("lobbies").child(code).child(playerId).child("blockTower").setValue(blockTower);
+                }
+            }
+        });
     }
 
     @Override
-    public List<String> updateOthers() {
+    public List<List<Integer>> updateOthers(String code, String playerId) {
+        myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
-        return null;
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    getOpponentTowers(task, playerId);
+                }
+            }
+        });
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(333);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return opponentTowers;
     }
 
-    @Override
+    private void getOpponentTowers(Task<DataSnapshot> task, String playerId) {
+        List<List<Integer>> towers = new ArrayList<>();
+        long playerCount = task.getResult().getChildrenCount();
+        for(int i = 1; i <= playerCount; i++) {
+            if(playerId != String.valueOf(i)) {
+                String tower = task.getResult().child(String.valueOf(i)).child("blockTower").getValue().toString();
+                tower = tower.replaceAll("[\\D]", "");
+                List<Integer> towerList = new ArrayList<>();
+                for(int j = 0; j < tower.length(); j++) {
+                    towerList.add(Integer.valueOf(tower.charAt(j)));
+                }
+                towers.add(towerList);
+            }
+        }
+        opponentTowers = towers;
+    }
+
+
+        @Override
     public List<String> getResults() {
         return null;
     }
