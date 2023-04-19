@@ -255,8 +255,10 @@ public class GameScreen extends Screen {
         for(int i = 0; i < otherPlayers.size(); i++) {
             if (otherPlayers.get(i).size() <= 3) {
                 List<Integer> tempTower = otherPlayers.get(i);
-                for (int j = 0; j < 4-tempTower.size(); j++) {
+                Integer num = 4-otherPlayers.get(i).size();
+                for (int j = 0; j < num; j++) {
                     tempTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
+                    System.out.println(j);
                 }
                 otherPlayers.set(i, tempTower);
             }
@@ -265,13 +267,13 @@ public class GameScreen extends Screen {
 
 
     // draw the other players towers
-        for(List<Integer> tower : otherPlayers) {
-            drawTower(sb, tower);
+        for(int i = 0; i < otherPlayers.size(); i++) {
+            drawTower(sb, otherPlayers.get(i), i+1);
             //System.out.println("tower: " + tower.toString());
         }
 
         if(timeoutTime < System.currentTimeMillis()) {
-            drawTower(sb, mainBlockTower);
+            drawTower(sb, mainBlockTower, 0);
             // avatar and name tags are drawn in both if and else since it needs to be behind the splat,
             // but in front of the blocks
             sb.draw(avatar, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
@@ -308,15 +310,27 @@ public class GameScreen extends Screen {
         sb.end();
     }
 
-    private void drawTower(SpriteBatch sb, List<Integer> bt) {
-        sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55), widthMainBlock,
-                widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.25), widthMainBlock,
-                widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.5), widthMainBlock,
-                widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
-                widthMainBlock);
+    private void drawTower(SpriteBatch sb, List<Integer> bt, int placement) {
+        if(placement == 0) {
+            sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 2.8 + widthMainBlock * 0.42), (float) (height / 2.55), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 2.8 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.25), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 2.8 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.5), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 2.8 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
+                    widthMainBlock);
+        }
+        else {
+            sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.25), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.5), widthMainBlock,
+                    widthMainBlock);
+            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
+                    widthMainBlock);
+        }
     }
 
     @Override
