@@ -427,7 +427,7 @@ public class JoinGameScreen extends Screen {
                     System.out.println("The player name is taken");
                     return;
                 }
-                String success = FBIF.joinLobby(codeValue, nameValue, "");
+                String success = FBIF.joinLobby(codeValue, nameValue, "4");
                 System.out.println(success);
                 if (success.equals("false") || nameValue.isEmpty()) {
                     // add text "The lobby is full"

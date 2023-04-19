@@ -309,7 +309,7 @@ public class HostGameScreen extends Screen{
                 int x = Gdx.input.getX();
                 int y = Gdx.input.getY();
                 if (boundsHostGameButton.contains(x, y)) {
-                    String code = FBIF.hostLobby(nameValue, "");
+                    String code = FBIF.hostLobby(nameValue, "4");
                     System.out.println(code);
                     gsm.set(new HostLobbyScreen(gsm, code));
                     dispose();

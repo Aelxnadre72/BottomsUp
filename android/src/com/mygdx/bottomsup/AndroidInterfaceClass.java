@@ -40,7 +40,6 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 }
                 else {
                     long lobbyNum = task.getResult().getChildrenCount();
-                    System.out.println(lobbyNum);
                     handleId(task);
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1");
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("name").setValue(name);
@@ -54,7 +53,8 @@ public class AndroidInterfaceClass implements FireBaseInterface{
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println("her:");
+        System.out.println(lobbyId);
         return lobbyId;
     }
 

@@ -89,6 +89,7 @@ public class GameScreen extends Screen {
     public GameScreen(GameScreenManager gsm, String playerId, String lobbyCode) {
         super(gsm);
         blockTower = new BlockTower(50);
+        FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().toString());
         this.playerId = playerId;
         this.lobbyCode = lobbyCode;
         otherPlayers = new ArrayList<>();

@@ -39,4 +39,4 @@ public class CoreInterfaceClass implements FireBaseInterface{
     @Override
     public List<String> updatePlayerList(String code) {return null; }
 
-    }
+}
