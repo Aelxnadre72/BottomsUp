@@ -96,6 +96,13 @@ public class LobbyScreen extends Screen {
 
     @Override
     public void update() {
+        handleInput();
+        getPlayers();
+        checkStartGame();
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
         if(playerId.equals("")) {
             List<String> playersFromDatabase = FBIF.updatePlayerList(lobbyCode);
             for(int i = 0; i < playersFromDatabase.size(); i++) {
@@ -105,13 +112,7 @@ public class LobbyScreen extends Screen {
                 }
             }
         }
-        handleInput();
-        getPlayers();
-        checkStartGame();
-    }
 
-    @Override
-    public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(backgroundUpper, 0, 0, width, height);
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.63));
