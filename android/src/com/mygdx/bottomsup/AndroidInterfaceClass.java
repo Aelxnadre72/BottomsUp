@@ -156,6 +156,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
+                    System.out.println("playerIDDD: " + playerId);
                     getOpponentTowers(task, playerId);
                 }
             }
@@ -173,8 +174,11 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     private void getOpponentTowers(Task<DataSnapshot> task, String playerId) {
         List<List<Integer>> towers = new ArrayList<>();
         long playerCount = task.getResult().getChildrenCount();
+        System.out.println("lengththt: " + String.valueOf(playerCount));
         for(int i = 1; i <= playerCount; i++) {
             if(!playerId.equals(String.valueOf(i))) {
+                System.out.println("HEHRHER:");
+                System.out.println(i);
                 String tower = task.getResult().child(String.valueOf(i)).child("blockTower").getValue().toString();
                 tower = tower.replaceAll("[\\D]", "");
                 List<Integer> towerList = new ArrayList<>();
