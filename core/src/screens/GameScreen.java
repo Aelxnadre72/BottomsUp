@@ -266,8 +266,8 @@ public class GameScreen extends Screen {
 
     // draw the other players towers
         for(List<Integer> tower : otherPlayers) {
-            //drawTower(sb, tower);
-            System.out.println("tower: " + tower.toString());
+            drawTower(sb, tower);
+            //System.out.println("tower: " + tower.toString());
         }
 
         if(timeoutTime < System.currentTimeMillis()) {
@@ -309,13 +309,13 @@ public class GameScreen extends Screen {
     }
 
     private void drawTower(SpriteBatch sb, List<Integer> bt) {
-        sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55), widthMainBlock,
+        sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55), widthMainBlock,
                 widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.25), widthMainBlock,
+        sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.25), widthMainBlock,
                 widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.5), widthMainBlock,
+        sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.5), widthMainBlock,
                 widthMainBlock);
-        sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
+        sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
                 widthMainBlock);
     }
 
