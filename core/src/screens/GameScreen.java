@@ -43,6 +43,7 @@ public class GameScreen extends Screen {
     private long timeoutTime = 0;
 
     private long startTime = System.currentTimeMillis();
+    private long lastUpdateTime = 0;
     private long finishTime = 0;
 
     // private long elapsedGameTime;
@@ -210,8 +211,11 @@ public class GameScreen extends Screen {
             FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
         }
         handleInput();
-        getOtherPlayers();
-        checkGameOver();
+        if(System.currentTimeMillis() > lastUpdateTime + 1000) {
+            getOtherPlayers();
+            lastUpdateTime = System.currentTimeMillis();
+            checkGameOver();
+        }
     }
 
     private void checkGameOver(){
