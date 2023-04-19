@@ -89,11 +89,10 @@ public class GameScreen extends Screen {
     public GameScreen(GameScreenManager gsm, String playerId, String lobbyCode) {
         super(gsm);
         blockTower = new BlockTower(50);
-        FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
         this.playerId = playerId;
         this.lobbyCode = lobbyCode;
-        otherPlayers = new ArrayList<>();
         mainBlockTower = new ArrayList<>();
+        otherPlayers = new ArrayList<>();
         background = new Texture("background.png");
         background2 = new Texture("background2.png");
         nametag1 = new Texture("background2.png");
@@ -207,6 +206,9 @@ public class GameScreen extends Screen {
     }
     @Override
     public void update() {
+        if(mainBlockTower.isEmpty()) {
+            FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
+        }
         handleInput();
         getOtherPlayers();
         checkGameOver();

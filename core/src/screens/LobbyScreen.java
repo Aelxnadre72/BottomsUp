@@ -99,7 +99,7 @@ public class LobbyScreen extends Screen {
         if(playerId.equals("")) {
             List<String> playersFromDatabase = FBIF.updatePlayerList(lobbyCode);
             for(int i = 0; i < playersFromDatabase.size(); i++) {
-                if(playersFromDatabase.get(i) == playerName) {
+                if(playersFromDatabase.get(i).equals(playerName)) {
                     playerId = String.valueOf(i);
                     System.out.println(playerId);
                 }

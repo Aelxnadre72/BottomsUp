@@ -185,6 +185,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 for(int j = 0; j < tower.length(); j++) {
                     towerList.add(Integer.parseInt(String.valueOf(tower.charAt(j))));
                 }
+                System.out.println("towerlist: " + towerList.toString());
                 towers.add(towerList);
             }
         }
