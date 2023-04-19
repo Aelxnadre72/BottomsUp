@@ -217,8 +217,8 @@ public class GameScreen extends Screen {
             if(isFinished == 0) {
                 int blocksLeft = blockTower.getHeight() - blockTower.getCurrentHeight();
                 //send how many blocks left to database
+                FBIF.setResult(lobbyCode, playerId, String.valueOf(blocksLeft));
             }
-
             //finish time in seconds is already sent to database for those that did not finish last
             gsm.set(new ResultScreen(gsm));
         }
