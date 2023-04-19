@@ -226,6 +226,11 @@ public class GameScreen extends Screen {
             FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
         }
         handleInput();
+        if(System.currentTimeMillis() > lastUpdateTime + 500) {
+            getOtherPlayers();
+            lastUpdateTime = System.currentTimeMillis();
+            checkGameOver();
+        }
     }
 
     private void checkGameOver(){
@@ -265,18 +270,12 @@ public class GameScreen extends Screen {
             }
         }
 
-    if(System.currentTimeMillis() > lastUpdateTime + 500) {
-        getOtherPlayers();
-        lastUpdateTime = System.currentTimeMillis();
-        checkGameOver();
 
-        // draw the other players towers
+    // draw the other players towers
         for(int i = 0; i < otherPlayers.size(); i++) {
             drawTower(sb, otherPlayers.get(i), i+1);
             //System.out.println("tower: " + tower.toString());
         }
-
-    }
 
         if(timeoutTime < System.currentTimeMillis()) {
             drawTower(sb, mainBlockTower, 0);
