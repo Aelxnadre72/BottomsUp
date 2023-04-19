@@ -46,7 +46,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1");
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("name").setValue(name);
                     myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("blockTower").setValue(blockTower);
-                    myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("result").setValue("25");
+                    myRef.child("lobbies").child(String.valueOf(lobbyNum+1)).child("1").child("result").setValue("1");
                 }
             }
         });

@@ -38,8 +38,8 @@ public class LobbyScreen extends Screen {
 
     private List<String> players;
     private String lobbyCode;
+    private String playerId = "";
     private String playerName;
-    private String playerId;
 
     public LobbyScreen(GameScreenManager gsm, String lobbyCode, String playerName) {
         super(gsm);
@@ -65,13 +65,6 @@ public class LobbyScreen extends Screen {
         player3Text = generator.generateFont(parameter);
         player4Text = generator.generateFont(parameter);
         generator.dispose();
-
-        List<String> playersFromDatabase = FBIF.updatePlayerList(lobbyCode);
-        for(int i = 0; i < playersFromDatabase.size(); i++) {
-            if(playersFromDatabase.get(i) == playerName) {
-                playerId = String.valueOf(i);
-            }
-        }
     }
 
     public void getPlayers() {
@@ -103,6 +96,15 @@ public class LobbyScreen extends Screen {
 
     @Override
     public void update() {
+        if(playerId.equals("")) {
+            List<String> playersFromDatabase = FBIF.updatePlayerList(lobbyCode);
+            for(int i = 0; i < playersFromDatabase.size(); i++) {
+                if(playersFromDatabase.get(i) == playerName) {
+                    playerId = String.valueOf(i);
+                    System.out.println(playerId);
+                }
+            }
+        }
         handleInput();
         getPlayers();
         checkStartGame();
