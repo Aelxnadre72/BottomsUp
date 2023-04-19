@@ -255,7 +255,7 @@ public class GameScreen extends Screen {
         for(int i = 0; i < otherPlayers.size(); i++) {
             if (otherPlayers.get(i).size() <= 3) {
                 List<Integer> tempTower = otherPlayers.get(i);
-                for (int j = 0; j < 4-blockTower.getCurrentHeight(); j++) {
+                for (int j = 0; j < 4-tempTower.size(); j++) {
                     tempTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
                 }
                 otherPlayers.set(i, tempTower);
