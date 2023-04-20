@@ -209,7 +209,7 @@ public class GameScreen extends Screen {
                 count += 1;
             }
         }
-        if (count == 0) {
+        if (otherPlayers.size() == 0) {
             solo = true;
         }
 

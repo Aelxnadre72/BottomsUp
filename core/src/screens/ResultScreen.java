@@ -156,10 +156,10 @@ private List<String> playerResultsName;
         secondTime.draw(sb, "" + playerResults.get(1) + " " + textChoice.get(1), (float)(width * 0.3), (float)(height * 0.32));
         thirdTime.draw(sb, "" + playerResults.get(2) + " " + textChoice.get(2), (float)(width * 0.3), (float)(height * 0.19));
         fourthTime.draw(sb, "" + playerResults.get(3) + " " + textChoice.get(3), (float)(width * 0.3), (float)(height * 0.06));
-        sb.draw(playerImages.get(0), (float)(width * 0.7), (float)(height * 0.37), scaleWidthImage, scaleImage);
-        sb.draw(playerImages.get(1), (float)(width * 0.7), (float)(height * 0.24), scaleWidthImage, scaleImage);
-        sb.draw(playerImages.get(2), (float)(width * 0.7), (float)(height * 0.11), scaleWidthImage, scaleImage);
-        sb.draw(playerImages.get(3), (float)(width * 0.7), (float)(height * 0.08 - height * 0.1), scaleWidthImage, scaleImage);
+        sb.draw(playerImages.get(0), (float)(width * 0.72), (float)(height * 0.36), scaleWidthImage, scaleImage);
+        sb.draw(playerImages.get(1), (float)(width * 0.72), (float)(height * 0.23), scaleWidthImage, scaleImage);
+        sb.draw(playerImages.get(2), (float)(width * 0.72), (float)(height * 0.10), scaleWidthImage, scaleImage);
+        sb.draw(playerImages.get(3), (float)(width * 0.72), (float)(height * 0.07 - height * 0.1), scaleWidthImage, scaleImage);
         sb.end();
     }
 
