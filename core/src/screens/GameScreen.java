@@ -162,6 +162,8 @@ public class GameScreen extends Screen {
         if (Gdx.input.justTouched()) {
             int pointerX = Gdx.input.getX(0);
             int pointerY = Gdx.input.getY(0);
+            System.out.println("X: " + pointerX);
+            System.out.println("Y: " + pointerY);
 
             if (blockTower.getCurrentHeight() != 0 && timeoutTime < System.currentTimeMillis()) {
                 if (isBoundedByBtn(0, pointerX, pointerY)) {
@@ -213,12 +215,10 @@ public class GameScreen extends Screen {
                 Integer num = 4-otherPlayers.get(i).size();
                 for (int j = 0; j < num; j++) {
                     tempTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
-                    System.out.println(j);
                 }
                 otherPlayers.set(i, tempTower);
             }
         }
-        System.out.println("all towers " + otherPlayers.toString());
     }
     @Override
     public void update() {
