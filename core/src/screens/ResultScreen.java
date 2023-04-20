@@ -11,7 +11,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ResultScreen extends Screen {
 
@@ -102,18 +105,30 @@ private List<String> playerResultsName;
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
     }
 
+    @SuppressWarnings("NewApi")
     public void getResults(){
         List<String> results = FBIF.getResults(lobbyCode);
         List<String> resultsName = FBIF.updatePlayerList(lobbyCode);
+        Map<String, String> mappingTime = new HashMap<>();
+        Map<String, Integer> mappingId = new HashMap<>();
+        for (int i = 0; i < resultsName.size(); i++) {
+            mappingTime.put(results.get(i), resultsName.get(i));
+            mappingId.put(resultsName.get(i), i+1);
+        }
+        results.stream().sorted().collect(Collectors.toList());
         for (int i = 0; i < results.size(); i++) {
             playerResults.set(i, results.get(i));
-            playerResultsName.set(i, resultsName.get(i));
+            playerResultsName.set(i, mappingTime.get(results.get(i)));
             if (i < results.size() - 1) {
                 textChoice.set(i, "sec");
             } else if (i == results.size() - 1){
-                textChoice.set(i, "blocks");
+                if (Integer.parseInt(playerResults.get(i)) == 1 ) {
+                    textChoice.set(i, "block");
+                } else {
+                    textChoice.set(i, "blocks");
+                }
             }
-            String path = "" + "p" + String.valueOf(i+1) + ".png";
+            String path = "" + "p" + String.valueOf(mappingId.get(playerResultsName.get(i))) + ".png";
             playerImages.set(i, new Texture(path));
         }
     }
