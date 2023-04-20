@@ -1,5 +1,7 @@
 package screens;
 
+import static com.mygdx.bottomsup.BottomsUp.FBIF;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ResultScreen extends Screen {
 
@@ -27,9 +32,13 @@ public class ResultScreen extends Screen {
     private BitmapFont third;
     private BitmapFont fourth;
 
-    public ResultScreen(GameScreenManager gsm) {
+    private String lobbyCode;
+    private List<String> playerResults;
 
+    public ResultScreen(GameScreenManager gsm, String lobbyCode) {
         super(gsm);
+        this.lobbyCode = lobbyCode;
+        playerResults = Arrays.asList("", "", "", "");
         backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("darkerBackground.png");
         logo = new Texture("bottomsUpLogoNoText.png");
@@ -59,6 +68,13 @@ public class ResultScreen extends Screen {
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
     }
 
+    public void getResults(){
+        List<String> results = FBIF.getResults(lobbyCode);
+        for (int i = 0; i < results.size(); i++) {
+            playerResults.set(i, results.get(i));
+        }
+    }
+
     @Override
     protected void handleInput() {
         if (Gdx.input.justTouched()) {
@@ -74,6 +90,7 @@ public class ResultScreen extends Screen {
     @Override
     public void update() {
         handleInput();
+        getResults();
     }
 
     @Override
@@ -84,10 +101,10 @@ public class ResultScreen extends Screen {
         sb.draw(logo, (float)(width * 0.25), (float)(height * 0.7), scaleWidth, scaleLogo);
         sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
         resultText.draw(sb, "Results!", (float)(width * 0.2), (float)(height * 0.65));
-        first.draw(sb, "1.", (float)(width * 0.05), (float)(height * 0.5));
-        second.draw(sb, "2.", (float)(width * 0.05), (float)(height * 0.37));
-        third.draw(sb, "3.", (float)(width * 0.05), (float)(height * 0.24));
-        fourth.draw(sb, "4.", (float)(width * 0.05), (float)(height * 0.11));
+        first.draw(sb, "1.    " + playerResults.get(0), (float)(width * 0.05), (float)(height * 0.5));
+        second.draw(sb, "2.    " + playerResults.get(1), (float)(width * 0.05), (float)(height * 0.37));
+        third.draw(sb, "3.    " + playerResults.get(2), (float)(width * 0.05), (float)(height * 0.24));
+        fourth.draw(sb, "4.    " + playerResults.get(3), (float)(width * 0.05), (float)(height * 0.11));
         sb.end();
     }
 

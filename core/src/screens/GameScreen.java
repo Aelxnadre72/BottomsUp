@@ -1,12 +1,11 @@
 package screens;
 
+import static com.mygdx.bottomsup.BottomsUp.FBIF;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import static com.mygdx.bottomsup.BottomsUp.FBIF;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -241,7 +240,7 @@ public class GameScreen extends Screen {
                 FBIF.setResult(lobbyCode, playerId, String.valueOf(blocksLeft));
             }
             //finish time in seconds is already sent to database for those that did not finish last
-            gsm.set(new ResultScreen(gsm));
+            gsm.set(new ResultScreen(gsm, lobbyCode));
         }
     }
 
