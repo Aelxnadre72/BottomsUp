@@ -87,6 +87,7 @@ public class GameScreen extends Screen {
 
     private long isFinished = 0;
     private boolean gameOver = false;
+    private boolean solo = false;
 
     public GameScreen(GameScreenManager gsm, String playerId, String lobbyCode) {
         super(gsm);
@@ -187,6 +188,9 @@ public class GameScreen extends Screen {
                     isFinished = 1;
                     // send finishTime to players database here:
                     FBIF.setResult(lobbyCode, playerId, String.valueOf(finishTime));
+                    if (solo) {
+                        gameOver = true;
+                    }
                 }
             }
 
@@ -205,7 +209,11 @@ public class GameScreen extends Screen {
                 count += 1;
             }
         }
-        if(count + isFinished == otherPlayers.size()) {
+        if (count == 0) {
+            solo = true;
+        }
+
+        if(count + isFinished == otherPlayers.size() && !solo) {
             gameOver = true;
         }
 
