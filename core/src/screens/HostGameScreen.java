@@ -61,10 +61,11 @@ public class HostGameScreen extends Screen{
                     scaleButton,
                     scaleButton);
             Gdx.input.setOnscreenKeyboardVisible(false);
-            setNameField(nameValue, 60, new Color(0x7999B6ff));
+            setNameField(nameValue, (int)height*1/30, new Color(0x7999B6ff));
+            FreeTypeFontGenerator.setMaxTextureSize(2048);
             FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
             FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            parameter.size = 80;
+            parameter.size = (int)height*1/24;
             parameter.color = new Color(0x022444ff);
             hostGameText = generator.generateFont(parameter);
             enterNicknameText = generator.generateFont(parameter);
@@ -76,13 +77,13 @@ public class HostGameScreen extends Screen{
                     if ((boundsNicknameField.contains(x, y))) {
                         focus = 'b';
                         if (nameValue.equals("Enter nickname")) {
-                            setNameField("", 80, new Color(0x022444ff));
+                            setNameField("", (int)height*1/24, new Color(0x022444ff));
                         }
                         Gdx.input.setOnscreenKeyboardVisible(true);
                     } else {
                         Gdx.input.setOnscreenKeyboardVisible(false);
                         if (nameValue.isEmpty()) {
-                            setNameField("Enter nickname", 60, new Color(0x7999B6ff));
+                            setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                         }
                     }
                     return true;
@@ -96,7 +97,7 @@ public class HostGameScreen extends Screen{
                             case Input.Keys.ENTER:
                                 Gdx.input.setOnscreenKeyboardVisible(false);
                                 if (nameValue.isEmpty()) {
-                                    setNameField("Enter nickname", 60, new Color(0x7999B6ff));
+                                    setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                                 }
                                 break;
                         }
@@ -275,7 +276,7 @@ public class HostGameScreen extends Screen{
                             case Input.Keys.ENTER:
                                 Gdx.input.setOnscreenKeyboardVisible(false);
                                 if (nameValue.isEmpty()) {
-                                    setNameField("Enter nickname", 60, new Color(0x7999B6ff));
+                                    setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                                 }
                                 break;
 
@@ -334,8 +335,8 @@ public class HostGameScreen extends Screen{
             sb.draw(hostGameButton, (float)(width * 0.2), (float)(height * 0.25), scaleWidth, scaleHeight);
             sb.draw(backButton, (float)(width * 0.05), (float)(height * 0.9), scaleButton, scaleButton);
             sb.draw(logo, (float)(width * 0.2), (float)(height * 0.55), scaleWidth, scaleLogo);
-            name.draw(sb, nameValue, (float)(width * 0.275), (float)(height * 0.46));
-            hostGameText.draw(sb, "Host game", (float)(width * 0.28), (float)(height * 0.31));
+            name.draw(sb, nameValue, (float)(width * 0.24), (float)(height * 0.46));
+            hostGameText.draw(sb, "Host game", (float)(width * 0.275), (float)(height * 0.315));
             sb.end();
         }
 

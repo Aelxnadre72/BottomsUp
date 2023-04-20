@@ -74,11 +74,12 @@ public class JoinGameScreen extends Screen {
                 scaleButton,
                 scaleButton);
         Gdx.input.setOnscreenKeyboardVisible(false);
-        setPinField(codeValue, 60, new Color(0x7999B6ff));
-        setNameField(nameValue, 60, new Color(0x7999B6ff));
+        setPinField(codeValue, (int)height*1/30, new Color(0x7999B6ff));
+        setNameField(nameValue, (int)height*1/30, new Color(0x7999B6ff));
+        FreeTypeFontGenerator.setMaxTextureSize(2048);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 80;
+        parameter.size = (int)height*1/24;
         parameter.color = new Color(0x022444ff);
         enterGameText = generator.generateFont(parameter);
         enterNicknameText = generator.generateFont(parameter);
@@ -90,14 +91,14 @@ public class JoinGameScreen extends Screen {
                 if (boundsJoinField.contains(x, y)) {
                     focus = 'a';
                     if (codeValue.equals("Enter game pin")) {
-                        setPinField("", 80, new Color(0x022444ff));
+                        setPinField("", (int)height*1/24, new Color(0x022444ff));
                     }
                     Gdx.input.setOnscreenKeyboardVisible(true);
                     keyboardAdjustment = (float) (height * 0.15);
                 } else if ((boundsNicknameField.contains(x, y))) {
                     focus = 'b';
                     if (nameValue.equals("Enter nickname")) {
-                        setNameField("", 80, new Color(0x022444ff));
+                        setNameField("", (int)height*1/24, new Color(0x022444ff));
                     }
                     Gdx.input.setOnscreenKeyboardVisible(true);
                     keyboardAdjustment = (float) (height * 0.15);
@@ -105,10 +106,10 @@ public class JoinGameScreen extends Screen {
                     Gdx.input.setOnscreenKeyboardVisible(false);
                     keyboardAdjustment = 0;
                     if (codeValue.isEmpty()) {
-                        setPinField("Enter game pin", 60, new Color(0x7999B6ff));
+                        setPinField("Enter game pin", (int)height*1/30, new Color(0x7999B6ff));
                     }
                     if (nameValue.isEmpty()) {
-                        setNameField("Enter nickname", 60, new Color(0x7999B6ff));
+                        setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                     }
                 }
                 return true;
@@ -189,7 +190,7 @@ public class JoinGameScreen extends Screen {
                             Gdx.input.setOnscreenKeyboardVisible(false);
                             keyboardAdjustment = 0;
                             if (codeValue.isEmpty()) {
-                                setPinField("Enter game pin", 60, new Color(0x7999B6ff));
+                                setPinField("Enter game pin", (int)height*1/30, new Color(0x7999B6ff));
                             }
                             break;
                     }
@@ -369,7 +370,7 @@ public class JoinGameScreen extends Screen {
                             Gdx.input.setOnscreenKeyboardVisible(false);
                             keyboardAdjustment = 0;
                             if (nameValue.isEmpty()) {
-                                setNameField("Enter nickname", 60, new Color(0x7999B6ff));
+                                setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                             }
                             break;
 
@@ -465,9 +466,9 @@ public class JoinGameScreen extends Screen {
         sb.draw(enterButton, (float)(width * 0.2), (float)(height * 0.15), scaleWidth, scaleHeight);
         sb.draw(backButton, (float)(width * 0.05), (float)(height * 0.9), scaleButton, scaleButton);
         sb.draw(logo, (float)(width * 0.2), (float)(height * 0.55 + keyboardAdjustment), scaleWidth, scaleLogo);
-        code.draw(sb, codeValue, (float)(width * 0.275), (float)(height * 0.46 + keyboardAdjustment));
-        name.draw(sb, nameValue, (float)(width * 0.275), (float)(height * 0.36 + keyboardAdjustment));
-        enterGameText.draw(sb, "Enter game", (float)(width * 0.28), (float)(height * 0.21));
+        code.draw(sb, codeValue, (float)(width * 0.24), (float)(height * 0.46 + keyboardAdjustment));
+        name.draw(sb, nameValue, (float)(width * 0.24), (float)(height * 0.36 + keyboardAdjustment));
+        enterGameText.draw(sb, "Enter game", (float)(width * 0.26), (float)(height * 0.215));
         sb.end();
     }
 
