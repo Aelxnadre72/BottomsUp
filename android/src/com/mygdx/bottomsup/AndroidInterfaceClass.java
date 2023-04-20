@@ -78,11 +78,12 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 else {
                     lobbyId[0] = task.getResult().getChildrenCount();
                     handleJoinSuccess(task);
-
-                    if(lobbyId[0] < 4 && task.getResult().child("1").child("blockTower").getValue().toString().equals("4")) {
-                        myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("name").setValue(name);
-                        myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("blockTower").setValue(blockTower);
-                        myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("result").setValue("0");
+                    if(task.getResult().child("1").child("blockTower").getValue() != null) {
+                        if(lobbyId[0] < 4 && task.getResult().child("1").child("blockTower").getValue().toString().equals("4")) {
+                            myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("name").setValue(name);
+                            myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("blockTower").setValue(blockTower);
+                            myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("result").setValue("0");
+                        }
                     }
                 }
             }
@@ -107,8 +108,13 @@ public class AndroidInterfaceClass implements FireBaseInterface{
 
     private void handleJoinSuccess(Task<DataSnapshot> task) {
         this.playerCount = task.getResult().getChildrenCount();
-        String hostTower = task.getResult().child("1").child("blockTower").getValue().toString();
-        if(!hostTower.equals("4")) {
+        if(task.getResult().child("1").child("blockTower").getValue() != null) {
+            String hostTower = task.getResult().child("1").child("blockTower").getValue().toString();
+            if(!hostTower.equals("4")) {
+                unavailableLobby = true;
+            }
+        }
+        else {
             unavailableLobby = true;
         }
     }

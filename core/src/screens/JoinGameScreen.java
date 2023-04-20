@@ -431,7 +431,8 @@ public class JoinGameScreen extends Screen {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsEnterButton.contains(x, y)) {
-                if(codeValue.equals("Enter game pin") || nameValue.equals("Enter nickname")){
+                if(codeValue.equals("Enter game pin") || nameValue.equals("Enter nickname") ||
+                        nameValue.equals("") || codeValue.equals("")){
                     System.out.println("Enter game pin and name");
                     errorMessageValue = "Enter game pin and name";
                     return;
