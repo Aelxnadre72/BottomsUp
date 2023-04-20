@@ -13,8 +13,8 @@ public class ResultScreen extends Screen {
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
 
-    float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
-    float scaleLogo = (float)(scaleWidth * 0.9);
+    float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.5);
+    float scaleLogo = (float)(scaleWidth * 0.85);
     private float scaleExit = (float)(Gdx.graphics.getWidth() * 0.1);
     private Texture backgroundUpper;
     private Texture backgroundLower;
@@ -39,15 +39,16 @@ public class ResultScreen extends Screen {
                 (float)(height * 0.08) - scaleExit,
                 scaleExit,
                 scaleExit);
+        FreeTypeFontGenerator.setMaxTextureSize(2048);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 164;
+        parameter.size = (int)height*1/13;
         parameter.color = new Color(0x022444ff);
         resultText = generator.generateFont(parameter);
         parameter.borderColor = new Color(0xffffffff);
         parameter.borderWidth = 5;
         parameter.characters = "1234.!";
-        parameter.size = 169;
+        parameter.size = (int)height*1/12;
         fourth = generator.generateFont(parameter);
         parameter.color = new Color(0xFFD700ff);
         first = generator.generateFont(parameter);
@@ -80,9 +81,9 @@ public class ResultScreen extends Screen {
         sb.begin();
         sb.draw(backgroundUpper, 0, 0, width, height);
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.55));
-        sb.draw(logo, (float)(width * 0.2), (float)(height * 0.67), scaleWidth, scaleLogo);
+        sb.draw(logo, (float)(width * 0.25), (float)(height * 0.7), scaleWidth, scaleLogo);
         sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
-        resultText.draw(sb, "Results!", (float)(width * 0.19), (float)(height * 0.65));
+        resultText.draw(sb, "Results!", (float)(width * 0.2), (float)(height * 0.65));
         first.draw(sb, "1.", (float)(width * 0.05), (float)(height * 0.5));
         second.draw(sb, "2.", (float)(width * 0.05), (float)(height * 0.37));
         third.draw(sb, "3.", (float)(width * 0.05), (float)(height * 0.24));

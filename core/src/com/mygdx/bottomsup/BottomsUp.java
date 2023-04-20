@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import screens.GameScreen;
 import screens.GameScreenManager;
-import screens.JoinGameScreen;
 import screens.MainMenuScreen;
 
 
