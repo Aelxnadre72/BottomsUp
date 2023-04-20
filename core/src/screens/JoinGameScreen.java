@@ -429,7 +429,12 @@ public class JoinGameScreen extends Screen {
                 }
                 String success = FBIF.joinLobby(codeValue, nameValue, "4");
                 System.out.println(success);
-                if (success.equals("false") || nameValue.isEmpty()) {
+                if (success.equals("unavailable")) {
+                    // add text "The lobby is expired/not available
+                    System.out.println("The lobby is unavailable");
+                    return;
+                }
+                else if (success.equals("full") || nameValue.isEmpty()) {
                     // add text "The lobby is full"
                     System.out.println("The lobby is full");
                     return;

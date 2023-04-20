@@ -247,6 +247,10 @@ public class GameScreen extends Screen {
 
 @Override
     public void render(SpriteBatch sb) {
+        if(lastUpdateTime == 0) {
+            update();
+            lastUpdateTime = System.currentTimeMillis();
+        }
 
         sb.begin();
         sb.draw(background, 0, 0, width, height);

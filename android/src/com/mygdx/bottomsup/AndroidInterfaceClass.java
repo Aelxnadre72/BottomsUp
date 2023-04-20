@@ -22,6 +22,8 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     String lobbyId;
     long playerCount = 0;
 
+    boolean unavailableLobby = false;
+
     List<String> playerList;
 
     List<List<Integer>> opponentTowers;
@@ -68,7 +70,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     @Override
     public String joinLobby(String code, String name, String blockTower) {
         long[] lobbyId = new long[1];
-
+        unavailableLobby = false;
         myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
             @Override
@@ -79,7 +81,8 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                 else {
                     lobbyId[0] = task.getResult().getChildrenCount();
                     handleJoinSuccess(task);
-                    if(lobbyId[0] < 4) {
+
+                    if(lobbyId[0] < 4 && task.getResult().child("1").child("blockTower").getValue().toString().equals("4")) {
                         myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("name").setValue(name);
                         myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("blockTower").setValue(blockTower);
                         myRef.child("lobbies").child(code).child(String.valueOf(lobbyId[0]+1)).child("result").setValue("0");
@@ -94,16 +97,23 @@ public class AndroidInterfaceClass implements FireBaseInterface{
             throw new RuntimeException(e);
         }
 
-        if(playerCount > 3) {
-            return "false";
+        if(unavailableLobby) {
+            return "unavailable";
+        }
+        else if(playerCount > 3) {
+            return "full";
         }
         else {
-            return "true";
+            return "success";
         }
     }
 
     private void handleJoinSuccess(Task<DataSnapshot> task) {
         this.playerCount = task.getResult().getChildrenCount();
+        String hostTower = task.getResult().child("1").child("blockTower").getValue().toString();
+        if(!hostTower.equals("4")) {
+            unavailableLobby = true;
+        }
     }
 
     @Override
