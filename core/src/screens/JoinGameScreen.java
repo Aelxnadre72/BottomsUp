@@ -32,12 +32,15 @@ public class JoinGameScreen extends Screen {
     private String codeValue = "Enter game pin";
 
     private String nameValue = "Enter nickname";
+    private String errorMessageValue = "";
+
     private BitmapFont code;
     private char focus;
 
     private BitmapFont name;
     private BitmapFont enterGameText;
     private BitmapFont enterNicknameText;
+    private BitmapFont errorMessage;
     private Texture joinField;
 
     private Texture nicknameField;
@@ -83,6 +86,9 @@ public class JoinGameScreen extends Screen {
         parameter.color = new Color(0x022444ff);
         enterGameText = generator.generateFont(parameter);
         enterNicknameText = generator.generateFont(parameter);
+        parameter.color = new Color(0xe21617ff);
+        parameter.size = (int)height*1/34;
+        errorMessage = generator.generateFont(parameter);
         generator.dispose();
 
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -104,6 +110,7 @@ public class JoinGameScreen extends Screen {
                     keyboardAdjustment = (float) (height * 0.15);
                 } else {
                     Gdx.input.setOnscreenKeyboardVisible(false);
+                    errorMessageValue = "";
                     keyboardAdjustment = 0;
                     if (codeValue.isEmpty()) {
                         setPinField("Enter game pin", (int)height*1/30, new Color(0x7999B6ff));
@@ -188,6 +195,7 @@ public class JoinGameScreen extends Screen {
 
                         case Input.Keys.ENTER:
                             Gdx.input.setOnscreenKeyboardVisible(false);
+                            errorMessageValue = "";
                             keyboardAdjustment = 0;
                             if (codeValue.isEmpty()) {
                                 setPinField("Enter game pin", (int)height*1/30, new Color(0x7999B6ff));
@@ -369,6 +377,7 @@ public class JoinGameScreen extends Screen {
                         case Input.Keys.ENTER:
                             Gdx.input.setOnscreenKeyboardVisible(false);
                             keyboardAdjustment = 0;
+                            errorMessageValue = "";
                             if (nameValue.isEmpty()) {
                                 setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                             }
@@ -422,10 +431,16 @@ public class JoinGameScreen extends Screen {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (boundsEnterButton.contains(x, y)) {
+                if(codeValue.equals("Enter game pin") || nameValue.equals("Enter nickname")){
+                    System.out.println("Enter game pin and name");
+                    errorMessageValue = "Enter game pin and name";
+                    return;
+                }
                 List<String> playersFromDatabase = FBIF.updatePlayerList(codeValue);
                 if(playersFromDatabase.contains(nameValue)) {
                     // add text "the player name is taken"
                     System.out.println("The player name is taken");
+                    errorMessageValue = "The player name is taken";
                     return;
                 }
                 String success = FBIF.joinLobby(codeValue, nameValue, "4");
@@ -433,11 +448,13 @@ public class JoinGameScreen extends Screen {
                 if (success.equals("unavailable")) {
                     // add text "The lobby is expired/not available
                     System.out.println("The lobby is unavailable");
+                    errorMessageValue = "The lobby is unavailable";
                     return;
                 }
                 else if (success.equals("full") || nameValue.isEmpty()) {
                     // add text "The lobby is full"
                     System.out.println("The lobby is full");
+                    errorMessageValue = "The lobby is full";
                     return;
                 } else {
                     gsm.set(new LobbyScreen(gsm, codeValue, nameValue));
@@ -469,6 +486,7 @@ public class JoinGameScreen extends Screen {
         code.draw(sb, codeValue, (float)(width * 0.24), (float)(height * 0.46 + keyboardAdjustment));
         name.draw(sb, nameValue, (float)(width * 0.24), (float)(height * 0.36 + keyboardAdjustment));
         enterGameText.draw(sb, "Enter game", (float)(width * 0.26), (float)(height * 0.215));
+        errorMessage.draw(sb, errorMessageValue, (float)(width * 0.1), (float)(height * 0.28));
         sb.end();
     }
 
