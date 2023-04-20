@@ -20,6 +20,9 @@ public class ResultScreen extends Screen {
 
     float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.5);
     float scaleLogo = (float)(scaleWidth * 0.85);
+
+    float scaleWidthImage = (float)(Gdx.graphics.getWidth() * 0.23);
+    float scaleImage = (float)(scaleWidthImage * 14/10);
     private float scaleExit = (float)(Gdx.graphics.getWidth() * 0.1);
     private Texture backgroundUpper;
     private Texture backgroundLower;
@@ -32,14 +35,32 @@ public class ResultScreen extends Screen {
     private BitmapFont third;
     private BitmapFont fourth;
 
+    private BitmapFont firstName;
+    private BitmapFont secondName;
+    private BitmapFont thirdName;
+    private BitmapFont fourthName;
+
+    private BitmapFont firstTime;
+    private BitmapFont secondTime;
+    private BitmapFont thirdTime;
+    private BitmapFont fourthTime;
+
     private String lobbyCode;
     private List<String> playerResults;
+    private List<String> textChoice;
+
+    private List<Texture> playerImages;
 private List<String> playerResultsName;
     public ResultScreen(GameScreenManager gsm, String lobbyCode) {
         super(gsm);
         this.lobbyCode = lobbyCode;
         playerResults = Arrays.asList("", "", "", "");
         playerResultsName = Arrays.asList("", "", "", "");
+        textChoice = Arrays.asList("", "", "", "");
+        playerImages = Arrays.asList(new Texture("invisibleBlock.png"),
+                new Texture("invisibleBlock.png"),
+                new Texture("invisibleBlock.png"),
+                new Texture("invisibleBlock.png"));
         backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("darkerBackground.png");
         logo = new Texture("bottomsUpLogoNoText.png");
@@ -55,6 +76,18 @@ private List<String> playerResultsName;
         parameter.size = (int)height*1/13;
         parameter.color = new Color(0x022444ff);
         resultText = generator.generateFont(parameter);
+        parameter.size = (int)height*1/24;
+        parameter.color = new Color(0xffffffff);
+        firstName = generator.generateFont(parameter);
+        secondName = generator.generateFont(parameter);
+        thirdName = generator.generateFont(parameter);
+        fourthName = generator.generateFont(parameter);
+        parameter.size = (int)height*1/30;
+        firstTime = generator.generateFont(parameter);
+        secondTime = generator.generateFont(parameter);
+        thirdTime = generator.generateFont(parameter);
+        fourthTime = generator.generateFont(parameter);
+        parameter.color = new Color(0x022444ff);
         parameter.borderColor = new Color(0xffffffff);
         parameter.borderWidth = 5;
         parameter.characters = "1234.!";
@@ -75,6 +108,13 @@ private List<String> playerResultsName;
         for (int i = 0; i < results.size(); i++) {
             playerResults.set(i, results.get(i));
             playerResultsName.set(i, resultsName.get(i));
+            if (i < results.size() - 1) {
+                textChoice.set(i, "sec");
+            } else if (i == results.size() - 1){
+                textChoice.set(i, "blocks");
+            }
+            String path = "" + "p" + String.valueOf(i+1) + ".png";
+            playerImages.set(i, new Texture(path));
         }
     }
 
@@ -104,10 +144,22 @@ private List<String> playerResultsName;
         sb.draw(logo, (float)(width * 0.25), (float)(height * 0.7), scaleWidth, scaleLogo);
         sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
         resultText.draw(sb, "Results!", (float)(width * 0.2), (float)(height * 0.65));
-        first.draw(sb, "1.    " + playerResultsName.get(0) + " " + playerResults.get(0), (float)(width * 0.05), (float)(height * 0.5));
-        second.draw(sb, "2.   " + playerResultsName.get(1) + " " + playerResults.get(1), (float)(width * 0.05), (float)(height * 0.37));
-        third.draw(sb, "3.    " + playerResultsName.get(2) + " " + playerResults.get(2), (float)(width * 0.05), (float)(height * 0.24));
-        fourth.draw(sb, "4.   " + playerResultsName.get(3) + " " + playerResults.get(3), (float)(width * 0.05), (float)(height * 0.11));
+        first.draw(sb, "1.", (float)(width * 0.05), (float)(height * 0.49));
+        second.draw(sb, "2.", (float)(width * 0.05), (float)(height * 0.36));
+        third.draw(sb, "3.", (float)(width * 0.05), (float)(height * 0.23));
+        fourth.draw(sb, "4.", (float)(width * 0.05), (float)(height * 0.1));
+        firstName.draw(sb, playerResultsName.get(0), (float)(width * 0.3), (float)(height * 0.5));
+        secondName.draw(sb, playerResultsName.get(1), (float)(width * 0.3), (float)(height * 0.37));
+        thirdName.draw(sb, playerResultsName.get(2), (float)(width * 0.3), (float)(height * 0.24));
+        fourthName.draw(sb, playerResultsName.get(3), (float)(width * 0.3), (float)(height * 0.11));
+        firstTime.draw(sb, "" + playerResults.get(0) + " " + textChoice.get(0), (float)(width * 0.3), (float)(height * 0.45));
+        secondTime.draw(sb, "" + playerResults.get(1) + " " + textChoice.get(1), (float)(width * 0.3), (float)(height * 0.32));
+        thirdTime.draw(sb, "" + playerResults.get(2) + " " + textChoice.get(2), (float)(width * 0.3), (float)(height * 0.19));
+        fourthTime.draw(sb, "" + playerResults.get(3) + " " + textChoice.get(3), (float)(width * 0.3), (float)(height * 0.06));
+        sb.draw(playerImages.get(0), (float)(width * 0.7), (float)(height * 0.37), scaleWidthImage, scaleImage);
+        sb.draw(playerImages.get(1), (float)(width * 0.7), (float)(height * 0.24), scaleWidthImage, scaleImage);
+        sb.draw(playerImages.get(2), (float)(width * 0.7), (float)(height * 0.11), scaleWidthImage, scaleImage);
+        sb.draw(playerImages.get(3), (float)(width * 0.7), (float)(height * 0.08 - height * 0.1), scaleWidthImage, scaleImage);
         sb.end();
     }
 
