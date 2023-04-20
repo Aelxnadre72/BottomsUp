@@ -71,11 +71,9 @@ private List<String> playerResultsName;
 
     public void getResults(){
         List<String> results = FBIF.getResults(lobbyCode);
-        List<String> resultsName = FBIF.getResultsName(lobbyCode);
+        List<String> resultsName = FBIF.updatePlayerList(lobbyCode);
         for (int i = 0; i < results.size(); i++) {
             playerResults.set(i, results.get(i));
-        }
-        for (int i = 0; i < resultsName.size(); i++) {
             playerResultsName.set(i, resultsName.get(i));
         }
     }

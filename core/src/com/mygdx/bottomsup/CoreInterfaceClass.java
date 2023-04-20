@@ -42,11 +42,6 @@ public class CoreInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public List<String> getResultsName(String code) {
-        return null;
-    }
-
-    @Override
     public void updateHighscore(String time) {
 
     }
