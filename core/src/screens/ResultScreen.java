@@ -74,6 +74,8 @@ private List<String> playerResultsName;
         List<String> resultsName = FBIF.getResultsName(lobbyCode);
         for (int i = 0; i < results.size(); i++) {
             playerResults.set(i, results.get(i));
+        }
+        for (int i = 0; i < resultsName.size(); i++) {
             playerResultsName.set(i, resultsName.get(i));
         }
     }

@@ -258,7 +258,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    handleResults(task);
+                    handleResultsName(task);
                 }
             }
         });
