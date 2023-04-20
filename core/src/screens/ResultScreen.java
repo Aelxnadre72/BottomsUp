@@ -34,11 +34,12 @@ public class ResultScreen extends Screen {
 
     private String lobbyCode;
     private List<String> playerResults;
-
+private List<String> playerResultsName;
     public ResultScreen(GameScreenManager gsm, String lobbyCode) {
         super(gsm);
         this.lobbyCode = lobbyCode;
         playerResults = Arrays.asList("", "", "", "");
+        playerResultsName = Arrays.asList("", "", "", "");
         backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("darkerBackground.png");
         logo = new Texture("bottomsUpLogoNoText.png");
@@ -70,8 +71,10 @@ public class ResultScreen extends Screen {
 
     public void getResults(){
         List<String> results = FBIF.getResults(lobbyCode);
+        List<String> resultsName = FBIF.getResultsName(lobbyCode);
         for (int i = 0; i < results.size(); i++) {
             playerResults.set(i, results.get(i));
+            playerResultsName.set(i, resultsName.get(i));
         }
     }
 
@@ -101,10 +104,10 @@ public class ResultScreen extends Screen {
         sb.draw(logo, (float)(width * 0.25), (float)(height * 0.7), scaleWidth, scaleLogo);
         sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
         resultText.draw(sb, "Results!", (float)(width * 0.2), (float)(height * 0.65));
-        first.draw(sb, "1.    " + playerResults.get(0), (float)(width * 0.05), (float)(height * 0.5));
-        second.draw(sb, "2.    " + playerResults.get(1), (float)(width * 0.05), (float)(height * 0.37));
-        third.draw(sb, "3.    " + playerResults.get(2), (float)(width * 0.05), (float)(height * 0.24));
-        fourth.draw(sb, "4.    " + playerResults.get(3), (float)(width * 0.05), (float)(height * 0.11));
+        first.draw(sb, "1.    " + playerResultsName.get(0) + " " + playerResults.get(0), (float)(width * 0.05), (float)(height * 0.5));
+        second.draw(sb, "2.   " + playerResultsName.get(1) + " " + playerResults.get(1), (float)(width * 0.05), (float)(height * 0.37));
+        third.draw(sb, "3.    " + playerResultsName.get(2) + " " + playerResults.get(2), (float)(width * 0.05), (float)(height * 0.24));
+        fourth.draw(sb, "4.   " + playerResultsName.get(3) + " " + playerResults.get(3), (float)(width * 0.05), (float)(height * 0.11));
         sb.end();
     }
 

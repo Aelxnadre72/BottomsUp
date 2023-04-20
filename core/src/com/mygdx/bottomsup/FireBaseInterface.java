@@ -14,6 +14,8 @@ public interface FireBaseInterface {
     public void setResult(String code, String playerId, String value);
     public void hostStartGame(String code);
 
+    List<String> getResultsName(String code);
+
     public void updateHighscore(String time);
 
     public List<String> updatePlayerList(String code);

@@ -11,7 +11,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -29,6 +28,7 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     List<List<Integer>> opponentTowers;
 
     List<String> resultsList;
+    List<String> resultsListName;
 
     public AndroidInterfaceClass() {
         database = FirebaseDatabase.getInstance();
@@ -247,6 +247,39 @@ public class AndroidInterfaceClass implements FireBaseInterface{
             results.add(child);
         }
         resultsList = results;
+    }
+
+    @Override
+    public List<String> getResultsName(String code) {
+        myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    handleResults(task);
+                }
+            }
+        });
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultsListName;
+    }
+
+    private void handleResultsName(Task<DataSnapshot> task) {
+        List<String> results = new ArrayList<>();
+        long playerCount = task.getResult().getChildrenCount();
+        for(int i = 1; i <= playerCount; i++) {
+            String child = task.getResult().child(String.valueOf(i)).child("name").getValue().toString();
+            results.add(child);
+        }
+        resultsListName = results;
     }
 
     @Override
