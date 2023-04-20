@@ -11,10 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ResultScreen extends Screen {
 
@@ -105,7 +102,6 @@ private List<String> playerResultsName;
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
     }
 
-    @SuppressWarnings("NewApi")
     public void getResults(){
         List<String> results = FBIF.getResults(lobbyCode);
         List<String> resultsName = FBIF.updatePlayerList(lobbyCode);
