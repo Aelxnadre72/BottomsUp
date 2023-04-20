@@ -17,18 +17,28 @@ public class CoreInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public void updateBlockTower(String id, String blockTower) {
+    public void updateBlockTower(String code, String playerId, String blockTower) {
 
     }
 
     @Override
-    public List<String> updateOthers() {
+    public List<List<Integer>> updateOthers(String code, String playerId) {
         return null;
     }
 
     @Override
-    public List<String> getResults() {
+    public List<String> getResults(String code) {
         return null;
+    }
+
+    @Override
+    public void setResult(String code, String playerId, String value) {
+
+    }
+
+    @Override
+    public void hostStartGame(String code) {
+
     }
 
     @Override
@@ -39,4 +49,4 @@ public class CoreInterfaceClass implements FireBaseInterface{
     @Override
     public List<String> updatePlayerList(String code) {return null; }
 
-    }
+}

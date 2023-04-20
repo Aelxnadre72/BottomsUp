@@ -82,7 +82,7 @@ public class BlockTower {
 
     // check if the next block has the same color as the argument
     public boolean checkNextBlock(String color) {
-        return numberToColor.get(blockList.get(0)) == color;
+        return numberToColor.get(blockList.get(0)).equals(color);
     }
 
     // Main
