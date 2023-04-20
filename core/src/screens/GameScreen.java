@@ -31,7 +31,6 @@ public class GameScreen extends Screen {
     private Texture boundsBtn3;
     private Texture timeoutSplash;
     private Texture cancelButton;
-    private Texture avatar;
     private Texture nametag1;
     private Texture nametag2;
     private Texture nametag3;
@@ -83,8 +82,12 @@ public class GameScreen extends Screen {
 
     private List<List<Integer>> otherPlayers;
     private List<Integer> mainBlockTower;
+
+    private Texture playerImage;
+
     private long isFinished = 0;
     private boolean gameOver = false;
+    private boolean solo = false;
 
     public GameScreen(GameScreenManager gsm, String playerId, String lobbyCode) {
         super(gsm);
@@ -93,6 +96,8 @@ public class GameScreen extends Screen {
         this.lobbyCode = lobbyCode;
         mainBlockTower = new ArrayList<>();
         otherPlayers = new ArrayList<>();
+        String path = "" + "p" + String.valueOf(playerId) + "InGame.png";
+        playerImage = new Texture(path);
         background = new Texture("background.png");
         background2 = new Texture("background2.png");
         nametag1 = new Texture("background2.png");
@@ -120,8 +125,6 @@ public class GameScreen extends Screen {
         secondView = new Texture("button.png");
         thirdView = new Texture("button.png");
         fourthView = new Texture("button.png");
-
-        avatar = new Texture("avatar.png");
 
         // width and height of phone screen
         width = Gdx.graphics.getWidth();
@@ -185,6 +188,9 @@ public class GameScreen extends Screen {
                     isFinished = 1;
                     // send finishTime to players database here:
                     FBIF.setResult(lobbyCode, playerId, String.valueOf(finishTime));
+                    if (solo) {
+                        gameOver = true;
+                    }
                 }
             }
 
@@ -203,7 +209,11 @@ public class GameScreen extends Screen {
                 count += 1;
             }
         }
-        if(count + isFinished == otherPlayers.size()) {
+        if (count == 0) {
+            solo = true;
+        }
+
+        if(count + isFinished == otherPlayers.size() && !solo) {
             gameOver = true;
         }
 
@@ -284,7 +294,7 @@ public class GameScreen extends Screen {
             drawTower(sb, mainBlockTower, 0);
             // avatar and name tags are drawn in both if and else since it needs to be behind the splat,
             // but in front of the blocks
-            sb.draw(avatar, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
+            sb.draw(playerImage, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
                     widthAvatar, heightAvatar);
             sb.draw(nametag1, 0, (float)(height * 0.84), widthMain, (float)(heightMain*0.105));
             sb.draw(nametag2, (width-(widthPlayers)), height-(float)(heightMain*0.105), widthPlayers,
@@ -295,7 +305,7 @@ public class GameScreen extends Screen {
                     (float)(heightMain*0.105));
         }
         else {
-            sb.draw(avatar, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
+            sb.draw(playerImage, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
                     widthAvatar, heightAvatar);
             sb.draw(nametag1, 0, (float)(height * 0.84), widthMain, (float)(heightMain*0.105));
             sb.draw(nametag2, (width-(widthPlayers)), height-(float)(heightMain*0.105), widthPlayers,
