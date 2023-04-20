@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ResultScreen extends Screen {
@@ -106,20 +108,52 @@ private List<String> playerResultsName;
         List<String> results = FBIF.getResults(lobbyCode);
         List<String> resultsName = FBIF.updatePlayerList(lobbyCode);
 
-        for (int i = 0; i < results.size(); i++) {
-            playerResults.set(i, results.get(i));
-            playerResultsName.set(i, resultsName.get(i);
-            if (i < results.size() - 1) {
-                textChoice.set(i, "sec");
-            } else if (i == results.size() - 1){
-                if (Integer.parseInt(playerResults.get(i)) == 1 ) {
-                    textChoice.set(i, "block");
-                } else {
-                    textChoice.set(i, "blocks");
+        List<String> tempPlayerResultsName = new ArrayList<>();
+        List<String> tempPlayerResults;
+
+        for(int i = 0; i < results.size(); i ++) {
+            if(results.get(i).contains("block")) {
+                String lastPlaceName = resultsName.remove(i);
+                String lastPlaceValue = results.remove(i);
+                String path = "" + "p" + String.valueOf(i+1) + ".png";
+                System.out.println("Size after remove: " + results.size());
+                playerImages.set(results.size(), new Texture(path));
+
+                tempPlayerResults = results;
+                Collections.sort(tempPlayerResults);
+                for(int j = 0; j < tempPlayerResults.size(); j++) {
+                    for(int k = 0; k < resultsName.size(); k++){
+                        if(tempPlayerResults.get(j).equals(results.get(k))) {
+                            tempPlayerResultsName.add(resultsName.remove(k));
+                            path = "" + "p" + String.valueOf(k+2) + ".png";
+                            playerImages.set(j, new Texture(path));
+                            break;
+                        }
+                    }
                 }
+                tempPlayerResultsName.add(lastPlaceName);
+                tempPlayerResults.add(lastPlaceValue);
+                Integer excessNum = 4-tempPlayerResults.size();
+                Integer secNum = tempPlayerResults.size()-1;
+
+                for (int j = 0; j < 4; j ++) {
+                    if(j < secNum) {
+                        tempPlayerResults.set(j, tempPlayerResults.get(j) + " sec");
+                    }
+                    if(j < excessNum) {
+                        System.out.println("less: " + j);
+                        tempPlayerResultsName.add("");
+                        tempPlayerResults.add("");
+                    }
+                }
+                System.out.println("names: " + tempPlayerResultsName.toString());
+                System.out.println("values: " + tempPlayerResults.toString());
+                System.out.println("images: " + playerImages.toString());
+
+                playerResultsName = tempPlayerResultsName;
+                playerResults = tempPlayerResults;
+                break;
             }
-            String path = "" + "p" + String.valueOf(i+1) + ".png";
-            playerImages.set(i, new Texture(path));
         }
     }
 

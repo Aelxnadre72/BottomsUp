@@ -91,7 +91,7 @@ public class GameScreen extends Screen {
 
     public GameScreen(GameScreenManager gsm, String playerId, String lobbyCode) {
         super(gsm);
-        blockTower = new BlockTower(50);
+        blockTower = new BlockTower(5);
         this.playerId = playerId;
         this.lobbyCode = lobbyCode;
         mainBlockTower = new ArrayList<>();
@@ -246,8 +246,12 @@ public class GameScreen extends Screen {
         if(gameOver) {
             if(isFinished == 0) {
                 int blocksLeft = blockTower.getCurrentHeight();
+                String lastPlaceResult = String.valueOf(blocksLeft) + " blocks";
+                if (blocksLeft == 1) {
+                    lastPlaceResult = String.valueOf(blocksLeft) + " block";
+                }
                 //send how many blocks left to database
-                FBIF.setResult(lobbyCode, playerId, String.valueOf(blocksLeft));
+                FBIF.setResult(lobbyCode, playerId, lastPlaceResult);
             }
             //finish time in seconds is already sent to database for those that did not finish last
             gsm.set(new ResultScreen(gsm, lobbyCode));
