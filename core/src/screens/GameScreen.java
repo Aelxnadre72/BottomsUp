@@ -322,19 +322,18 @@ public class GameScreen extends Screen {
         double excessVertically = 0;
 
         if(placement != 0) {
-            System.out.println("elise sin");
             shiftRight = 0.93;
-            resize = 0.4;
-            excessVertically = widthMainBlock * 0.6;
+            resize = 0.38;
+            excessVertically = widthMainBlock * 0.62;
             if(placement == 1) {
-                shiftVertically = (height * 0.38);
+                shiftVertically = (height * 0.379);
             }
             else if(placement == 2) {
-                shiftVertically = (height * 0.1);
+                shiftVertically = (height * 0.135);
 
             }
             else {
-                shiftVertically = (height * -0.1);
+                shiftVertically = (height * -0.108);
 
             }
         }
