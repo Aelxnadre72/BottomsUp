@@ -105,7 +105,7 @@ public class HostLobbyScreen extends Screen {
                 FBIF.hostStartGame(lobbyCode);
                 // the other players has a 1 second delay on the start signal from the database
                 try {
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.MILLISECONDS.sleep(1400);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
