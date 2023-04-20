@@ -109,7 +109,7 @@ private List<String> playerResultsName;
         List<String> resultsName = FBIF.updatePlayerList(lobbyCode);
 
         List<String> tempPlayerResultsName = new ArrayList<>();
-        List<String> tempPlayerResults;
+        List<String> tempPlayerResults = new ArrayList<>();
 
         for(int i = 0; i < results.size(); i ++) {
             if(results.get(i).contains("block")) {
@@ -119,13 +119,22 @@ private List<String> playerResultsName;
                 System.out.println("Size after remove: " + results.size());
                 playerImages.set(results.size(), new Texture(path));
 
-                tempPlayerResults = results;
-                Collections.sort(tempPlayerResults);
+
+                List<Integer> tempSortList = new ArrayList<>();
+                for(String numString : results) {
+                    tempSortList.add(Integer.parseInt(numString));
+                }
+                Collections.sort(tempSortList);
+                for(int num : tempSortList) {
+                    tempPlayerResults.add(String.valueOf(num));
+                }
+
                 for(int j = 0; j < tempPlayerResults.size(); j++) {
                     for(int k = 0; k < resultsName.size(); k++){
                         if(tempPlayerResults.get(j).equals(results.get(k))) {
-                            tempPlayerResultsName.add(resultsName.remove(k));
-                            path = "" + "p" + String.valueOf(k+2) + ".png";
+                            tempPlayerResultsName.add(resultsName.get(k));
+                            resultsName.set(k, "");
+                            path = "" + "p" + String.valueOf(k+1) + ".png";
                             playerImages.set(j, new Texture(path));
                             break;
                         }
@@ -133,6 +142,12 @@ private List<String> playerResultsName;
                 }
                 tempPlayerResultsName.add(lastPlaceName);
                 tempPlayerResults.add(lastPlaceValue);
+
+                System.out.println("Before:");
+                System.out.println("names: " + tempPlayerResultsName.toString());
+                System.out.println("values: " + tempPlayerResults.toString());
+                System.out.println("images: " + playerImages.toString());
+
                 Integer excessNum = 4-tempPlayerResults.size();
                 Integer secNum = tempPlayerResults.size()-1;
 
@@ -146,6 +161,7 @@ private List<String> playerResultsName;
                         tempPlayerResults.add("");
                     }
                 }
+                System.out.println("After:");
                 System.out.println("names: " + tempPlayerResultsName.toString());
                 System.out.println("values: " + tempPlayerResults.toString());
                 System.out.println("images: " + playerImages.toString());
