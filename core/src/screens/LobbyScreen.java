@@ -38,10 +38,13 @@ public class LobbyScreen extends Screen {
 
     private List<String> players;
     private String lobbyCode;
+    private String playerId = "";
+    private String playerName;
 
-    public LobbyScreen(GameScreenManager gsm, String lobbycode) {
+    public LobbyScreen(GameScreenManager gsm, String lobbyCode, String playerName) {
         super(gsm);
-        this.lobbyCode = lobbycode;
+        this.lobbyCode = lobbyCode;
+        this.playerName = playerName;
         players = Arrays.asList("", "", "", "");
         backgroundUpper = new Texture("background.png");
         backgroundLower = new Texture("background2.png");
@@ -83,14 +86,33 @@ public class LobbyScreen extends Screen {
         }
     }
 
+    private void checkStartGame() {
+        //check if host has pressed start, then start game
+        List<String> results = FBIF.getResults(lobbyCode);
+        if(results.get(0).equals("0")) {
+            gsm.set(new GameScreen(gsm, playerId, lobbyCode));
+        }
+    }
+
     @Override
     public void update() {
         handleInput();
         getPlayers();
+        checkStartGame();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        if(playerId.equals("")) {
+            List<String> playersFromDatabase = FBIF.updatePlayerList(lobbyCode);
+            for(int i = 0; i < playersFromDatabase.size(); i++) {
+                if(playersFromDatabase.get(i).equals(playerName)) {
+                    playerId = String.valueOf(i+1);
+                    System.out.println(playerId);
+                }
+            }
+        }
+
         sb.begin();
         sb.draw(backgroundUpper, 0, 0, width, height);
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.63));

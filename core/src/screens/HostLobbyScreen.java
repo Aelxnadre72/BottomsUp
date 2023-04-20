@@ -38,6 +38,7 @@ public class HostLobbyScreen extends Screen {
     private BitmapFont player2Text;
     private BitmapFont player3Text;
     private BitmapFont player4Text;
+    private String playerId = "1";
 
     private List<String> players;
     public HostLobbyScreen(GameScreenManager gsm, String lobbyCode) {
@@ -101,7 +102,15 @@ public class HostLobbyScreen extends Screen {
             }
             else if(boundStartGameButton.contains(x,y)){
                 //Add new game screen
-                gsm.set(new GameScreen(gsm));
+                FBIF.hostStartGame(lobbyCode);
+                // the other players has a 1 second delay on the start signal from the database
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1400);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                gsm.set(new GameScreen(gsm, playerId, lobbyCode));
                 dispose();
             }
         }

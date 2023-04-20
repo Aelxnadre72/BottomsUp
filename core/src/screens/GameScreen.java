@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import static com.mygdx.bottomsup.BottomsUp.FBIF;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import components.BlockTower;
@@ -42,6 +43,8 @@ public class GameScreen extends Screen {
     private long timeoutTime = 0;
 
     private long startTime = System.currentTimeMillis();
+    private long lastUpdateTime = 0;
+    private long finishTime = 0;
 
     // private long elapsedGameTime;
     // For the leaderboard, in render: elapsedGameTime = System.currentTimeMillis() - startTime;
@@ -76,12 +79,21 @@ public class GameScreen extends Screen {
     private Rectangle boundsExitField;
 
     private float scaleExit = (float)(Gdx.graphics.getWidth() * 0.1);
+    private String playerId;
+    private String lobbyCode;
 
+    private List<List<Integer>> otherPlayers;
+    private List<Integer> mainBlockTower;
+    private long isFinished = 0;
+    private boolean gameOver = false;
 
-    public GameScreen(GameScreenManager gsm) {
+    public GameScreen(GameScreenManager gsm, String playerId, String lobbyCode) {
         super(gsm);
         blockTower = new BlockTower(50);
-
+        this.playerId = playerId;
+        this.lobbyCode = lobbyCode;
+        mainBlockTower = new ArrayList<>();
+        otherPlayers = new ArrayList<>();
         background = new Texture("background.png");
         background2 = new Texture("background2.png");
         nametag1 = new Texture("background2.png");
@@ -150,6 +162,8 @@ public class GameScreen extends Screen {
         if (Gdx.input.justTouched()) {
             int pointerX = Gdx.input.getX(0);
             int pointerY = Gdx.input.getY(0);
+            System.out.println("X: " + pointerX);
+            System.out.println("Y: " + pointerY);
 
             if (blockTower.getCurrentHeight() != 0 && timeoutTime < System.currentTimeMillis()) {
                 if (isBoundedByBtn(0, pointerX, pointerY)) {
@@ -168,6 +182,10 @@ public class GameScreen extends Screen {
                 // if finished
                 if(blockTower.getCurrentHeight() == 0) {
                     System.out.println("Finished");
+                    finishTime = Math.round((System.currentTimeMillis() - startTime)/1000);
+                    isFinished = 1;
+                    // send finishTime to players database here:
+                    FBIF.setResult(lobbyCode, playerId, String.valueOf(finishTime));
                 }
             }
 
@@ -177,13 +195,62 @@ public class GameScreen extends Screen {
             }
         }
     }
+
+    private void getOtherPlayers() {
+        otherPlayers = FBIF.updateOthers(lobbyCode, playerId);
+        long count = 0;
+        for(List<Integer> tower : otherPlayers) {
+            if(tower.size() == 0) {
+                count += 1;
+            }
+        }
+        if(count + isFinished == otherPlayers.size()) {
+            gameOver = true;
+        }
+
+        // For the other players: replaces the last block images with an invisible block when there is less than 4 blocks left
+        for(int i = 0; i < otherPlayers.size(); i++) {
+            if (otherPlayers.get(i).size() <= 3) {
+                List<Integer> tempTower = otherPlayers.get(i);
+                Integer num = 4-otherPlayers.get(i).size();
+                for (int j = 0; j < num; j++) {
+                    tempTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
+                }
+                otherPlayers.set(i, tempTower);
+            }
+        }
+    }
     @Override
     public void update() {
+        if(mainBlockTower.isEmpty()) {
+            FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
+        }
         handleInput();
+        if(System.currentTimeMillis() > lastUpdateTime + 700) {
+            getOtherPlayers();
+            lastUpdateTime = System.currentTimeMillis();
+            checkGameOver();
+        }
+    }
+
+    private void checkGameOver(){
+        if(gameOver) {
+            if(isFinished == 0) {
+                int blocksLeft = blockTower.getCurrentHeight();
+                //send how many blocks left to database
+                FBIF.setResult(lobbyCode, playerId, String.valueOf(blocksLeft));
+            }
+            //finish time in seconds is already sent to database for those that did not finish last
+            gsm.set(new ResultScreen(gsm));
+        }
     }
 
 @Override
     public void render(SpriteBatch sb) {
+        if(lastUpdateTime == 0) {
+            update();
+            lastUpdateTime = System.currentTimeMillis();
+        }
 
         sb.begin();
         sb.draw(background, 0, 0, width, height);
@@ -197,25 +264,25 @@ public class GameScreen extends Screen {
         sb.draw(boundsBtn3, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleBot), widthBtn, heightBtn);
 
         sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
+
         // draw blocktower
-        List<Integer> bt = blockTower.getCopyOfCurrentList();
+        mainBlockTower = blockTower.getCopyOfCurrentList();
         // replaces the last block images with an invisible block when there is less than 4 blocks left
         if(blockTower.getCurrentHeight() <= 3) {
             for (int j = 0; j < 4-blockTower.getCurrentHeight(); j++) {
-                bt.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
+                mainBlockTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
             }
         }
 
-        if(timeoutTime < System.currentTimeMillis()) {
-            sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.25), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.5), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 2.85 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
-                    widthMainBlock);
 
+    // draw the other players towers
+        for(int i = 0; i < otherPlayers.size(); i++) {
+            drawTower(sb, otherPlayers.get(i), i+1);
+            //System.out.println("tower: " + tower.toString());
+        }
+
+        if(timeoutTime < System.currentTimeMillis()) {
+            drawTower(sb, mainBlockTower, 0);
             // avatar and name tags are drawn in both if and else since it needs to be behind the splat,
             // but in front of the blocks
             sb.draw(avatar, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
@@ -252,6 +319,38 @@ public class GameScreen extends Screen {
         sb.end();
     }
 
+    private void drawTower(SpriteBatch sb, List<Integer> bt, int placement) {
+        double shiftRight = 2.8;
+        double shiftVertically = 0;
+        double resize = 1;
+        double excessVertically = 0;
+
+        if(placement != 0) {
+            shiftRight = 0.93;
+            resize = 0.38;
+            excessVertically = widthMainBlock * 0.62;
+            if(placement == 1) {
+                shiftVertically = (height * 0.379);
+            }
+            else if(placement == 2) {
+                shiftVertically = (height * 0.135);
+
+            }
+            else {
+                shiftVertically = (height * -0.108);
+
+            }
+        }
+            sb.draw(getBlockTowerImage(bt.get(0)), (float) ( widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically + height / 2.55), (float) (resize * widthMainBlock),
+                    (float) (resize * widthMainBlock));
+            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - excessVertically + height / 2.55 + width * 0.25), (float) (resize * widthMainBlock),
+                    (float) (resize * widthMainBlock));
+            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - (excessVertically * 2) + height / 2.55 + width * 0.5), (float) (resize * widthMainBlock),
+                    (float) (resize * widthMainBlock));
+            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically  - (excessVertically * 3) + height / 2.55 + width * 0.75), (float) (resize * widthMainBlock),
+                    (float) (resize * widthMainBlock));
+    }
+
     @Override
     public void dispose() {
         btn0.dispose();
@@ -270,7 +369,13 @@ public class GameScreen extends Screen {
     private void checkPopTimeoutBlock(int blockNumber) {
         if (blockTower.checkNextBlock(blockNumber)) { // sjekke om de matcher med ønsket knapp
             blockTower.popNextBlock();
-            //sender nyeste liste til databasen!!!!!
+            // update your tower in the database
+            if(blockTower.getCurrentHeight() > 3) {
+                FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
+            }
+            else {
+                FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().toString());
+            }
         } else {
             timeoutTime = System.currentTimeMillis() + timeoutDuration;
         }
