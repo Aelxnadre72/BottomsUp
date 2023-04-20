@@ -246,9 +246,9 @@ public class GameScreen extends Screen {
         if(gameOver) {
             if(isFinished == 0) {
                 int blocksLeft = blockTower.getCurrentHeight();
-                String lastPlaceResult = String.valueOf(blocksLeft) + " blocks";
+                String lastPlaceResult = String.valueOf(blocksLeft) + " blocks left";
                 if (blocksLeft == 1) {
-                    lastPlaceResult = String.valueOf(blocksLeft) + " block";
+                    lastPlaceResult = String.valueOf(blocksLeft) + " block left";
                 }
                 //send how many blocks left to database
                 FBIF.setResult(lobbyCode, playerId, lastPlaceResult);

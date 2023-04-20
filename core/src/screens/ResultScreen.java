@@ -113,58 +113,45 @@ private List<String> playerResultsName;
 
         for(int i = 0; i < results.size(); i ++) {
             if(results.get(i).contains("block")) {
-                String lastPlaceName = resultsName.remove(i);
-                String lastPlaceValue = results.remove(i);
-                String path = "" + "p" + String.valueOf(i+1) + ".png";
-                System.out.println("Size after remove: " + results.size());
-                playerImages.set(results.size(), new Texture(path));
-
+                String lastPlaceValue = results.get(i);
 
                 List<Integer> tempSortList = new ArrayList<>();
                 for(String numString : results) {
-                    tempSortList.add(Integer.parseInt(numString));
+                    if(!numString.contains("block")) {
+                        tempSortList.add(Integer.parseInt(numString));
+                    }
                 }
                 Collections.sort(tempSortList);
                 for(int num : tempSortList) {
                     tempPlayerResults.add(String.valueOf(num));
                 }
 
+                tempPlayerResults.add(lastPlaceValue);
+                System.out.println(tempPlayerResults);
                 for(int j = 0; j < tempPlayerResults.size(); j++) {
                     for(int k = 0; k < resultsName.size(); k++){
                         if(tempPlayerResults.get(j).equals(results.get(k))) {
                             tempPlayerResultsName.add(resultsName.get(k));
-                            resultsName.set(k, "");
-                            path = "" + "p" + String.valueOf(k+1) + ".png";
+                            results.set(k, "");
+                            String path = "" + "p" + String.valueOf(k+1) + ".png";
                             playerImages.set(j, new Texture(path));
                             break;
                         }
                     }
                 }
-                tempPlayerResultsName.add(lastPlaceName);
-                tempPlayerResults.add(lastPlaceValue);
-
-                System.out.println("Before:");
-                System.out.println("names: " + tempPlayerResultsName.toString());
-                System.out.println("values: " + tempPlayerResults.toString());
-                System.out.println("images: " + playerImages.toString());
 
                 Integer excessNum = 4-tempPlayerResults.size();
                 Integer secNum = tempPlayerResults.size()-1;
 
                 for (int j = 0; j < 4; j ++) {
                     if(j < secNum) {
-                        tempPlayerResults.set(j, tempPlayerResults.get(j) + " sec");
+                        tempPlayerResults.set(j, tempPlayerResults.get(j) + " seconds");
                     }
                     if(j < excessNum) {
-                        System.out.println("less: " + j);
                         tempPlayerResultsName.add("");
                         tempPlayerResults.add("");
                     }
                 }
-                System.out.println("After:");
-                System.out.println("names: " + tempPlayerResultsName.toString());
-                System.out.println("values: " + tempPlayerResults.toString());
-                System.out.println("images: " + playerImages.toString());
 
                 playerResultsName = tempPlayerResultsName;
                 playerResults = tempPlayerResults;
@@ -188,11 +175,13 @@ private List<String> playerResultsName;
     @Override
     public void update() {
         handleInput();
-        getResults();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        if(playerResults.get(0).equals("")) {
+            getResults();
+        }
         sb.begin();
         sb.draw(backgroundUpper, 0, 0, width, height);
         sb.draw(backgroundLower, 0, 0, width, (float)(height * 0.55));
