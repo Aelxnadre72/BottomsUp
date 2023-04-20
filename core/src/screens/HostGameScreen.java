@@ -30,10 +30,12 @@ public class HostGameScreen extends Screen{
         private Texture logo;
         private Texture backButton;
         private String nameValue = "Enter nickname";
+        private String errorMessageValue = "";
         private char focus;
         private BitmapFont name;
         private BitmapFont hostGameText;
         private BitmapFont enterNicknameText;
+        private BitmapFont errorMessage;
         private Texture nicknameField;
 
         private Rectangle boundsNicknameField;
@@ -69,6 +71,9 @@ public class HostGameScreen extends Screen{
             parameter.color = new Color(0x022444ff);
             hostGameText = generator.generateFont(parameter);
             enterNicknameText = generator.generateFont(parameter);
+            parameter.color = new Color(0xe21617ff);
+            parameter.size = (int)height*1/33;
+            errorMessage = generator.generateFont(parameter);
             generator.dispose();
 
             Gdx.input.setInputProcessor(new InputAdapter() {
@@ -82,6 +87,7 @@ public class HostGameScreen extends Screen{
                         Gdx.input.setOnscreenKeyboardVisible(true);
                     } else {
                         Gdx.input.setOnscreenKeyboardVisible(false);
+                        errorMessageValue = "";
                         if (nameValue.isEmpty()) {
                             setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                         }
@@ -96,6 +102,7 @@ public class HostGameScreen extends Screen{
 
                             case Input.Keys.ENTER:
                                 Gdx.input.setOnscreenKeyboardVisible(false);
+                                errorMessageValue = "";
                                 if (nameValue.isEmpty()) {
                                     setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                                 }
@@ -275,6 +282,7 @@ public class HostGameScreen extends Screen{
 
                             case Input.Keys.ENTER:
                                 Gdx.input.setOnscreenKeyboardVisible(false);
+                                errorMessageValue = "";
                                 if (nameValue.isEmpty()) {
                                     setNameField("Enter nickname", (int)height*1/30, new Color(0x7999B6ff));
                                 }
@@ -310,6 +318,11 @@ public class HostGameScreen extends Screen{
                 int x = Gdx.input.getX();
                 int y = Gdx.input.getY();
                 if (boundsHostGameButton.contains(x, y)) {
+                    if(nameValue.equals("Enter nickname")) {
+                        System.out.println("Enter a nickname");
+                        errorMessageValue = "Enter a nickname";
+                        return;
+                    }
                     String code = FBIF.hostLobby(nameValue, "4");
                     gsm.set(new HostLobbyScreen(gsm, code));
                     dispose();
@@ -337,6 +350,7 @@ public class HostGameScreen extends Screen{
             sb.draw(logo, (float)(width * 0.2), (float)(height * 0.55), scaleWidth, scaleLogo);
             name.draw(sb, nameValue, (float)(width * 0.24), (float)(height * 0.46));
             hostGameText.draw(sb, "Host game", (float)(width * 0.275), (float)(height * 0.315));
+            errorMessage.draw(sb, errorMessageValue, (float)(width * 0.23), (float)(height * 0.39));
             sb.end();
         }
 
