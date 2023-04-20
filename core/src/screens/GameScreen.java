@@ -226,7 +226,7 @@ public class GameScreen extends Screen {
             FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
         }
         handleInput();
-        if(System.currentTimeMillis() > lastUpdateTime + 500) {
+        if(System.currentTimeMillis() > lastUpdateTime + 700) {
             getOtherPlayers();
             lastUpdateTime = System.currentTimeMillis();
             checkGameOver();
@@ -236,7 +236,7 @@ public class GameScreen extends Screen {
     private void checkGameOver(){
         if(gameOver) {
             if(isFinished == 0) {
-                int blocksLeft = blockTower.getHeight() - blockTower.getCurrentHeight();
+                int blocksLeft = blockTower.getCurrentHeight();
                 //send how many blocks left to database
                 FBIF.setResult(lobbyCode, playerId, String.valueOf(blocksLeft));
             }
@@ -316,26 +316,36 @@ public class GameScreen extends Screen {
     }
 
     private void drawTower(SpriteBatch sb, List<Integer> bt, int placement) {
-        if(placement == 0) {
-            sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 2.8 + widthMainBlock * 0.42), (float) (height / 2.55), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 2.8 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.25), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 2.8 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.5), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 2.8 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
-                    widthMainBlock);
+        double shiftRight = 2.8;
+        double shiftVertically = 0;
+        double resize = 1;
+        double excessVertically = 0;
+
+        if(placement != 0) {
+            System.out.println("elise sin");
+            shiftRight = 0.93;
+            resize = 0.4;
+            excessVertically = widthMainBlock * 0.6;
+            if(placement == 1) {
+                shiftVertically = (height * 0.38);
+            }
+            else if(placement == 2) {
+                shiftVertically = (height * 0.1);
+
+            }
+            else {
+                shiftVertically = (height * -0.1);
+
+            }
         }
-        else {
-            sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.25), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.5), widthMainBlock,
-                    widthMainBlock);
-            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / 1.5 + widthMainBlock * 0.42), (float) (height / 2.55 + width * 0.75), widthMainBlock,
-                    widthMainBlock);
-        }
+            sb.draw(getBlockTowerImage(bt.get(0)), (float) ( widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically + height / 2.55), (float) (resize * widthMainBlock),
+                    (float) (resize * widthMainBlock));
+            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - excessVertically + height / 2.55 + width * 0.25), (float) (resize * widthMainBlock),
+                    (float) (resize * widthMainBlock));
+            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - (excessVertically * 2) + height / 2.55 + width * 0.5), (float) (resize * widthMainBlock),
+                    (float) (resize * widthMainBlock));
+            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically  - (excessVertically * 3) + height / 2.55 + width * 0.75), (float) (resize * widthMainBlock),
+                    (float) (resize * widthMainBlock));
     }
 
     @Override
