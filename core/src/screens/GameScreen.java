@@ -88,6 +88,12 @@ public class GameScreen extends Screen {
     private long isFinished = 0;
     private boolean gameOver = false;
     private boolean solo = false;
+    private boolean secondLastTouch = false;
+    private int pointerXOne;
+    private int pointerYOne;
+    private int pointerXTwo;
+    private int pointerYTwo;
+    private int render = 0;
 
     public GameScreen(GameScreenManager gsm, String playerId, String lobbyCode) {
         super(gsm);
@@ -159,47 +165,82 @@ public class GameScreen extends Screen {
                 scaleExit);
     }
 
-    @Override
-    protected void handleInput() {
-        if (Gdx.input.justTouched()) {
-            int pointerX = Gdx.input.getX(0);
-            int pointerY = Gdx.input.getY(0);
-            System.out.println("X: " + pointerX);
-            System.out.println("Y: " + pointerY);
+    private void checkTouch(int x, int y) {
+        if (blockTower.getCurrentHeight() != 0 && timeoutTime < System.currentTimeMillis()) {
+            if (isBoundedByBtn(0, x, y)) {
+                checkPopTimeoutBlock(0);
 
-            if (blockTower.getCurrentHeight() != 0 && timeoutTime < System.currentTimeMillis()) {
-                if (isBoundedByBtn(0, pointerX, pointerY)) {
-                    checkPopTimeoutBlock(0);
+            } else if (isBoundedByBtn(1, x, y)) {
+                checkPopTimeoutBlock(1);
 
-                } else if (isBoundedByBtn(1, pointerX, pointerY)) {
-                    checkPopTimeoutBlock(1);
+            } else if (isBoundedByBtn(2, x, y)) {
+                checkPopTimeoutBlock(2);
 
-                } else if (isBoundedByBtn(2, pointerX, pointerY)) {
-                    checkPopTimeoutBlock(2);
-
-                } else if (isBoundedByBtn(3, pointerX, pointerY)) {
-                    checkPopTimeoutBlock(3);
-                }
-
-                // if finished
-                if(blockTower.getCurrentHeight() == 0) {
-                    System.out.println("Finished");
-                    finishTime = Math.round((System.currentTimeMillis() - startTime)/1000);
-                    isFinished = 1;
-                    // send finishTime to players database here:
-                    FBIF.setResult(lobbyCode, playerId, String.valueOf(finishTime));
-                    if (solo) {
-                        gameOver = true;
-                    }
-                }
-            }
-
-            if (boundsExitField.contains(pointerX, pointerY)) {
-                gsm.set(new MainMenuScreen(gsm));
-                dispose();
+            } else if (isBoundedByBtn(3, x, y)) {
+                checkPopTimeoutBlock(3);
             }
         }
     }
+
+    @Override
+    protected void handleInput() {
+        render += 1;
+        System.out.println("checkTouch" + render);
+        int pointerX = Gdx.input.getX(0);
+        int pointerY = Gdx.input.getY(0);
+
+        int secondPointerX = Gdx.input.getX(1);
+        int secondPointerY = Gdx.input.getY(1);
+
+        System.out.println("3X: " + Gdx.input.getX(3));
+        System.out.println("3Y: " + Gdx.input.getY(3));
+
+        System.out.println("FIRST: ");
+
+        if((pointerX != pointerXOne && pointerY != pointerYOne && !secondLastTouch) ||
+                (pointerX != pointerXTwo && pointerY != pointerYTwo && secondLastTouch)) {
+            checkTouch(pointerX, pointerY);
+            pointerXOne = pointerX;
+            pointerYOne = pointerY;
+        }
+
+        if(!secondLastTouch && secondPointerX != 0 &&
+                secondPointerY != 0 && secondPointerX != pointerXTwo &&
+                secondPointerY != pointerYTwo) {
+            pointerX = secondPointerX;
+            pointerY = secondPointerY;
+            pointerXTwo = secondPointerX;
+            pointerYTwo = secondPointerY;
+            secondLastTouch = true;
+            System.out.println("SECOND: ");
+            checkTouch(pointerX, pointerY);
+        }
+        else {
+            secondLastTouch = false;
+        }
+
+        System.out.println("X: " + pointerX);
+        System.out.println("Y: " + pointerY);
+
+
+        // if finished
+        if(blockTower.getCurrentHeight() == 0) {
+            System.out.println("Finished");
+            finishTime = Math.round((System.currentTimeMillis() - startTime)/1000);
+            isFinished = 1;
+            // send finishTime to players database here:
+            FBIF.setResult(lobbyCode, playerId, String.valueOf(finishTime));
+            if (solo) {
+                gameOver = true;
+            }
+        }
+
+        if (boundsExitField.contains(pointerX, pointerY)) {
+            gsm.set(new MainMenuScreen(gsm));
+            dispose();
+        }
+    }
+
 
     private void getOtherPlayers() {
         otherPlayers = FBIF.updateOthers(lobbyCode, playerId);
@@ -258,7 +299,7 @@ public class GameScreen extends Screen {
         }
     }
 
-@Override
+    @Override
     public void render(SpriteBatch sb) {
         if(lastUpdateTime == 0) {
             update();
@@ -288,7 +329,7 @@ public class GameScreen extends Screen {
         }
 
 
-    // draw the other players towers
+        // draw the other players towers
         for(int i = 0; i < otherPlayers.size(); i++) {
             drawTower(sb, otherPlayers.get(i), i+1);
             //System.out.println("tower: " + tower.toString());
@@ -354,14 +395,14 @@ public class GameScreen extends Screen {
 
             }
         }
-            sb.draw(getBlockTowerImage(bt.get(0)), (float) ( widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically + height / 2.55), (float) (resize * widthMainBlock),
-                    (float) (resize * widthMainBlock));
-            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - excessVertically + height / 2.55 + width * 0.25), (float) (resize * widthMainBlock),
-                    (float) (resize * widthMainBlock));
-            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - (excessVertically * 2) + height / 2.55 + width * 0.5), (float) (resize * widthMainBlock),
-                    (float) (resize * widthMainBlock));
-            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically  - (excessVertically * 3) + height / 2.55 + width * 0.75), (float) (resize * widthMainBlock),
-                    (float) (resize * widthMainBlock));
+        sb.draw(getBlockTowerImage(bt.get(0)), (float) ( widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically + height / 2.55), (float) (resize * widthMainBlock),
+                (float) (resize * widthMainBlock));
+        sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - excessVertically + height / 2.55 + width * 0.25), (float) (resize * widthMainBlock),
+                (float) (resize * widthMainBlock));
+        sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - (excessVertically * 2) + height / 2.55 + width * 0.5), (float) (resize * widthMainBlock),
+                (float) (resize * widthMainBlock));
+        sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically  - (excessVertically * 3) + height / 2.55 + width * 0.75), (float) (resize * widthMainBlock),
+                (float) (resize * widthMainBlock));
     }
 
     @Override
@@ -391,6 +432,7 @@ public class GameScreen extends Screen {
             }
         } else {
             timeoutTime = System.currentTimeMillis() + timeoutDuration;
+            System.out.println("SPLASH");
         }
     }
 
