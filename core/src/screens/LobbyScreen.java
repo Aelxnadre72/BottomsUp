@@ -142,7 +142,7 @@ public class LobbyScreen extends Screen {
                 (float)(height * 0.79));
         gamePinCode.draw(sb,
                 lobbyCode,
-                (float)(width * 0.15),
+                (float)(width * 0.3),
                 (float)(height * 0.73));
         playersJoinedText.draw(sb,
                 "Players joined",
