@@ -104,7 +104,6 @@ public class GameScreen extends Screen {
         mainBlockTower = new ArrayList<>();
         otherPlayers = new ArrayList<>();
         playerList = Arrays.asList("", "", "", "");
-        System.out.println(playerList);
         String path = "" + "p" + String.valueOf(playerId) + "InGame.png";
         playerImage = new Texture(path);
         background = new Texture("background.png");
@@ -221,14 +220,16 @@ public class GameScreen extends Screen {
         }
     }
 
-    private void getOtherPlayers() {
-        otherPlayers = FBIF.updateOthers(lobbyCode, playerId);
+    private void getPlayers() {
         List<String> localPlayers = FBIF.updatePlayerList(lobbyCode);
         playerList.set(0, localPlayers.get(Integer.parseInt(playerId)-1));
         localPlayers.remove(Integer.parseInt(playerId)-1);
-        for (int i = 1; i < localPlayers.size(); i++) {
-            playerList.set(i, localPlayers.get(i));
+        for (int i = 1; i <= localPlayers.size(); i++) {
+            playerList.set(i, localPlayers.get(i-1));
         }
+    }
+    private void getOtherPlayers() {
+        otherPlayers = FBIF.updateOthers(lobbyCode, playerId);
         long count = 0;
         for(List<Integer> tower : otherPlayers) {
             if(tower.size() == 0) {
@@ -288,6 +289,7 @@ public class GameScreen extends Screen {
     public void render(SpriteBatch sb) {
         if(lastUpdateTime == 0) {
             update();
+            getPlayers();
             lastUpdateTime = System.currentTimeMillis();
         }
 
