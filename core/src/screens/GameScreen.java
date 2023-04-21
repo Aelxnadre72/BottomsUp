@@ -335,6 +335,10 @@ public class GameScreen extends Screen {
                     (float)(heightMain*0.105));
             sb.draw(nametag4, (width-(widthPlayers)), (float)(height-(heightMain*0.105*3)-heightPlayers*2), widthPlayers,
                     (float)(heightMain*0.105));
+            player1Text.draw(sb, playerList.get(0), (float)(width * 0.08), (float)(height * 0.885));
+            player2Text.draw(sb, playerList.get(1), (float)(width * 0.64), (float)(height * 0.98));
+            player3Text.draw(sb, playerList.get(2), (float)(width * 0.64), (float)(height * 0.74));
+            player4Text.draw(sb, playerList.get(3), (float)(width * 0.64), (float)(height * 0.49));
         }
         else {
             sb.draw(playerImage, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
@@ -346,6 +350,10 @@ public class GameScreen extends Screen {
                     (float)(heightMain*0.105));
             sb.draw(nametag4, (width-(widthPlayers)), (float)(height-(heightMain*0.105*3)-heightPlayers*2), widthPlayers,
                     (float)(heightMain*0.105));
+            player1Text.draw(sb, playerList.get(0), (float)(width * 0.08), (float)(height * 0.885));
+            player2Text.draw(sb, playerList.get(1), (float)(width * 0.64), (float)(height * 0.98));
+            player3Text.draw(sb, playerList.get(2), (float)(width * 0.64), (float)(height * 0.74));
+            player4Text.draw(sb, playerList.get(3), (float)(width * 0.64), (float)(height * 0.49));
             sb.draw(timeoutSplash,0,0, width, height);
             // makes the tower invisible while there is a timeout/splash
             sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47), widthMainBlock,
@@ -356,11 +364,8 @@ public class GameScreen extends Screen {
                     widthMainBlock);
             sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47 + width * 0.75), widthMainBlock,
                     widthMainBlock);
+
         }
-    player1Text.draw(sb, playerList.get(0), (float)(width * 0.08), (float)(height * 0.885));
-    player2Text.draw(sb, playerList.get(1), (float)(width * 0.64), (float)(height * 0.98));
-    player3Text.draw(sb, playerList.get(2), (float)(width * 0.64), (float)(height * 0.74));
-    player4Text.draw(sb, playerList.get(3), (float)(width * 0.64), (float)(height * 0.49));
         sb.end();
     }
 
