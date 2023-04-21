@@ -52,7 +52,7 @@ public class ResultScreen extends Screen {
     private List<String> textChoice;
 
     private List<Texture> playerImages;
-private List<String> playerResultsName;
+    private List<String> playerResultsName;
     public ResultScreen(GameScreenManager gsm, String lobbyCode) {
         super(gsm);
         this.lobbyCode = lobbyCode;
@@ -107,6 +107,14 @@ private List<String> playerResultsName;
     public void getResults(){
         List<String> results = FBIF.getResults(lobbyCode);
         List<String> resultsName = FBIF.updatePlayerList(lobbyCode);
+
+        if(results.size() == 1 && resultsName.size() == 1) {
+            playerResults.set(0, results.get(0) + " seconds");
+            playerResultsName.set(0, resultsName.get(0));
+            String path = "" + "p1.png";
+            playerImages.set(0, new Texture(path));
+            return;
+        }
 
         List<String> tempPlayerResultsName = new ArrayList<>();
         List<String> tempPlayerResults = new ArrayList<>();
