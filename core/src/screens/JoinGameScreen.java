@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class JoinGameScreen extends Screen {
@@ -459,11 +458,13 @@ public class JoinGameScreen extends Screen {
                     return;
                 } else {
                     gsm.set(new LobbyScreen(gsm, codeValue, nameValue));
+                    Gdx.input.setInputProcessor(null);
                     dispose();
                 }
             }
             else if (boundsBackButton.contains(x, y)) {
                 gsm.set(new MainMenuScreen(gsm));
+                Gdx.input.setInputProcessor(null);
                 dispose();
             }
         }

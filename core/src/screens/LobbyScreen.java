@@ -105,6 +105,7 @@ public class LobbyScreen extends Screen {
         List<String> results = FBIF.getResults(lobbyCode);
         if(results.get(0).equals("0")) {
             gsm.set(new GameScreen(gsm, playerId, lobbyCode));
+            dispose();
         }
     }
 
