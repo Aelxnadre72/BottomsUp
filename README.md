@@ -38,7 +38,7 @@ Here lies the different screens for the game. These contains the logic used in t
 
 
 # How to compile the project :hammer:
-The project can be built using either an APK.
+The project can be built using an APK.
 
 ## APK
 To build the project as an APK file, do the following:
