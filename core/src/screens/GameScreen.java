@@ -4,10 +4,13 @@ import static com.mygdx.bottomsup.BottomsUp.FBIF;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import components.BlockTower;
@@ -79,11 +82,15 @@ public class GameScreen extends Screen {
     private float scaleExit = (float)(Gdx.graphics.getWidth() * 0.1);
     private String playerId;
     private String lobbyCode;
-
     private List<List<Integer>> otherPlayers;
     private List<Integer> mainBlockTower;
+    private List<String> playerList;
 
     private Texture playerImage;
+    private BitmapFont player1Text;
+    private BitmapFont player2Text;
+    private BitmapFont player3Text;
+    private BitmapFont player4Text;
 
     private long isFinished = 0;
     private boolean gameOver = false;
@@ -96,6 +103,7 @@ public class GameScreen extends Screen {
         this.lobbyCode = lobbyCode;
         mainBlockTower = new ArrayList<>();
         otherPlayers = new ArrayList<>();
+        playerList = Arrays.asList("", "", "", "");
         String path = "" + "p" + String.valueOf(playerId) + "InGame.png";
         playerImage = new Texture(path);
         background = new Texture("background.png");
@@ -157,6 +165,17 @@ public class GameScreen extends Screen {
                 (float)(height * 0.08) - scaleExit,
                 scaleExit,
                 scaleExit);
+
+        FreeTypeFontGenerator.setMaxTextureSize(2048);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = (int)height*1/24;
+        player1Text = generator.generateFont(parameter);
+        parameter.size = (int)height*1/30;
+        player2Text = generator.generateFont(parameter);
+        player3Text = generator.generateFont(parameter);
+        player4Text = generator.generateFont(parameter);
+        generator.dispose();
     }
 
     @Override
@@ -201,6 +220,14 @@ public class GameScreen extends Screen {
         }
     }
 
+    private void getPlayers() {
+        List<String> localPlayers = FBIF.updatePlayerList(lobbyCode);
+        playerList.set(0, localPlayers.get(Integer.parseInt(playerId)-1));
+        localPlayers.remove(Integer.parseInt(playerId)-1);
+        for (int i = 1; i <= localPlayers.size(); i++) {
+            playerList.set(i, localPlayers.get(i-1));
+        }
+    }
     private void getOtherPlayers() {
         otherPlayers = FBIF.updateOthers(lobbyCode, playerId);
         long count = 0;
@@ -262,6 +289,7 @@ public class GameScreen extends Screen {
     public void render(SpriteBatch sb) {
         if(lastUpdateTime == 0) {
             update();
+            getPlayers();
             lastUpdateTime = System.currentTimeMillis();
         }
 
@@ -278,7 +306,7 @@ public class GameScreen extends Screen {
 
         sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
 
-        // draw blocktower
+    // draw blocktower
         mainBlockTower = blockTower.getCopyOfCurrentList();
         // replaces the last block images with an invisible block when there is less than 4 blocks left
         if(blockTower.getCurrentHeight() <= 3) {
@@ -307,6 +335,10 @@ public class GameScreen extends Screen {
                     (float)(heightMain*0.105));
             sb.draw(nametag4, (width-(widthPlayers)), (float)(height-(heightMain*0.105*3)-heightPlayers*2), widthPlayers,
                     (float)(heightMain*0.105));
+            player1Text.draw(sb, playerList.get(0), (float)(width * 0.08), (float)(height * 0.885));
+            player2Text.draw(sb, playerList.get(1), (float)(width * 0.64), (float)(height * 0.98));
+            player3Text.draw(sb, playerList.get(2), (float)(width * 0.64), (float)(height * 0.74));
+            player4Text.draw(sb, playerList.get(3), (float)(width * 0.64), (float)(height * 0.49));
         }
         else {
             sb.draw(playerImage, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
@@ -318,6 +350,10 @@ public class GameScreen extends Screen {
                     (float)(heightMain*0.105));
             sb.draw(nametag4, (width-(widthPlayers)), (float)(height-(heightMain*0.105*3)-heightPlayers*2), widthPlayers,
                     (float)(heightMain*0.105));
+            player1Text.draw(sb, playerList.get(0), (float)(width * 0.08), (float)(height * 0.885));
+            player2Text.draw(sb, playerList.get(1), (float)(width * 0.64), (float)(height * 0.98));
+            player3Text.draw(sb, playerList.get(2), (float)(width * 0.64), (float)(height * 0.74));
+            player4Text.draw(sb, playerList.get(3), (float)(width * 0.64), (float)(height * 0.49));
             sb.draw(timeoutSplash,0,0, width, height);
             // makes the tower invisible while there is a timeout/splash
             sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47), widthMainBlock,
@@ -328,6 +364,7 @@ public class GameScreen extends Screen {
                     widthMainBlock);
             sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47 + width * 0.75), widthMainBlock,
                     widthMainBlock);
+
         }
         sb.end();
     }

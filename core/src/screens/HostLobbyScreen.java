@@ -158,7 +158,7 @@ public class HostLobbyScreen extends Screen {
                 (float)(height * 0.79));
         gamePinCode.draw(sb,
                 lobbyCode,
-                (float)(width * 0.15),
+                (float)(width * 0.3),
                 (float)(height * 0.73));
         sb.draw(startGame,
                 (float)(width * 0.18),

@@ -105,6 +105,7 @@ public class LobbyScreen extends Screen {
         List<String> results = FBIF.getResults(lobbyCode);
         if(results.get(0).equals("0")) {
             gsm.set(new GameScreen(gsm, playerId, lobbyCode));
+            dispose();
         }
     }
 
@@ -142,7 +143,7 @@ public class LobbyScreen extends Screen {
                 (float)(height * 0.79));
         gamePinCode.draw(sb,
                 lobbyCode,
-                (float)(width * 0.15),
+                (float)(width * 0.3),
                 (float)(height * 0.73));
         playersJoinedText.draw(sb,
                 "Players joined",

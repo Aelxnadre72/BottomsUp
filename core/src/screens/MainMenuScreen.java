@@ -106,5 +106,6 @@ public class MainMenuScreen extends Screen {
         joinButton.dispose();
         hostButtonText.dispose();
         joinButtonText.dispose();
+        tutorialButton.dispose();
     }
 }
