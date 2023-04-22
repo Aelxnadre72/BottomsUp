@@ -9,9 +9,9 @@ The project is a game meant for youths who want to up the level of their pre-gam
 
 ## Overview
 
-1. [Structure](#structure)
-2. [How to compile the project](#how-to-compile-the-project)
-3. [How to run the project](#how-to-run-the-project)
+1. [Structure](#structure-file_folder)
+2. [How to compile the project](#how-to-compile-the-project-hammer)
+3. [How to run the project](#how-to-run-project-arrow_forward) 
  
 <!-- Include readme-file to explain structure and how to compile/run project. -->
 
