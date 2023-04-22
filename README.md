@@ -54,7 +54,7 @@ To build the project as a JAR file, do the following:
 4. The compiled JAR file can be found in `desktop/build/libs`.
 
 # How to run the project :arrow_forward:
-Running the project is easy. If the project was built with the APK method, simply run the APK on an Android emulator. This can be done directly in Android Studio by creating a new emulator in device manager.
+Running the project is **easy**. If the project was built with the APK method, simply run the APK on an Android emulator. This can be done directly in Android Studio by creating a new emulator in device manager.
 
 If the project was built with the JAR method, simply execute the JAR file locally on your computer.
 
