@@ -47,4 +47,4 @@ To build the project as an APK file, do the following:
 3. The compiled APK file can be found in `android/build/outputs/apk`.
 
 # How to run the project :arrow_forward:
-Running the project is **easy**. If the project was successfully built with the APK method, run the APK on an Android emulator. This can be done directly in Android Studio by creating a new emulator in device manager.
+Running the project is **easy**. If the project was successfully built with the APK method, run the APK on an Android emulator. This can be done directly in Android Studio by creating a new emulator in device manager and dragging the APK file into it.
