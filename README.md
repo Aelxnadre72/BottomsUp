@@ -38,7 +38,7 @@ Here lies the different screens for the game. These contains the logic used in t
 
 
 # How to compile the project :hammer:
-The project can be built using either an APK or a JAR file.
+The project can be built using either an APK.
 
 ## APK
 To build the project as an APK file, do the following:
@@ -46,15 +46,5 @@ To build the project as an APK file, do the following:
 2. On the toolbar, click on Build -> Build Bundle(s) / APK(s) -> Build APK(s).
 3. The compiled APK file can be found in `android/build/outputs/apk`.
 
-## JAR
-To build the project as a JAR file, do the following:
-1. Open terminal.
-2. Navigate to the root folder, e.g. `Users\..\project_name> `.
-3. Run the command `./gradlew desktop:dist`.
-4. The compiled JAR file can be found in `desktop/build/libs`.
-
 # How to run the project :arrow_forward:
-Running the project is **easy**. If the project was built with the APK method, simply run the APK on an Android emulator. This can be done directly in Android Studio by creating a new emulator in device manager.
-
-If the project was built with the JAR method, simply execute the JAR file locally on your computer.
-
+Running the project is **easy**. If the project was successfully built with the APK method, run the APK on an Android emulator. This can be done directly in Android Studio by creating a new emulator in device manager.
