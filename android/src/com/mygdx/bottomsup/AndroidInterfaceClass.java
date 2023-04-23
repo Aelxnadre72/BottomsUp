@@ -120,30 +120,6 @@ public class AndroidInterfaceClass implements FireBaseInterface{
     }
 
     @Override
-    public void endGame() {
-
-        myRef.child("lobbies").child("lobbyCode").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            long[] id = new long[1];
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    id[0] = task.getResult().getChildrenCount();
-                    if (id[0] == 1000) {
-                        myRef.child("lobbies").removeValue();
-                        return;
-                    }
-                    for(int i = 1; i <= id[0]; i++) {
-                        myRef.child("lobbies").child("lobbyCode").child(String.valueOf(i)).setValue("");
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
     public void updateBlockTower(String code, String playerId, String blockTower) {
         myRef.child("lobbies").child(code).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
@@ -252,11 +228,6 @@ public class AndroidInterfaceClass implements FireBaseInterface{
             results.add(child);
         }
         resultsList = results;
-    }
-
-    @Override
-    public void updateHighscore(String time) {
-
     }
 
     @Override

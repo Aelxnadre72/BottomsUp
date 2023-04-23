@@ -432,28 +432,23 @@ public class JoinGameScreen extends Screen {
             if (boundsEnterButton.contains(x, y)) {
                 if(codeValue.equals("Enter game pin") || nameValue.equals("Enter nickname") ||
                         nameValue.equals("") || codeValue.equals("")){
-                    System.out.println("Enter game pin and name");
                     errorMessageValue = "Enter game pin and name";
                     return;
                 }
                 List<String> playersFromDatabase = FBIF.updatePlayerList(codeValue);
                 if(playersFromDatabase.contains(nameValue)) {
                     // add text "the player name is taken"
-                    System.out.println("The player name is taken");
                     errorMessageValue = "The player name is taken";
                     return;
                 }
                 String success = FBIF.joinLobby(codeValue, nameValue, "4");
-                System.out.println(success);
                 if (success.equals("unavailable")) {
                     // add text "The lobby is expired/not available
-                    System.out.println("The lobby is unavailable");
                     errorMessageValue = "The lobby is unavailable";
                     return;
                 }
                 else if (success.equals("full") || nameValue.isEmpty()) {
                     // add text "The lobby is full"
-                    System.out.println("The lobby is full");
                     errorMessageValue = "The lobby is full";
                     return;
                 } else {

@@ -315,7 +315,6 @@ public class HostGameScreen extends Screen{
                 int y = Gdx.input.getY();
                 if (boundsHostGameButton.contains(x, y)) {
                     if(nameValue.equals("Enter nickname")) {
-                        System.out.println("Enter a nickname");
                         errorMessageValue = "Enter a nickname";
                         return;
                     }

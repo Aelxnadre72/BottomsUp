@@ -123,7 +123,6 @@ public class LobbyScreen extends Screen {
             for(int i = 0; i < playersFromDatabase.size(); i++) {
                 if(playersFromDatabase.get(i).equals(playerName)) {
                     playerId = String.valueOf(i+1);
-                    System.out.println(playerId);
                 }
             }
         }

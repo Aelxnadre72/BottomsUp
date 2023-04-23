@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import screens.GameScreen;
 import screens.GameScreenManager;
 import screens.MainMenuScreen;
 
@@ -19,7 +18,7 @@ public class BottomsUp extends Game {
 	SpriteBatch batch;
 
 	public BottomsUp(FireBaseInterface FBIF){
-		this.FBIF = FBIF;
+		BottomsUp.FBIF = FBIF;
 	}
 	@Override
 	public void create () {
