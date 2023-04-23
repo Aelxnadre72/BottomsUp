@@ -47,10 +47,6 @@ public class GameScreen extends Screen {
     private long lastUpdateTime = 0;
     private long finishTime = 0;
 
-    // private long elapsedGameTime;
-    // For the leaderboard, in render: elapsedGameTime = System.currentTimeMillis()
-    // - startTime;
-
     private long timeoutDuration = 3000;
 
     private float width;
@@ -103,7 +99,7 @@ public class GameScreen extends Screen {
         mainBlockTower = new ArrayList<>();
         otherPlayers = new ArrayList<>();
         playerList = Arrays.asList("", "", "", "");
-        String path = "" + "p" + String.valueOf(playerId) + "InGame.png";
+        String path = "" + "p" + playerId + "InGame.png";
         playerImage = new Texture(path);
         background = new Texture("background.png");
         background2 = new Texture("background2.png");
@@ -463,9 +459,8 @@ public class GameScreen extends Screen {
     }
 
     private Boolean isBoundedByBtn(int btnNumber, int x, int y) {
-        // NB: sb.draw og gdx.input.getY/getX har forskjellig default grid.
-        // Origo til sb.draw er nederst til venstre, mens origo til gdx.input er øverst
-        // til venstre.
+        // NB: sb.draw and gdx.input.getY/getX have different default grid.
+        // Origo to sb.draw is bottom left, but origo to gdx.input is top left
 
         if (btnNumber == 0) {
             return (x >= width * widthScale &&
