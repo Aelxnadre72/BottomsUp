@@ -13,10 +13,6 @@ public class DesktopInterfaceClass implements FireBaseInterface{
         return null;
     }
 
-    @Override
-    public void endGame() {
-
-    }
 
     @Override
     public void updateBlockTower(String code, String playerId, String blockTower) {
@@ -40,11 +36,6 @@ public class DesktopInterfaceClass implements FireBaseInterface{
 
     @Override
     public void hostStartGame(String code) {
-
-    }
-
-    @Override
-    public void updateHighscore(String time) {
 
     }
 
