@@ -15,8 +15,13 @@ public class BottomsUp extends Game {
 	public static final int WIDTH = 360;
 	public static final int HEIGHT = 800;
 	private GameScreenManager gsm;
+
+	public static FireBaseInterface FBIF;
 	SpriteBatch batch;
 
+	public BottomsUp(FireBaseInterface FBIF){
+		BottomsUp.FBIF = FBIF;
+	}
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
