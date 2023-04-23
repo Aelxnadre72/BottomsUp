@@ -11,10 +11,6 @@ public class CoreInterfaceClass implements FireBaseInterface{
         return "0";
     }
 
-    @Override
-    public void endGame() {
-
-    }
 
     @Override
     public void updateBlockTower(String code, String playerId, String blockTower) {
@@ -38,11 +34,6 @@ public class CoreInterfaceClass implements FireBaseInterface{
 
     @Override
     public void hostStartGame(String code) {
-
-    }
-
-    @Override
-    public void updateHighscore(String time) {
 
     }
 

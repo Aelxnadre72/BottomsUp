@@ -135,7 +135,6 @@ public class ResultScreen extends Screen {
                 }
 
                 tempPlayerResults.add(lastPlaceValue);
-                System.out.println(tempPlayerResults);
                 for(int j = 0; j < tempPlayerResults.size(); j++) {
                     for(int k = 0; k < resultsName.size(); k++){
                         if(tempPlayerResults.get(j).equals(results.get(k))) {

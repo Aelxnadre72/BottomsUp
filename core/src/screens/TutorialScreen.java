@@ -17,7 +17,6 @@ public class TutorialScreen extends Screen {
     private float height = Gdx.graphics.getHeight();
 
     private float scaleWidth = (float)(Gdx.graphics.getWidth() * 0.6);
-    private float scaleHeight = (float)(scaleWidth * 0.3);
     private float scaleWidthButton = (float)(Gdx.graphics.getWidth() * 0.3);
     private float scaleHeightButton = (float)(scaleWidthButton * 0.4);
     private float scaleLogo = (float)(scaleWidth * 0.9);

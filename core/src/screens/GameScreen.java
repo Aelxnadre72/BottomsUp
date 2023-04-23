@@ -48,7 +48,8 @@ public class GameScreen extends Screen {
     private long finishTime = 0;
 
     // private long elapsedGameTime;
-    // For the leaderboard, in render: elapsedGameTime = System.currentTimeMillis() - startTime;
+    // For the leaderboard, in render: elapsedGameTime = System.currentTimeMillis()
+    // - startTime;
 
     private long timeoutDuration = 3000;
 
@@ -75,11 +76,9 @@ public class GameScreen extends Screen {
     private float heightPlayers;
     private float widthMainBlock;
 
-    private double heightScalePlayers;
-
     private Rectangle boundsExitField;
 
-    private float scaleExit = (float)(Gdx.graphics.getWidth() * 0.1);
+    private float scaleExit = (float) (Gdx.graphics.getWidth() * 0.1);
     private String playerId;
     private String lobbyCode;
     private List<List<Integer>> otherPlayers;
@@ -114,7 +113,6 @@ public class GameScreen extends Screen {
         nametag4 = new Texture("background2.png");
         screenDivider = new Texture("background2.png");
 
-
         btn0 = new Texture("block0.png");
         btn1 = new Texture("block1.png");
         btn2 = new Texture("block2.png");
@@ -139,12 +137,12 @@ public class GameScreen extends Screen {
         height = Gdx.graphics.getHeight();
 
         // standard sizes for buttons
-        widthBtn = (float)(width * 0.47);
-        heightBtn = (float)(widthBtn * 0.5);
+        widthBtn = (float) (width * 0.47);
+        heightBtn = (float) (widthBtn * 0.5);
 
         // size for the avatar
-        widthAvatar = (float)(width * 0.47);
-        heightAvatar = (float)(widthAvatar * 1.4);
+        widthAvatar = (float) (width * 0.47);
+        heightAvatar = (float) (widthAvatar * 1.4);
 
         // Scales for width and height for the different buttons and screen
         heightScaleTop = 0.141;
@@ -152,26 +150,24 @@ public class GameScreen extends Screen {
         widthScale = 0.02;
 
         // standard sizes for player screens
-        widthMain = (float)(width * 0.6);
+        widthMain = (float) (width * 0.6);
         heightMain = (float) (height * 0.62);
-        widthPlayers = (float)(width * 0.38);
-        heightPlayers = (float) (height-(heightMain*0.105*3)-(height * 0.27))/3;
-        widthMainBlock = (float)(width * 0.25);
-
-        heightScalePlayers = heightScaleBot + heightScaleTop;
+        widthPlayers = (float) (width * 0.38);
+        heightPlayers = (float) (height - (heightMain * 0.105 * 3) - (height * 0.27)) / 3;
+        widthMainBlock = (float) (width * 0.25);
 
         boundsExitField = new Rectangle(
-                (float)(width * 0.05),
-                (float)(height * 0.08) - scaleExit,
+                (float) (width * 0.05),
+                (float) (height * 0.08) - scaleExit,
                 scaleExit,
                 scaleExit);
 
         FreeTypeFontGenerator.setMaxTextureSize(2048);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = (int)height*1/24;
+        parameter.size = (int) height * 1 / 24;
         player1Text = generator.generateFont(parameter);
-        parameter.size = (int)height*1/30;
+        parameter.size = (int) height * 1 / 30;
         player2Text = generator.generateFont(parameter);
         player3Text = generator.generateFont(parameter);
         player4Text = generator.generateFont(parameter);
@@ -183,8 +179,6 @@ public class GameScreen extends Screen {
         if (Gdx.input.justTouched()) {
             int pointerX = Gdx.input.getX(0);
             int pointerY = Gdx.input.getY(0);
-            System.out.println("X: " + pointerX);
-            System.out.println("Y: " + pointerY);
 
             if (blockTower.getCurrentHeight() != 0 && timeoutTime < System.currentTimeMillis()) {
                 if (isBoundedByBtn(0, pointerX, pointerY)) {
@@ -201,9 +195,8 @@ public class GameScreen extends Screen {
                 }
 
                 // if finished
-                if(blockTower.getCurrentHeight() == 0) {
-                    System.out.println("Finished");
-                    finishTime = Math.round((System.currentTimeMillis() - startTime)/1000);
+                if (blockTower.getCurrentHeight() == 0) {
+                    finishTime = Math.round((System.currentTimeMillis() - startTime) / 1000);
                     isFinished = 1;
                     // send finishTime to players database here:
                     FBIF.setResult(lobbyCode, playerId, String.valueOf(finishTime));
@@ -222,17 +215,18 @@ public class GameScreen extends Screen {
 
     private void getPlayers() {
         List<String> localPlayers = FBIF.updatePlayerList(lobbyCode);
-        playerList.set(0, localPlayers.get(Integer.parseInt(playerId)-1));
-        localPlayers.remove(Integer.parseInt(playerId)-1);
+        playerList.set(0, localPlayers.get(Integer.parseInt(playerId) - 1));
+        localPlayers.remove(Integer.parseInt(playerId) - 1);
         for (int i = 1; i <= localPlayers.size(); i++) {
-            playerList.set(i, localPlayers.get(i-1));
+            playerList.set(i, localPlayers.get(i - 1));
         }
     }
+
     private void getOtherPlayers() {
         otherPlayers = FBIF.updateOthers(lobbyCode, playerId);
         long count = 0;
-        for(List<Integer> tower : otherPlayers) {
-            if(tower.size() == 0) {
+        for (List<Integer> tower : otherPlayers) {
+            if (tower.size() == 0) {
                 count += 1;
             }
         }
@@ -240,54 +234,58 @@ public class GameScreen extends Screen {
             solo = true;
         }
 
-        if(count + isFinished == otherPlayers.size() && !solo) {
+        if (count + isFinished == otherPlayers.size() && !solo) {
             gameOver = true;
         }
 
-        // For the other players: replaces the last block images with an invisible block when there is less than 4 blocks left
-        for(int i = 0; i < otherPlayers.size(); i++) {
+        // For the other players: replaces the last block images with an invisible block
+        // when there is less than 4 blocks left
+        for (int i = 0; i < otherPlayers.size(); i++) {
             if (otherPlayers.get(i).size() <= 3) {
                 List<Integer> tempTower = otherPlayers.get(i);
-                Integer num = 4-otherPlayers.get(i).size();
+                Integer num = 4 - otherPlayers.get(i).size();
                 for (int j = 0; j < num; j++) {
-                    tempTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
+                    tempTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will
+                                      // render instead
                 }
                 otherPlayers.set(i, tempTower);
             }
         }
     }
+
     @Override
     public void update() {
-        if(mainBlockTower.isEmpty()) {
+        if (mainBlockTower.isEmpty()) {
             FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
         }
         handleInput();
-        if(System.currentTimeMillis() > lastUpdateTime + 700) {
+        if (System.currentTimeMillis() > lastUpdateTime + 700) {
             getOtherPlayers();
             lastUpdateTime = System.currentTimeMillis();
             checkGameOver();
         }
     }
 
-    private void checkGameOver(){
-        if(gameOver) {
-            if(isFinished == 0) {
+    private void checkGameOver() {
+        if (gameOver) {
+            if (isFinished == 0) {
                 int blocksLeft = blockTower.getCurrentHeight();
                 String lastPlaceResult = String.valueOf(blocksLeft) + " blocks left";
                 if (blocksLeft == 1) {
                     lastPlaceResult = String.valueOf(blocksLeft) + " block left";
                 }
-                //send how many blocks left to database
+                // send how many blocks left to database
                 FBIF.setResult(lobbyCode, playerId, lastPlaceResult);
             }
-            //finish time in seconds is already sent to database for those that did not finish last
+            // finish time in seconds is already sent to database for those that did not
+            // finish last
             gsm.set(new ResultScreen(gsm, lobbyCode));
         }
     }
 
-@Override
+    @Override
     public void render(SpriteBatch sb) {
-        if(lastUpdateTime == 0) {
+        if (lastUpdateTime == 0) {
             update();
             getPlayers();
             lastUpdateTime = System.currentTimeMillis();
@@ -295,74 +293,85 @@ public class GameScreen extends Screen {
 
         sb.begin();
         sb.draw(background, 0, 0, width, height);
-        sb.draw(background2, 0, 0, width, (float)(height * 0.27));
-        sb.draw(screenDivider, widthMain, 0, (width-(widthPlayers)-widthMain), height);
+        sb.draw(background2, 0, 0, width, (float) (height * 0.27));
+        sb.draw(screenDivider, widthMain, 0, (width - (widthPlayers) - widthMain), height);
 
-        //sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth, scaleLogo);
-        sb.draw(boundsBtn0, (float)(width * widthScale),              (float)(height * heightScaleTop), widthBtn, heightBtn);
-        sb.draw(boundsBtn1, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleTop), widthBtn, heightBtn);
-        sb.draw(boundsBtn2, (float)(width * widthScale),              (float)(height * heightScaleBot), widthBtn, heightBtn);
-        sb.draw(boundsBtn3, (float)(width * 2*widthScale + widthBtn), (float)(height * heightScaleBot), widthBtn, heightBtn);
+        // sb.draw(logo, (float)(width * 0.2), (float)(height * 0.6), scaleWidth,
+        // scaleLogo);
+        sb.draw(boundsBtn0, (float) (width * widthScale), (float) (height * heightScaleTop), widthBtn, heightBtn);
+        sb.draw(boundsBtn1, (float) (width * 2 * widthScale + widthBtn), (float) (height * heightScaleTop), widthBtn,
+                heightBtn);
+        sb.draw(boundsBtn2, (float) (width * widthScale), (float) (height * heightScaleBot), widthBtn, heightBtn);
+        sb.draw(boundsBtn3, (float) (width * 2 * widthScale + widthBtn), (float) (height * heightScaleBot), widthBtn,
+                heightBtn);
 
-        sb.draw(cancelButton, (float)(width * 0.05), (float)(height * 0.92), scaleExit, scaleExit);
+        sb.draw(cancelButton, (float) (width * 0.05), (float) (height * 0.92), scaleExit, scaleExit);
 
-    // draw blocktower
+        // draw blocktower
         mainBlockTower = blockTower.getCopyOfCurrentList();
-        // replaces the last block images with an invisible block when there is less than 4 blocks left
-        if(blockTower.getCurrentHeight() <= 3) {
-            for (int j = 0; j < 4-blockTower.getCurrentHeight(); j++) {
-                mainBlockTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will render instead
+        // replaces the last block images with an invisible block when there is less
+        // than 4 blocks left
+        if (blockTower.getCurrentHeight() <= 3) {
+            for (int j = 0; j < 4 - blockTower.getCurrentHeight(); j++) {
+                mainBlockTower.add(4); // when the number 4 is read in getBlockTowerImage, and invisible block will
+                                       // render instead
             }
         }
 
-
-    // draw the other players towers
-        for(int i = 0; i < otherPlayers.size(); i++) {
-            drawTower(sb, otherPlayers.get(i), i+1);
-            //System.out.println("tower: " + tower.toString());
+        // draw the other players towers
+        for (int i = 0; i < otherPlayers.size(); i++) {
+            drawTower(sb, otherPlayers.get(i), i + 1);
         }
 
-        if(timeoutTime < System.currentTimeMillis()) {
+        if (timeoutTime < System.currentTimeMillis()) {
             drawTower(sb, mainBlockTower, 0);
-            // avatar and name tags are drawn in both if and else since it needs to be behind the splat,
+            // avatar and name tags are drawn in both if and else since it needs to be
+            // behind the splat,
             // but in front of the blocks
-            sb.draw(playerImage, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
+            sb.draw(playerImage, (widthMain / 3 - widthMainBlock), (float) (height / 3.2),
                     widthAvatar, heightAvatar);
-            sb.draw(nametag1, 0, (float)(height * 0.84), widthMain, (float)(heightMain*0.105));
-            sb.draw(nametag2, (width-(widthPlayers)), height-(float)(heightMain*0.105), widthPlayers,
-                    (float)(heightMain*0.105));
-            sb.draw(nametag3, (width-(widthPlayers)), (float)(height-heightMain*0.105*2-heightPlayers), widthPlayers,
-                    (float)(heightMain*0.105));
-            sb.draw(nametag4, (width-(widthPlayers)), (float)(height-(heightMain*0.105*3)-heightPlayers*2), widthPlayers,
-                    (float)(heightMain*0.105));
-            player1Text.draw(sb, playerList.get(0), (float)(width * 0.08), (float)(height * 0.885));
-            player2Text.draw(sb, playerList.get(1), (float)(width * 0.64), (float)(height * 0.98));
-            player3Text.draw(sb, playerList.get(2), (float)(width * 0.64), (float)(height * 0.74));
-            player4Text.draw(sb, playerList.get(3), (float)(width * 0.64), (float)(height * 0.49));
-        }
-        else {
-            sb.draw(playerImage, (widthMain / 3 - widthMainBlock), (float)(height / 3.2),
+            sb.draw(nametag1, 0, (float) (height * 0.84), widthMain, (float) (heightMain * 0.105));
+            sb.draw(nametag2, (width - (widthPlayers)), height - (float) (heightMain * 0.105), widthPlayers,
+                    (float) (heightMain * 0.105));
+            sb.draw(nametag3, (width - (widthPlayers)), (float) (height - heightMain * 0.105 * 2 - heightPlayers),
+                    widthPlayers,
+                    (float) (heightMain * 0.105));
+            sb.draw(nametag4, (width - (widthPlayers)), (float) (height - (heightMain * 0.105 * 3) - heightPlayers * 2),
+                    widthPlayers,
+                    (float) (heightMain * 0.105));
+            player1Text.draw(sb, playerList.get(0), (float) (width * 0.08), (float) (height * 0.885));
+            player2Text.draw(sb, playerList.get(1), (float) (width * 0.64), (float) (height * 0.98));
+            player3Text.draw(sb, playerList.get(2), (float) (width * 0.64), (float) (height * 0.74));
+            player4Text.draw(sb, playerList.get(3), (float) (width * 0.64), (float) (height * 0.49));
+        } else {
+            sb.draw(playerImage, (widthMain / 3 - widthMainBlock), (float) (height / 3.2),
                     widthAvatar, heightAvatar);
-            sb.draw(nametag1, 0, (float)(height * 0.84), widthMain, (float)(heightMain*0.105));
-            sb.draw(nametag2, (width-(widthPlayers)), height-(float)(heightMain*0.105), widthPlayers,
-                    (float)(heightMain*0.105));
-            sb.draw(nametag3, (width-(widthPlayers)), (float)(height-heightMain*0.105*2-heightPlayers), widthPlayers,
-                    (float)(heightMain*0.105));
-            sb.draw(nametag4, (width-(widthPlayers)), (float)(height-(heightMain*0.105*3)-heightPlayers*2), widthPlayers,
-                    (float)(heightMain*0.105));
-            player1Text.draw(sb, playerList.get(0), (float)(width * 0.08), (float)(height * 0.885));
-            player2Text.draw(sb, playerList.get(1), (float)(width * 0.64), (float)(height * 0.98));
-            player3Text.draw(sb, playerList.get(2), (float)(width * 0.64), (float)(height * 0.74));
-            player4Text.draw(sb, playerList.get(3), (float)(width * 0.64), (float)(height * 0.49));
-            sb.draw(timeoutSplash,0,0, width, height);
+            sb.draw(nametag1, 0, (float) (height * 0.84), widthMain, (float) (heightMain * 0.105));
+            sb.draw(nametag2, (width - (widthPlayers)), height - (float) (heightMain * 0.105), widthPlayers,
+                    (float) (heightMain * 0.105));
+            sb.draw(nametag3, (width - (widthPlayers)), (float) (height - heightMain * 0.105 * 2 - heightPlayers),
+                    widthPlayers,
+                    (float) (heightMain * 0.105));
+            sb.draw(nametag4, (width - (widthPlayers)), (float) (height - (heightMain * 0.105 * 3) - heightPlayers * 2),
+                    widthPlayers,
+                    (float) (heightMain * 0.105));
+            player1Text.draw(sb, playerList.get(0), (float) (width * 0.08), (float) (height * 0.885));
+            player2Text.draw(sb, playerList.get(1), (float) (width * 0.64), (float) (height * 0.98));
+            player3Text.draw(sb, playerList.get(2), (float) (width * 0.64), (float) (height * 0.74));
+            player4Text.draw(sb, playerList.get(3), (float) (width * 0.64), (float) (height * 0.49));
+            sb.draw(timeoutSplash, 0, 0, width, height);
             // makes the tower invisible while there is a timeout/splash
-            sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47), widthMainBlock,
+            sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47),
+                    widthMainBlock,
                     widthMainBlock);
-            sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47 + width * 0.25), widthMainBlock,
+            sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42),
+                    (float) (height / 2.47 + width * 0.25), widthMainBlock,
                     widthMainBlock);
-            sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47 + width * 0.5), widthMainBlock,
+            sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42),
+                    (float) (height / 2.47 + width * 0.5), widthMainBlock,
                     widthMainBlock);
-            sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42), (float) (height / 2.47 + width * 0.75), widthMainBlock,
+            sb.draw(invisibleBlock, (float) (widthMain / 2.85 - widthMainBlock * 0.42),
+                    (float) (height / 2.47 + width * 0.75), widthMainBlock,
                     widthMainBlock);
 
         }
@@ -375,30 +384,35 @@ public class GameScreen extends Screen {
         double resize = 1;
         double excessVertically = 0;
 
-        if(placement != 0) {
+        if (placement != 0) {
             shiftRight = 0.93;
             resize = 0.38;
             excessVertically = widthMainBlock * 0.62;
-            if(placement == 1) {
+            if (placement == 1) {
                 shiftVertically = (height * 0.379);
-            }
-            else if(placement == 2) {
+            } else if (placement == 2) {
                 shiftVertically = (height * 0.135);
 
-            }
-            else {
+            } else {
                 shiftVertically = (height * -0.108);
 
             }
         }
-            sb.draw(getBlockTowerImage(bt.get(0)), (float) ( widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically + height / 2.55), (float) (resize * widthMainBlock),
-                    (float) (resize * widthMainBlock));
-            sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - excessVertically + height / 2.55 + width * 0.25), (float) (resize * widthMainBlock),
-                    (float) (resize * widthMainBlock));
-            sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically - (excessVertically * 2) + height / 2.55 + width * 0.5), (float) (resize * widthMainBlock),
-                    (float) (resize * widthMainBlock));
-            sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / shiftRight + widthMainBlock * 0.42), (float) (shiftVertically  - (excessVertically * 3) + height / 2.55 + width * 0.75), (float) (resize * widthMainBlock),
-                    (float) (resize * widthMainBlock));
+        sb.draw(getBlockTowerImage(bt.get(0)), (float) (widthMain / shiftRight + widthMainBlock * 0.42),
+                (float) (shiftVertically + height / 2.55), (float) (resize * widthMainBlock),
+                (float) (resize * widthMainBlock));
+        sb.draw(getBlockTowerImage(bt.get(1)), (float) (widthMain / shiftRight + widthMainBlock * 0.42),
+                (float) (shiftVertically - excessVertically + height / 2.55 + width * 0.25),
+                (float) (resize * widthMainBlock),
+                (float) (resize * widthMainBlock));
+        sb.draw(getBlockTowerImage(bt.get(2)), (float) (widthMain / shiftRight + widthMainBlock * 0.42),
+                (float) (shiftVertically - (excessVertically * 2) + height / 2.55 + width * 0.5),
+                (float) (resize * widthMainBlock),
+                (float) (resize * widthMainBlock));
+        sb.draw(getBlockTowerImage(bt.get(3)), (float) (widthMain / shiftRight + widthMainBlock * 0.42),
+                (float) (shiftVertically - (excessVertically * 3) + height / 2.55 + width * 0.75),
+                (float) (resize * widthMainBlock),
+                (float) (resize * widthMainBlock));
     }
 
     @Override
@@ -420,10 +434,9 @@ public class GameScreen extends Screen {
         if (blockTower.checkNextBlock(blockNumber)) { // sjekke om de matcher med ønsket knapp
             blockTower.popNextBlock();
             // update your tower in the database
-            if(blockTower.getCurrentHeight() > 3) {
+            if (blockTower.getCurrentHeight() > 3) {
                 FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().subList(0, 4).toString());
-            }
-            else {
+            } else {
                 FBIF.updateBlockTower(lobbyCode, playerId, blockTower.getCopyOfCurrentList().toString());
             }
         } else {
@@ -432,54 +445,48 @@ public class GameScreen extends Screen {
     }
 
     private Texture getBlockTowerImage(int blockNumber) {
-        if(blockNumber == 0) {
+        if (blockNumber == 0) {
             return btn0;
-        }
-        else if (blockNumber == 1){
+        } else if (blockNumber == 1) {
             return btn1;
-        }
-        else if (blockNumber == 2){
+        } else if (blockNumber == 2) {
             return btn2;
-        }
-        else if (blockNumber == 3){
+        } else if (blockNumber == 3) {
             return btn3;
         }
         // uses invisible block image when there is less than 4 blocks left of the tower
         else if (blockNumber == 4) {
             return invisibleBlock;
-        }
-        else {
+        } else {
             return errorBlock;
         }
     }
 
     private Boolean isBoundedByBtn(int btnNumber, int x, int y) {
-        //NB: sb.draw og gdx.input.getY/getX har forskjellig default grid.
-        // Origo til sb.draw er nederst til venstre, mens origo til gdx.input er øverst til venstre.
+        // NB: sb.draw og gdx.input.getY/getX har forskjellig default grid.
+        // Origo til sb.draw er nederst til venstre, mens origo til gdx.input er øverst
+        // til venstre.
 
-        if(btnNumber == 0) {
-            return (x >= width*widthScale &&
-                    x <= width*widthScale+widthBtn &&
-                    y >= height-height*heightScaleTop-heightBtn &&
-                    y <= height-height*heightScaleTop);
-        }
-        else if (btnNumber == 1) {
-            return (x >= width*2*widthScale+widthBtn &&
-                    x <= width*widthScale+widthBtn*2 &&
-                    y >= height-height*heightScaleTop-heightBtn &&
-                    y <= height-height*heightScaleTop);
-        }
-        else if (btnNumber == 2) {
-            return (x >= width*widthScale &&
-                    x <= width*widthScale+widthBtn &&
-                    y >= height-height*heightScaleBot-heightBtn &&
-                    y <= height-height*heightScaleBot);
-        }
-        else {
-            return (x >= width*2*widthScale+widthBtn &&
-                    x <= width*widthScale+widthBtn*2 &&
-                    y >= height-height*heightScaleBot-heightBtn &&
-                    y <= height-height*heightScaleBot);
+        if (btnNumber == 0) {
+            return (x >= width * widthScale &&
+                    x <= width * widthScale + widthBtn &&
+                    y >= height - height * heightScaleTop - heightBtn &&
+                    y <= height - height * heightScaleTop);
+        } else if (btnNumber == 1) {
+            return (x >= width * 2 * widthScale + widthBtn &&
+                    x <= width * widthScale + widthBtn * 2 &&
+                    y >= height - height * heightScaleTop - heightBtn &&
+                    y <= height - height * heightScaleTop);
+        } else if (btnNumber == 2) {
+            return (x >= width * widthScale &&
+                    x <= width * widthScale + widthBtn &&
+                    y >= height - height * heightScaleBot - heightBtn &&
+                    y <= height - height * heightScaleBot);
+        } else {
+            return (x >= width * 2 * widthScale + widthBtn &&
+                    x <= width * widthScale + widthBtn * 2 &&
+                    y >= height - height * heightScaleBot - heightBtn &&
+                    y <= height - height * heightScaleBot);
         }
     }
 }
